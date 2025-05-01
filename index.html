@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ألعاب العائلة</title>
+  <link rel="stylesheet" href="styles/reset.css">
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/animations.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Player Input Screen -->
+  <section id="playerScreen" class="screen active">
+    <div class="container">
+      <h1 class="title">ألعاب العائلة</h1>
+      <div class="player-input">
+        <input type="text" id="playerName" placeholder="اسم اللاعب" maxlength="20">
+        <button id="addPlayer" class="btn btn-primary">إضافة</button>
+      </div>
+      <p class="player-counter"><span id="playerCount">0</span>/12</p>
+      
+      <div class="player-list-container">
+        <h2>قائمة اللاعبين</h2>
+        <ul id="playerList" class="player-list"></ul>
+      </div>
+      
+      <button id="startButton" class="btn btn-start" disabled>ابدأ</button>
+    </div>
+  </section>
+
+  <!-- Games Menu Screen -->
+  <section id="gamesScreen" class="screen">
+    <div class="container">
+      <h1 class="title">قائمة الألعاب</h1>
+      
+      <div class="games-grid">
+        <!-- Game cards will be inserted here dynamically -->
+      </div>
+      
+      <button id="backButton" class="btn btn-secondary">العودة</button>
+    </div>
+  </section>
+
+  <!-- Out of Topic Game Screen -->
+  <section id="outOfTopicScreen" class="screen">
+    <header class="game-header">
+      <div class="container">
+        <h1 class="game-header-title">🎲 لعبة: خارج الموضوع</h1>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="game-info">
+        <h2 class="game-title">قوانين لعبة خارج الموضوع</h2>
+        
+        <div class="info-section">
+          <h3>عدد اللاعبين المقترح:</h3>
+          <p>من 3 إلى 12 لاعب</p>
+        </div>
+        
+        <div class="info-section">
+          <h3>🎯 الهدف:</h3>
+          <p>اكتشف من هو اللاعب "خارج الموضوع" 😲 عن طريق طرح الأسئلة 🧑‍🤝‍🧑🙆‍♀️ وملاحظة الإجابات 🤨.</p>
+        </div>
+
+        <div class="info-section">
+          <h3>🎲 طريقة اللعب:</h3>
+          <ol>
+            <li>اختيار الكلمة السرية: 😲 يختار التطبيق بشكل عشوائي كلمة أو موضوع سيعرفه الجميع ماعدا لاعب واحد.</li>
+            <li>توزيع الأدوار: 🎭 سيتم اختيار اللاعب "خارج الموضوع" بشكل عشوائي أيضًا. لن يعلم هذا اللاعب بالكلمة السرية.</li>
+            <li>الدور: 🎙️ يتناوب اللاعبون على طرح الأسئلة 🙋‍♀️ على بعضهم البعض، بهدف اكتشاف هوية اللاعب 🙆‍♂️ "خارج الموضوع".</li>
+            <li>الإجابات: 🤔 يجب على اللاعبين الإجابة على الأسئلة بشكل طبيعي ودون الكشف عن هويتهم الحقيقية 🤐 , خاصة اللاعب "خارج الصندوق" الذي سيحاول التظاهر بأنه على علم بالكلمة. </li>
+            <li>التصويت: 🗳️ بعد انتهاء فترة الأسئلة 👑 يصوت كل لاعب على من يعتقد أنه اللاعب "خارج الموضوع" 😲.</li>
+            <li>الكشف: يكشف التطبيق عن هوية اللاعب "خارج الموضوع" 😲. يحصل كل لاعب بشكل صحيح على 25 نقطة 🏆.</li>
+            <li>الجولات التالية: 🔄 تستمر اللعبة بعدد من الجولات حسب رغبة اللاعبين 🎲، مع اختيار كلمة سرية جديدة في كل جولة.</li>
+
+          </ol>
+        </div>
+
+        <div class="info-section">
+          <h3>نصائح وإرشادات 🧠:</h3>
+          <p> استخدموا خيالكم! كلما كانت الأسئلة أكثر إبداعًا 🎨، زادت متعة اللعبة وصعوبة اكتشاف اللاعب "خارج الموضوع" 😲. انتبهوا لإشارات الكلام ولغة الجسد! 👀 قد تكشف بعض التصرفات هوية اللاعب "خارج الموضوع" 😲. لا تنسوا الاستمتاع! 😆 تهدف اللعبة إلى قضاء وقت ممتع مع العائلة والأصدقاء 👨‍👩‍👧‍👦 بدون عصبية وتوتر.</p>
+        </div>
+
+      </div>
+      
+      <button id="startGameButton" class="btn btn-start">بدء اللعبة</button>
+      <button id="backToGamesButton" class="btn btn-secondary">العودة للقائمة</button>
+    </div>
+  </section>
+
+  <!-- Category Selection Screen -->
+  <section id="categoryScreen" class="screen">
+    <header class="game-header">
+      <div class="container">
+        <h1>اختر التصنيف</h1>
+      </div>
+    </header>
+    <div class="container">
+      <div class="category-grid">
+        <button class="category-card" data-category="food"><span style="font-size: 3rem;">🍔</span> مأكولات</button>
+      <button class="category-card" data-category="places"><span style="font-size: 3rem;">🌍</span> أماكن</button>
+      <button class="category-card" data-category="animals"><span style="font-size: 3rem;">🐶</span> حيوانات</button>
+      <button class="category-card" data-category="clothes"><span style="font-size: 3rem;">👕</span> ملابس</button>
+      <button class="category-card" data-category="produce"><span style="font-size: 3rem;">🥕</span> خضار وفاكهة</button>
+      <button class="category-card" data-category="drinks"><span style="font-size: 3rem;">🥤</span> مشروبات</button>
+      <button class="category-card" data-category="household"><span style="font-size: 3rem;">🏠</span> أشياء منزلية</button>
+      <button class="category-card" data-category="vehicles"><span style="font-size: 3rem;">🚗</span> مركبات ومواصلات</button>
+      <button class="category-card" data-category="cities"><span style="font-size: 3rem;">🏙️</span> مدن</button>
+      <button class="category-card" data-category="cartoons"><span style="font-size: 3rem;">🎬</span> شخصيات كرتونية</button>
+      <button class="category-card" data-category="games"><span style="font-size: 3rem;">🎮</span> ألعاب</button>
+      <button class="category-card" data-category="jobs"><span style="font-size: 3rem;">💼</span> وظائف</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Warning Screen -->
+  <section id="warningScreen" class="screen">
+    <div class="container">
+      <div class="warning-box">
+        <h2 class="warning-title">حافظ على الخصوصية</h2>
+        <p class="warning-text">
+          كل اللاعبين ماعدا لاعب واحد سيعرفون نفس الكلمة السرية.<br>
+          حافظ على خصوصية الشاشة بعيدًا عن أعين باقي اللاعبين.<br>
+          لا تجعلهم ينظروا لمحتوى الشاشة التالية.
+        </p>
+        <button id="playerConfirmButton" class="btn btn-primary"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Secret Word Screen -->
+  <section id="secretScreen" class="screen">
+    <div class="container">
+      <div class="secret-box">
+        <h2 id="playerGreeting" class="greeting-title">مرحبا</h2>
+        <h3 id="playerName" class="player-name"></h3>
+        <div id="secretContent" class="secret-content">
+          <button id="revealButton" class="btn btn-primary">انقر</button>
+        </div>
+        <button id="secretConfirmButton" class="btn btn-primary" style="display: none;">موافق</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Questions Round Screen -->
+  <section id="questionsScreen" class="screen">
+    <header class="game-header">
+      <!-- <img src="assets/magnifier.svg" class="header-icon" alt=""> -->
+      <h1>⏱️ وقت الأسئلة</h1>
+    </header>
+    <div class="container">
+      <div class="questions-box">
+        <p class="questions-instructions">
+          في هذه الجولة كل لاعب يطرح سؤال عام عن الموضوع على اللاعب الآخر.<br>
+          لا تعطوا إجابات واضحة جدًا حتى لا يعرف اللاعب خارج الموضوع الموضوع.<br>
+          يمنع إعادة نفس السؤال مرة أخرى.
+        </p>
+        <div id="currentQuestion" class="current-question"></div>
+        <button id="nextQuestionButton" class="btn btn-primary">السؤال التالي</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Voting Round Screen -->
+  <section id="votingScreen" class="screen">
+    <header class="game-header">
+      <div class="container">
+        <h1>جولة التصويت على الخارج</h1>
+      </div>
+    </header>
+    <div class="container">
+      <div class="voting-box">
+        <div class="voting-instructions">
+          <p>
+            كل لاعب يصوت على من يظن أنه خارج الموضوع.<br>
+            كل صوت صحيح يمنح صاحب السؤال 25 نقطة.<br>
+            إذا تصوت الأغلبية على الشخص الصحيح، يحصل الجميع على 100 نقطة إضافية.
+          </p>
+        </div>
+        <div id="votingArea" class="voting-area"></div>
+      </div>
+    </div>
+  </section>
+  <!-- Secret Word Guess Screen -->
+<section id="guessScreen" class="screen">
+  <header class="game-header">
+    <div class="container">
+      <h1>تخمين الكلمة السرية</h1>
+    </div>
+  </header>
+  <div class="container">
+    <div class="guess-box">
+      <p>أنت خارج الموضوع، <span id="guessingPlayer"></span>. حاول تخمين الكلمة السرية:</p>
+      <div id="guessWord" class="voting-area"></div>
+      <button id="submitGuessButton" class="btn btn-primary">تأكيد</button>
+    </div>
+  </div>
+</section>
+  <!-- Results Screen -->
+  <section id="resultsScreen" class="screen">
+    <header class="game-header">
+      <div class="container">
+        <h1>النتائج النهائية</h1>
+      </div>
+    </header>
+    <div class="container">
+      <div class="results-box">
+        <div id="resultsArea" class="results-area"></div>
+        <button id="backToMenuButton" class="btn btn-primary">العودة للقائمة الرئيسية</button>
+      </div>
+    </div>
+  </section>
+
+  <script src="scripts/constants.js"></script>
+  <script src="scripts/storage.js"></script>
+  <script src="scripts/ui.js"></script>
+  <script src="scripts/validation.js"></script>
+  <script src="scripts/app.js"></script>
+</body>
+</html>
