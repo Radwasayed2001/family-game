@@ -62,12 +62,14 @@ function setupEventListeners() {
   submitGuessButton.addEventListener('click', calculateResults);
   document.getElementById('backToGamesButton').addEventListener('click', () => showScreen('gamesScreen'));
   document.getElementById('startGameButton').addEventListener('click', () => showScreen('categoryScreen'));
-  document.querySelector('.category-grid').addEventListener('click', (e) => {
-    if (e.target.classList.contains('category-card')) {
-      currentCategory = e.target.dataset.category;
-      startGame();
-    }
+  document.querySelector('.category-grid').addEventListener('click', e => {
+    // find the nearest ancestor (or self) that has the .category-card class
+    const card = e.target.closest('.category-card');
+    if (!card) return;                // click was outside any card
+    currentCategory = card.dataset.category;
+    startGame();
   });
+  
   document.getElementById('playerConfirmButton').addEventListener('click', showSecretWord);
   // Note: reveal button now created dynamically in showSecretWord
   document.getElementById('secretConfirmButton').addEventListener('click', nextPlayer);
