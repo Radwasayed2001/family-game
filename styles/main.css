@@ -345,7 +345,7 @@ h2 {
 }
 
 .player-name {
-  font-size: 2rem;
+  font-size: 1.4rem;
   margin-bottom: var(--space-xl);
 }
 
@@ -513,7 +513,7 @@ body {
 .title::before {
   content: '🎮';
   position: absolute;
-  left: -2rem;
+  left: 0;
   top: 0;
   font-size: 2rem;
   animation: bounce 1.5s infinite;
@@ -939,4 +939,41 @@ body {
 .screen:not(.active) {
   opacity: 0;
   pointer-events: none;
+}
+/* Bottom Navigation */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #000;     /* أسود */
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 -2px 5px rgba(0,0,0,0.3);
+  z-index: 1000;
+}
+
+.bottom-nav .nav-btn {
+  background: none;
+  border: none;
+  color: #fff;               /* أبيض */
+  font-size: 1rem;
+  padding: 1rem 1rem;
+  flex-grow: 1;
+  text-align: center;
+  cursor: pointer;
+}
+
+.bottom-nav .nav-btn:hover,
+.bottom-nav .nav-btn.active {
+  background-color: rgba(255,255,255,0.1);
+}
+
+/* تجاوب على الشاشات الصغيرة */
+@media (max-width: 480px) {
+  .bottom-nav .nav-btn {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.5rem;
+  }
 }
