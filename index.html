@@ -144,7 +144,7 @@
 
       </div>
       
-      <button id="startGameButton" class="btn btn-start">بدء اللعبة</button>
+      <button id="startMafiaGameButton" onclick="startMafiaGame()" class="btn btn-start">بدء اللعبة</button>
       <button id="backToGamesButton" class="btn btn-secondary">العودة للقائمة</button>
     </div>
   </section>
@@ -187,7 +187,20 @@
       </div>
     </div>
   </section>
-
+  <section id="mafiaWarningScreen" class="screen">
+    <div class="container">
+      <div class="warning-box">
+        <h2>اعط الهاتف ل<span id="playernameMafia"></span></h2>
+        <h2 class="warning-title">حافظ على الخصوصية</h2>
+        <p class="warning-text">
+          كل اللاعبين ماعدا لاعب واحد سيعرفون نفس الكلمة السرية.<br>
+          حافظ على خصوصية الشاشة بعيدًا عن أعين باقي اللاعبين.<br>
+          لا تجعلهم ينظروا لمحتوى الشاشة التالية.
+        </p>
+        <button id="mafiaPlayerConfirmButton" class="btn btn-primary"></button>
+      </div>
+    </div>
+  </section>
   <!-- Secret Word Screen -->
   <section id="secretScreen" class="screen">
     <div class="container">
@@ -201,7 +214,18 @@
       </div>
     </div>
   </section>
-
+  <section id="roleScreen" class="screen">
+    <div class="container">
+      <div class="secret-box">
+        <h2 id="playerGreeting" class="greeting-title">مرحبا</h2>
+        <h3 id="playerName" class="player-name"></h3>
+        <div id="roleContent" class="secret-content">
+          <button id="revealButton" class="btn btn-primary">انقر</button>
+        </div>
+        <button id="roleConfirmButton" class="btn btn-primary" style="display: none;">موافق</button>
+      </div>
+    </div>
+  </section>
   <!-- Questions Round Screen -->
   <section id="questionsScreen" class="screen">
     <header class="game-header">
@@ -280,5 +304,6 @@
   <script src="scripts/ui.js"></script>
   <script src="scripts/validation.js"></script>
   <script src="scripts/app.js"></script>
+  <script src="scripts/mafiaGame.js"></script>
 </body>
 </html>

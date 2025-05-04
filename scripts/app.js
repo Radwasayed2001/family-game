@@ -70,14 +70,17 @@ function setupEventListeners() {
     currentCategory = card.dataset.category;
     startGame();
   });
+document.getElementById('mafiaPlayerConfirmButton').addEventListener('click', showRole);
   
   document.getElementById('playerConfirmButton').addEventListener('click', showSecretWord);
   // Note: reveal button now created dynamically in showSecretWord
   document.getElementById('secretConfirmButton').addEventListener('click', nextPlayer);
+  document.getElementById('roleConfirmButton').addEventListener('click', nextMafiaPlayer);
   document.getElementById('nextQuestionButton').addEventListener('click', nextQuestion);
   document.getElementById('backToMenuButton').addEventListener('click', () => {
     resetGame();
-    showScreen('gamesScreen');
+    renderGamesList();
+  showScreen('gamesScreen');
   });
 }
 

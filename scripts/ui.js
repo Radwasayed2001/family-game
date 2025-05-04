@@ -90,7 +90,7 @@ function renderGamesList() {
     // Set opacity for non-playable games
     if (!isPlayable) {
       gameCard.style.opacity = '0.6';
-      gameCard.style.cursor = 'not-allowed';
+      gameCard.style.cursor = 'pointer';
     }
     
     gameCard.innerHTML = `
