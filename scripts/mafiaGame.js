@@ -754,3 +754,32 @@ document.getElementById('showMorningRes').addEventListener('click', ()=>{
     return;
   }
 });
+
+function loadStoredResultsMafia() {
+  // 1. نجمع النقاط المخزنة لكل لاعب في مصفوفة
+  const storedResults = originalPlayers.map(p => ({
+    name: p,
+    score: Number(localStorage.getItem(p) || 0)
+  }));
+
+  // 2. نرتبها تنازليًا حسب النقاط
+  storedResults.sort((a, b) => b.score - a.score);
+
+  // 3. نبني الـ HTML لكل صف
+  const rowsHTML = storedResults.map(({ name, score }) => `
+    <div class="score-row">
+      <p class="player-name">${name}</p>
+      <p class="player-score">${score} نقطة</p>
+    </div>
+  `).join('');
+
+  // 4. ندخلها داخل العنصر
+  const resArea = document.getElementById('resultsArea');
+  resArea.innerHTML = `
+    <h2>النتائج الكاملة</h2>
+    <div class="scores">
+      ${rowsHTML}
+    </div>
+  `;
+  showScreen('resultsScreen');
+}
