@@ -1056,3 +1056,217 @@ body {
     padding: 0.5rem 0.5rem;
   }
 }
+#MorningDurationScreen .game-header {
+  background: #222;
+  color: #fff;
+  padding: 1rem;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+}
+#MorningDurationScreen .game-header h1 {
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Sub-heading */
+#MorningDurationScreen .sub-title {
+  text-align: center;
+  margin: 1rem 0;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+/* Illustration */
+#MorningDurationScreen .illustration {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+/* Description */
+#MorningDurationScreen .description {
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+#MorningDurationScreen .description p {
+  margin-bottom: 0.75rem;
+}
+
+/* Main button */
+#MorningDurationScreen .btn-start-night {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background: #222;
+  color: #FFD600;
+  font-size: 1.1rem;
+  padding: 0.8rem 0;
+  border: none;
+  border-radius: 2rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  margin: 0 auto 1.5rem;
+  transition: transform .2s, background .2s;
+}
+#MorningDurationScreen .btn-start-night:hover {
+  transform: scale(1.02);
+  background: #000;
+}
+
+/* Stats grid */
+#MorningDurationScreen .stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+#MorningDurationScreen .stat {
+  background: rgba(0,0,0,0.05);
+  padding: 1rem;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.95rem;
+}
+#MorningDurationScreen .stat span {
+  font-size: 1.4rem;
+}
+
+/* Footer nav */
+#MorningDurationScreen .footer-nav {
+  display: flex;
+  justify-content: space-around;
+  background: #222;
+  color: #fff;
+  padding: 0.5rem 0;
+}
+#MorningDurationScreen .footer-nav .nav-item {
+  flex: 1;
+  text-align: center;
+  font-size: 0.9rem;
+}
+#MorningDurationScreen .footer-nav .nav-item img {
+  width: 1.4rem;
+  display: block;
+  margin: 0 auto 0.3rem;
+  opacity: 0.8;
+}
+#MorningDurationScreen .footer-nav .nav-item:hover img {
+  opacity: 1;
+}
+
+/* Responsive tweaks */
+@media (min-width: 600px) {
+  #MorningDurationScreen .game-header h1 { font-size: 1.75rem; }
+  #MorningDurationScreen .sub-title { font-size: 1.4rem; }
+  #MorningDurationScreen .description { font-size: 1rem; }
+  #MorningDurationScreen .btn-start-night { font-size: 1.2rem; }
+}
+#NightDurationScreen .game-header {
+  background: #222;
+  color: #fff;
+  padding: 1rem;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+}
+#NightDurationScreen .game-header h1 {
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Sub-heading */
+#NightDurationScreen .sub-title {
+  text-align: center;
+  margin: 1rem 0;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+/* Illustration */
+#NightDurationScreen .illustration {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+/* Description */
+#NightDurationScreen .description {
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+#NightDurationScreen .description p {
+  margin-bottom: 0.75rem;
+}
+
+/* Main button */
+#NightDurationScreen .btn-start-night {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background: #222;
+  color: #FFD600;
+  font-size: 1.1rem;
+  padding: 0.8rem 0;
+  border: none;
+  border-radius: 2rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  margin: 0 auto 1.5rem;
+  transition: transform .2s, background .2s;
+}
+#NightDurationScreen .btn-start-night:hover {
+  transform: scale(1.02);
+  background: #000;
+}
+
+/* Stats grid */
+#NightDurationScreen .stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+#NightDurationScreen .stat {
+  background: rgba(0,0,0,0.05);
+  padding: 1rem;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.95rem;
+}
+#NightDurationScreen .stat span {
+  font-size: 1.4rem;
+}
+
+/* Footer nav */
+#NightDurationScreen .footer-nav {
+  display: flex;
+  justify-content: space-around;
+  background: #222;
+  color: #fff;
+  padding: 0.5rem 0;
+}
+#NightDurationScreen .footer-nav .nav-item {
+  flex: 1;
+  text-align: center;
+  font-size: 0.9rem;
+}
+#NightDurationScreen .footer-nav .nav-item img {
+  width: 1.4rem;
+  display: block;
+  margin: 0 auto 0.3rem;
+  opacity: 0.8;
+}
+#NightDurationScreen .footer-nav .nav-item:hover img {
+  opacity: 1;
+}
+
+/* Responsive tweaks */
+@media (min-width: 600px) {
+  #NightDurationScreen .game-header h1 { font-size: 1.75rem; }
+  #NightDurationScreen .sub-title { font-size: 1.4rem; }
+  #NightDurationScreen .description { font-size: 1rem; }
+  #NightDurationScreen .btn-start-night { font-size: 1.2rem; }
+}

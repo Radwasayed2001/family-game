@@ -71,11 +71,14 @@ function setupEventListeners() {
     startGame();
   });
 document.getElementById('mafiaPlayerConfirmButton').addEventListener('click', showRole);
+document.getElementById('mafiaPlayerVoteButton').addEventListener('click', showQuestion);
+document.getElementById('mafiaPlayerVoteButtonMorning').addEventListener('click', showQuestionMorning);
   
   document.getElementById('playerConfirmButton').addEventListener('click', showSecretWord);
   // Note: reveal button now created dynamically in showSecretWord
   document.getElementById('secretConfirmButton').addEventListener('click', nextPlayer);
   document.getElementById('roleConfirmButton').addEventListener('click', nextMafiaPlayer);
+  document.getElementById('roleConfirmButtonMorning').addEventListener('click', nextMafiaPlayerMorning);
   document.getElementById('nextQuestionButton').addEventListener('click', nextQuestion);
   document.getElementById('backToMenuButton').addEventListener('click', () => {
     resetGame();
@@ -140,7 +143,6 @@ function showWarningScreen() {
  */
 function showSecretWord() {
   const player = players[currentPlayerIndex];
-  console.log(player)
   const content = document.getElementById('secretContent');
   document.querySelector('#secretScreen .player-name').textContent = player;
   // If this player is the out-of-topic one, show outsider screen immediately
@@ -308,7 +310,6 @@ function submitVote(voter, candidate) {
     // combine and shuffle
     const guessItems = [...randomWrong, secretWord]
       .sort(() => 0.5 - Math.random());
-    console.log('Guess options:', guessItems);
     // store for guess screen
     window._guessOptions = guessItems;
     const area = document.getElementById('guessWord');
@@ -334,7 +335,6 @@ function submitVote(voter, candidate) {
 /**
  * Calculate and show results
  */function calculateResults(choosenWord) {
-  console.log("choosenWord", choosenWord);
   // 1. حساب النقاط لكل لاعب وفقًا لقواعد اللعبة
   players.forEach(p => scores[p] = localStorage.getItem(p)*1);
   let outVotes = 0;
