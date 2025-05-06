@@ -756,6 +756,7 @@ document.getElementById('showMorningRes').addEventListener('click', ()=>{
 });
 
 function loadStoredResultsMafia() {
+  console.log("press");
   // 1. نجمع النقاط المخزنة لكل لاعب في مصفوفة
   const storedResults = originalPlayers.map(p => ({
     name: p,
