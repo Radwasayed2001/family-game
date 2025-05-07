@@ -92,30 +92,36 @@ document.getElementById('mafiaPlayerVoteButtonMorning').addEventListener('click'
 /**
  * Add a new player
  */
+/**
+ * Add a new player and reload the app so every game picks up the change
+ */
 function addPlayer() {
-  players.forEach(p => localStorage.removeItem(p, 0));
-
   const name = playerNameInput.value.trim();
   const { isValid, error } = validatePlayerName(name, players);
-  if (!isValid) { alert(error); return; }
+  if (!isValid) {
+    alert(error);
+    return;
+  }
   players.push(name);
   savePlayers(players);
+  // re‐render and then reload everything
   renderPlayerList(players);
   clearPlayerInput();
-  playerNameInput.focus();
+  // give the browser a tiny moment to update the UI (optional)
+  setTimeout(() => location.reload(), 0);
 }
 
 /**
- * Remove a player
+ * Remove a player and reload the app so every game picks up the change
  */
 function removePlayer(index) {
-  players.forEach(p => localStorage.removeItem(p, 0));
-
   players.splice(index, 1);
   savePlayers(players);
+  // re‐render and then reload everything
   renderPlayerList(players);
-
+  setTimeout(() => location.reload(), 0);
 }
+
 
 /**
  * Start the OutOfTopic game flow

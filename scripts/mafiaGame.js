@@ -12,6 +12,13 @@ let mafianum = Math.floor(players.length/4);
 let cnum = players.length - Math.floor(players.length/4) - 2;
 let originalPlayers = [...players];
 function startMafiaGame() {
+  originalPlayers = loadPlayers();
+  players = loadPlayers();
+  pnum = 1;
+  mnum = 1;
+  mafianum = Math.floor(originalPlayers.length/4);
+  cnum = originalPlayers.length - Math.floor(players.length/4) - 2;
+
   if (originalPlayers.length < 5) {
     alert('لعبة المافيا تحتاج على الأقل 5 لاعبين.');
     return;

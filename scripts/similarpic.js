@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     attempts       = 0;
     roundResults   = [];
     runTurn();
-  });
+  }); 
   backHomeBtn.addEventListener('click', () => showScreen('gamesScreen'));
 
   // —— 2) الدور الحالي ——
