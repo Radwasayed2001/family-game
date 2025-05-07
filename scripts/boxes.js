@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentIndexBoxes = 0;
   let boxStartTime      = 0;
   let nextNumber        = 1;
-  let timerInterval     = null;
   let timeLeft          = 60;
   let boxResults        = [];
 
