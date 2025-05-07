@@ -12,7 +12,7 @@ let mafianum = Math.floor(players.length/4);
 let cnum = players.length - Math.floor(players.length/4) - 2;
 let originalPlayers = [...players];
 function startMafiaGame() {
-  if (players.length < 5) {
+  if (originalPlayers.length < 5) {
     alert('لعبة المافيا تحتاج على الأقل 5 لاعبين.');
     return;
   }
@@ -22,7 +22,7 @@ function startMafiaGame() {
     mafiaCurrentQuestionIndex = 0;
     mafiaVotes = {};
     mafiaScores = {};
-  
+    players = [...originalPlayers];
     // how many mafia members: one for every 4 players (rounded down)
     const mafiaCount = Math.floor(players.length / 4);
   

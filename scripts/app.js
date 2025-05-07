@@ -58,6 +58,8 @@ function setupEventListeners() {
     if (card && getComputedStyle(card).opacity === '1') {
       if (card.dataset.gameId === 'outOfTopic') showScreen('outOfTopicScreen');
       else if (card.dataset.gameId === 'mafia') showScreen('mafiaScreen');
+      else if (card.dataset.gameId === 'similarPictures') showScreen('similarPicturesScreen');
+      else if (card.dataset.gameId === 'boxes') showScreen('boxesRulesScreen');
     }
   });
   submitGuessButton.addEventListener('click', calculateResults);

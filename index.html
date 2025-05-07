@@ -12,6 +12,132 @@
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
+  <section id="similarPicturesScreen" class="screen">
+    <header class="game-header">
+      <div class="container">
+        <h1 class="game-header-title">🎲 لعبة: الصور المتشابهة</h1>
+      </div>
+    </header>
+  
+    <div class="container">
+      <div class="game-info">
+        <h2 class="game-title">📜 قوانين لعبة الصور المتشابهة</h2>
+  
+        <div class="info-section">
+          <h3>👥 عدد اللاعبين المقترح:</h3>
+          <p>من 3 إلى 12 لاعب</p>
+        </div>
+  
+        <div class="info-section">
+          <h3>🎯 الهدف:</h3>
+          <p>
+            إيجاد الصورة المكررة 🔍 بأسرع وقت ممكن قبل انتهاء المحاولات ⏱️.
+          </p>
+        </div>
+  
+        <div class="info-section">
+          <h3>🎲 طريقة اللعب:</h3>
+          <ol>
+            <li>أعطِ الهاتف إلى اللاعب التالي في الدور 📱.</li>
+            <li>⏳ سيبدأ العد التنازلي: "سيبدأ الوقت بعد 3 ثواني...".</li>
+            <li>بعد انقضاء 3 ثوانٍ، تظهر شبكة مكونة من 25 صورة 🖼️، إحداها متكررة.</li>
+            <li>
+              اضغط على الصورة التي تعتقد أنها مكررة:
+              <ul>
+                <li>✅ إذا صحّ اختيارك.</li>
+                <li>❌ إذا أخطأت.</li>
+              </ul>
+            </li>
+            <li>🎯 لديك محاولتان فقط، ثم ينتهي وقتك بـ 90 ثانية تلقائياً.</li>
+            <li>بعد انتهاء دور اللاعب (صحيح أو انتهاء المحاولات)، ينتقل الدور إلى اللاعب التالي.</li>
+            <li>🔢 تُسجَّل نتائج كل لاعب (الوقت + عدد المحاولات) في النهاية.</li>
+          </ol>
+        </div>
+  
+        <div class="info-section">
+          <h3>💡 نصائح وإرشادات:</h3>
+          <p>
+            • ركّز على تفاصيل الصور 🎨.<br>
+            • لا تسرع بالاختيار—محاولتان فقط! ⚡<br>
+            • استمتع باللعب مع الأصدقاء والعائلة 👪.
+          </p>
+        </div>
+      </div>
+  
+      <button id="startSimilarBtn" class="btn btn-start">بدء اللعبة ▶️</button>
+      <button  class="btn btn-secondary">العودة للقائمة</button>
+    </div>
+  </section>
+  <section id="countdownScreen" class="screen">
+    <div class="countdown-container">
+      <div id="playerNameDisplay" class="player-name-display"></div>
+      <div id="countdownNumber" class="countdown-number"></div>
+    </div>
+  </section>
+  <div id="boxCountdownScreen" class="screen">
+    <div class="countdown-container">
+    <div id="playerBoxName" class="player-name-display"></div>
+    <div id="boxCountdownNumber" class="countdown-number"></div>
+  </div>
+</div>
+  <!-- Results Screen -->
+<section id="similarResultsScreen" class="screen">
+  <div class="container results-container">
+    <h1 class="results-title">🏆 النتائج النهائية</h1>
+    
+    <!-- جداول النتائج -->
+    <div class="results-tables">
+      <!-- جدول جولة اللعبة الحالية -->
+      <div class="results-box">
+        <h2 class="box-title">نتائج الجولة</h2>
+        <table class="results-table">
+          <thead>
+            <tr>
+              <th>🏅 المركز</th>
+              <th>👤 اللاعب</th>
+              <th>⏱️ الوقت (ث)</th>
+              <th>✅ المحاولات</th>
+              <th>🌟 النقاط</th>
+            </tr>
+          </thead>
+          <tbody id="roundResultsBody">
+            <!-- تعبئة ديناميكياً عبر JS -->
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- جدول النقاط التراكمية -->
+      <div class="results-box">
+        <h2 class="box-title">النقاط الإجمالية</h2>
+        <table class="results-table">
+          <thead>
+            <tr>
+              <th>🏆 الترتيب</th>
+              <th>👤 اللاعب</th>
+              <th>💯 المجموع الكلي</th>
+            </tr>
+          </thead>
+          <tbody id="totalResultsBody">
+            <!-- تعبئة ديناميكياً عبر JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <!-- زر للعودة أو إعادة اللعب -->
+    <div class="results-actions">
+      <button id="playAgainBtn" class="btn btn-primary large">🔄 العب مرة أخرى</button>
+      <button id="backHomeBtn" class="btn btn-secondary large">🏠 العودة للقائمة</button>
+    </div>
+  </div>
+</section>
+
+  <section id="imagesScreen" class="screen">
+    <div class="container">
+      <div class="image-grid"></div>
+      <button id="nextTurnBtn" class="btn btn-primary">التالي ▶️</button>
+    </div>
+  </section>
   <!-- Player Input Screen -->
   <section id="playerScreen" class="screen active">
     <div class="container">
@@ -30,6 +156,110 @@
       <button id="startButton" class="btn btn-start" disabled>ابدأ</button>
     </div>
   </section>
+<!-- Boxes Game Rules Screen -->
+<section id="boxesRulesScreen" style="padding-bottom: 3rem !important;" class="screen">
+  <header class="game-header">
+    <div class="container">
+      <h1 class="game-header-title">🎲 لعبة الصناديق</h1>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="game-info">
+      <h2 class="game-title">📜 قوانين لعبة الصناديق</h2>
+
+      <div class="info-section">
+        <h3>👥 عدد اللاعبين المقترح:</h3>
+        <p>من 3 إلى 12 لاعب</p>
+      </div>
+
+      <div class="info-section">
+        <h3>🎉 عن اللعبة:</h3>
+        <p>لعبة الصناديق ممتعة 😄 وتعتمد على التركيز والسرعة بشكل كبير ⏱️. تُلعب بشكل كامل على الجهاز 📱.</p>
+      </div>
+
+      <div class="info-section">
+        <h3>🕹️ طريقة اللعب:</h3>
+        <ol>
+          <li>اضغط على زر البدء ▶️ لبدء التحدي.</li>
+          <li>ستظهر أمامك 20 صندوقًا 📦 بترتيب عشوائي.</li>
+          <li>مهمتك: النقر على الصناديق بالترتيب من 1 إلى 20 بأسرع ما يمكن.</li>
+          <li>🚨 أي خطأ يعيدك إلى نقطة البداية 🔙.</li>
+        </ol>
+      </div>
+
+      <div class="info-section">
+        <h3>⏳ الوقت:</h3>
+        <p>لديك 60 ثانية 🕒 لإكمال التحدي 🏁.</p>
+      </div>
+
+      <div class="info-section">
+        <h3>🏆 الفوز:</h3>
+        <p>أسرع لاعب ينهي التحدي هو الفائز! 🏅</p>
+      </div>
+
+      <div class="info-section">
+        <h3>💡 تحديات إضافية:</h3>
+        <p>
+          ابتكروا تحديات مجنونة لإضافة المرح 😂:<br>
+          • جولة الأصبع: استخدم إصبعًا واحدًا فقط ☝️ للنقر.<br>
+          • جولة الكوع: حاول النقر بالكوع! 🤜<br>
+          • جولة الأنف: هل يمكنك النقر بأنفك؟ 👃
+        </p>
+      </div>
+
+      <div class="info-section">
+        <h3>🎖️ نظام النقاط:</h3>
+        <ul>
+          <li>🥇 المركز الأول: 20 نقطة</li>
+          <li>🥈 المركز الثاني: 10 نقاط</li>
+          <li>🥉 المركز الثالث: 5 نقاط</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="buttons-row">
+      <button id="backToGamesBtn" class="btn btn-secondary">🔙 العودة للقائمة</button>
+      <button id="startBoxesBtn" class="btn btn-primary">▶️ بدء اللعبة</button>
+    </div>
+  </div>
+</section>
+
+<div id="boxGameScreen" class="screen">
+  <div id="boxTimer">⏰ 60s</div>
+  <div class="box-grid"></div>
+</div>
+<div id="boxResultsScreen" class="screen results-container">
+  <h2 class="results-title">نتائج الجولة 🏁</h2>
+
+  <div class="results-tables">
+    <div class="results-box">
+      <div class="box-title">نتائج الجولة</div>
+      <table class="results-table">
+        <thead>
+          <tr><th>#</th><th>اللاعب</th><th>الزمن</th><th>النقاط</th></tr>
+        </thead>
+        <tbody id="roundResultsBody1"></tbody>
+      </table>
+    </div>
+
+    <div class="results-box">
+      <div class="box-title">النقاط التراكمية 🏆</div>
+      <table class="results-table">
+        <thead>
+          <tr><th>#</th><th>اللاعب</th><th>المجموع</th></tr>
+        </thead>
+        <tbody id="totalResultsBody1"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="results-actions">
+    <button id="boxPlayAgainBtn" class="btn large">🔁 إعادة اللعب</button>
+    <button id="boxBackHomeBtn" class="btn large">🏠 العودة للقائمة الرئيسية</button>
+  </div>
+</div>
+
 
   <!-- Games Menu Screen -->
   <section id="gamesScreen" class="screen">
@@ -190,7 +420,7 @@
       </div>
   
       <button id="startMafiaGameButton" onclick="startMafiaGame()" class="btn btn-start">بدء اللعبة</button>
-      <button id="backToGamesButton" class="btn btn-secondary">العودة للقائمة</button>
+      <button  class="btn btn-secondary">العودة للقائمة</button>
     </div>
   </section>
   
@@ -517,5 +747,7 @@
   <script src="scripts/validation.js"></script>
   <script src="scripts/app.js"></script>
   <script src="scripts/mafiaGame.js"></script>
+  <script src="scripts/similarpic.js"></script>
+  <script src="scripts/boxes.js"></script>
 </body>
 </html>
