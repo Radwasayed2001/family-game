@@ -10,8 +10,6 @@ let currentQuestionIndex = 0;
 let votes = {};
 let scores = {};
 let outOfTopicInput = 'sldkl;';
-let timerInterval     = null;
-
 // Category words mapping
 const categoryWords = {
   food: ['كبسة', 'مندي', 'برياني', 'مقلوبة', 'محشي', 'فتوش', 'شاورما', 'سندويش', 'فلافل', 'حريرة', 'ملوخية', 'فتة', 'مسبحة', 'طاجن'],
@@ -60,6 +58,7 @@ function setupEventListeners() {
     if (card && getComputedStyle(card).opacity === '1') {
       if (card.dataset.gameId === 'outOfTopic') showScreen('outOfTopicScreen');
       else if (card.dataset.gameId === 'mafia') showScreen('mafiaScreen');
+      else if (card.dataset.gameId === 'phoneOnHead') showScreen('jawwalRulesScreen');
       else if (card.dataset.gameId === 'similarPictures') showScreen('similarPicturesScreen');
       else if (card.dataset.gameId === 'boxes') showScreen('boxesRulesScreen');
     }
@@ -436,16 +435,14 @@ function resetGame() {
 }
 // في app.js أو ui.js
 document.getElementById('nav-players').addEventListener('click', () => {
-  clearInterval(timerInterval);
   showScreen('playerScreen');
 });
 document.getElementById('nav-games').addEventListener('click', () => {
-  clearInterval(timerInterval);
   renderGamesList();
   showScreen('gamesScreen');
 });
 document.getElementById('nav-results').addEventListener('click', () => {
-  clearInterval(timerInterval);
+  
   loadStoredResults()
 });
 

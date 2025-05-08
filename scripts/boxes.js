@@ -1,196 +1,171 @@
 // scripts/boxes.js
+
+let boxTimerIntervalBox = null;
+let boxCountDownIntervalBox = null;
+let boxAdvanceTimeoutBox = null;
+
+// مسح كل المؤقتات
+function clearBoxAllTimers() {
+  if (boxTimerIntervalBox !== null) {
+    clearInterval(boxTimerIntervalBox);
+    boxTimerIntervalBox = null;
+  }
+  if (boxCountDownIntervalBox !== null) {
+    clearInterval(boxCountDownIntervalBox);
+    boxCountDownIntervalBox = null;
+  }
+  if (boxAdvanceTimeoutBox !== null) {
+    clearTimeout(boxAdvanceTimeoutBox);
+    boxAdvanceTimeoutBox = null;
+  }
+}
+
+// تغيير الشاشة مع مسح كل المؤقتات
+function showScreen(id) {
+  clearBoxAllTimers();
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-  // ——————————————————————————————————————————
-  // 1) Load players into module-scope variable
-  // ——————————————————————————————————————————
   const playersBoxes = loadPlayers();
+  let currentPlayer = 0, nextNumber = 1, timeLeft = 60, startTime = 0;
+  let boxResults = [];
 
-  // ——————————————————————————————————————————
-  // 2) Game state
-  // ——————————————————————————————————————————
-  let currentIndexBoxes = 0;
-  let boxStartTime      = 0;
-  let nextNumber        = 1;
-  let timeLeft          = 60;
-  let boxResults        = [];
-
-  // ——————————————————————————————————————————
-  // 3) DOM references
-  // ——————————————————————————————————————————
-  const playerDisplay   = document.getElementById('playerBoxName');
-  const boxGrid         = document.querySelector('.box-grid');
-  const timerDisplay    = document.getElementById('boxTimer');
+  // DOM refs
+  const playerLabel     = document.getElementById('playerBoxName');
   const countdownNumber = document.getElementById('boxCountdownNumber');
+  const timerLabel      = document.getElementById('boxTimer');
+  const grid            = document.querySelector('.box-grid');
   const startBtn        = document.getElementById('startBoxesBtn');
-  const playAgainBtn    = document.getElementById('boxPlayAgainBtn');
-  const backHomeBtn     = document.getElementById('boxBackHomeBtn');
+  const againBtn        = document.getElementById('boxPlayAgainBtn');
+  const homeBtn         = document.getElementById('boxBackHomeBtn');
 
-  // ——————————————————————————————————————————
-  // 4) Kick off on “Start” and on “Play Again”
-  // ——————————————————————————————————————————
-  function resetGameState() {
-    clearInterval(timerInterval);
-    currentIndexBoxes = 0;
-    boxResults        = [];
+  function resetGame() {
+    clearBoxAllTimers();
+    currentPlayer = 0;
+    boxResults = [];
   }
 
   startBtn.addEventListener('click', () => {
-    if (playersBoxes.length < 3) {
-      return alert('لعبة الصناديق تحتاج من 3 إلى 12 لاعبًا.');
-    }
-    resetGameState();
-    runBoxTurn();
+    if (playersBoxes.length < 3) return alert('يحتاج 3 لاعبين على الأقل');
+    resetGame();
+    playTurn();
   });
-
-  playAgainBtn.addEventListener('click', () => {
-    resetGameState();
-    runBoxTurn();
+  againBtn.addEventListener('click', () => {
+    resetGame();
+    playTurn();
   });
-  backHomeBtn.addEventListener('click', () => showScreen('gamesScreen'));
+  homeBtn.addEventListener('click', () => showScreen('gamesScreen'));
 
-  // ——————————————————————————————————————————
-  // 5) One player’s countdown → challenge
-  // ——————————————————————————————————————————
-  function runBoxTurn() {
-    timeLeft   = 60;
+  function playTurn() {
     nextNumber = 1;
+    timeLeft = 60;
 
-    // display current player
-    const name = playersBoxes[currentIndexBoxes];
-    playerDisplay.textContent = `📱 أعطِ الجهاز إلى: ${name}`;
-
-    // countdown 3…2…1
+    playerLabel.textContent = `📱 دور: ${playersBoxes[currentPlayer]}`;
     showScreen('boxCountdownScreen');
-    let count = 3;
-    countdownNumber.textContent = count;
-    const iv = setInterval(() => {
-      count--;
-      countdownNumber.textContent = count;
-      if (count <= 0) {
-        clearInterval(iv);
-        startBoxChallenge();
+
+    // عدّ تنازلي 3
+    let c = 3;
+    countdownNumber.textContent = c;
+    boxCountDownIntervalBox = setInterval(() => {
+      c--;
+      countdownNumber.textContent = c;
+      if (c <= 0) {
+        clearInterval(boxCountDownIntervalBox);
+        boxCountDownIntervalBox = null;
+        startChallenge();
       }
     }, 1000);
   }
 
-  function startBoxChallenge() {
+  function startChallenge() {
     showScreen('boxGameScreen');
-    setupBoxes();
-    boxStartTime = Date.now();
+    startTime = Date.now();
+    renderBoxes();
 
-    // 60s timer
-    timerDisplay.textContent = `⏰ ${timeLeft}s`;
-    clearInterval(timerInterval);
-    timerInterval = setInterval(() => {
+    timerLabel.textContent = `⏰ ${timeLeft}s`;
+    boxTimerIntervalBox = setInterval(() => {
       timeLeft--;
-      timerDisplay.textContent = `⏰ ${timeLeft}s`;
+      timerLabel.textContent = `⏰ ${timeLeft}s`;
       if (timeLeft <= 0) {
-        clearInterval(timerInterval);
-        boxResults.push({
-          name: playersBoxes[currentIndexBoxes],
-          time: 90
-        });
-        setTimeout(nextBoxPlayer, 300);
+        clearInterval(boxTimerIntervalBox);
+        boxTimerIntervalBox = null;
+        recordResult(90);
+        boxAdvanceTimeoutBox = setTimeout(nextPlayer, 300);
       }
     }, 1000);
   }
 
-  // ——————————————————————————————————————————
-  // 6) Build 1–20 buttons
-  // ——————————————————————————————————————————
-  function setupBoxes() {
-    const numbers = Array.from({ length: 20 }, (_, i) => i + 1)
-                         .sort(() => Math.random() - 0.5);
-    boxGrid.innerHTML = '';
-    numbers.forEach(num => {
+  function renderBoxes() {
+    const nums = Array.from({ length: 20 }, (_, i) => i+1).sort(() => Math.random()-0.5);
+    grid.innerHTML = '';
+    nums.forEach(n => {
       const btn = document.createElement('button');
       btn.className = 'box';
-      btn.textContent = num;
-      btn.addEventListener('click', () => handleBoxClick(num, btn));
-      boxGrid.appendChild(btn);
+      btn.textContent = n;
+      btn.onclick = () => handleClick(n, btn);
+      grid.appendChild(btn);
     });
   }
 
-  function handleBoxClick(num, btn) {
-    if (num === nextNumber) {
+  function handleClick(n, btn) {
+    if (n === nextNumber) {
       btn.classList.add('correct');
       btn.disabled = true;
       nextNumber++;
       if (nextNumber > 20) {
-        clearInterval(timerInterval);
-        const elapsed = ((Date.now() - boxStartTime) / 1000).toFixed(2);
-        boxResults.push({
-          name: playersBoxes[currentIndexBoxes],
-          time: parseFloat(elapsed)
-        });
-        setTimeout(nextBoxPlayer, 300);
+        clearInterval(boxTimerIntervalBox);
+        boxTimerIntervalBox = null;
+        const elapsed = ((Date.now() - startTime)/1000).toFixed(2);
+        recordResult(parseFloat(elapsed));
+        boxAdvanceTimeoutBox = setTimeout(nextPlayer, 300);
       }
     } else {
-      // mistake: reset challenge
       nextNumber = 1;
-      setupBoxes();
+      renderBoxes();
     }
   }
 
-  // ——————————————————————————————————————————
-  // 7) Next player or final results
-  // ——————————————————————————————————————————
-  function nextBoxPlayer() {
-    currentIndexBoxes++;
-    if (currentIndexBoxes < playersBoxes.length) {
-      runBoxTurn();
+  function recordResult(time) {
+    boxResults.push({ name: playersBoxes[currentPlayer], time });
+  }
+
+  function nextPlayer() {
+    currentPlayer++;
+    if (currentPlayer < playersBoxes.length) {
+      playTurn();
     } else {
-      showBoxResults();
+      showResults();
     }
   }
 
-  function showBoxResults() {
-    // sort, award, persist
-    boxResults.sort((a,b) => a.time - b.time);
+  function showResults() {
+    boxResults.sort((a,b)=>a.time-b.time);
     const pts = [20,10,5];
-    const final = boxResults.map((r,i) => ({
-      name:   r.name,
-      time:   r.time,
-      points: i < 3 ? pts[i] : 0
+    const final = boxResults.map((r,i)=>({
+      name: r.name,
+      time: r.time,
+      points: i<3?pts[i]:0
     }));
-
-    playersBoxes.forEach(p => {
-      const prev = parseInt(localStorage.getItem(p)) || 0;
-      const curr = final.find(r=>r.name===p)?.points || 0;
-      localStorage.setItem(p, prev + curr);
+    // تحديث localStorage
+    playersBoxes.forEach(p=>{
+      const prev = +localStorage.getItem(p)||0;
+      const curr = final.find(r=>r.name===p)?.points||0;
+      localStorage.setItem(p, prev+curr);
     });
-
-    populateRoundResultsBox(final);
+    // عرض الجداول
+    document.getElementById('roundResultsBody1').innerHTML =
+      final.map((r,i)=>`
+        <tr><td>${i+1}</td><td>${r.name}</td><td>${r.time}s</td><td>${r.points}</td></tr>
+      `).join('');
     const total = playersBoxes.map(p=>({
-      name:  p,
-      total: parseInt(localStorage.getItem(p))||0
-    })).sort((a,b)=>b.total - a.total);
-    populateTotalResultsBox(total);
-
+      name:p, total:+localStorage.getItem(p)||0
+    })).sort((a,b)=>b.total-a.total);
+    document.getElementById('totalResultsBody1').innerHTML =
+      total.map((r,i)=>`
+        <tr><td>${i+1}</td><td>${r.name}</td><td>${r.total}</td></tr>
+      `).join('');
     showScreen('boxResultsScreen');
   }
-
-  function populateRoundResultsBox(results) {
-    document.getElementById('roundResultsBody1').innerHTML =
-      results.map((r,i) => `
-        <tr>
-          <td>${i+1}</td>
-          <td>${r.name}</td>
-          <td>${r.time}s</td>
-          <td>${r.points}</td>
-        </tr>
-      `).join('');
-  }
-
-  function populateTotalResultsBox(results) {
-    document.getElementById('totalResultsBody1').innerHTML =
-      results.map((r,i) => `
-        <tr>
-          <td>${i+1}</td>
-          <td>${r.name}</td>
-          <td>${r.total}</td>
-        </tr>
-      `).join('');
-  }
-
 });

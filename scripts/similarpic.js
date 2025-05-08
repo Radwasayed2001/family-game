@@ -1,88 +1,122 @@
 // scripts/similar.js
+
+// ───────────────
+// مؤقتات عامة
+// ───────────────
+let imageCountdownInterval = null;
+let advanceTimeoutSim         = null;
+
+// يمسح كل مؤقتات العدّ التنازلي والمؤقتات المتأخرة
+function clearAllTimersSim() {
+  if (imageCountdownInterval !== null) {
+    clearInterval(imageCountdownInterval);
+    imageCountdownInterval = null;
+  }
+  if (advanceTimeoutSim !== null) {
+    clearTimeout(advanceTimeoutSim);
+    advanceTimeoutSim = null;
+  }
+}
+
+// تبديل الشاشات + تنظيف المؤقتات
+function showScreenSim(id) {
+  clearAllTimersSim();
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-  // —— 1) التحضير ——
-  const picPlayers      = loadPlayers();
-  let currentIndex      = 0;
-  let imageStartTime    = 0;
-  let dupUrl            = '';
-  let attempts          = 0;
-  let roundResults      = [];  // { name, time, attempts, points }
+  // تحميل قائمة اللاعبين
+  const picPlayers   = loadPlayers();
+  let currentIndex   = 0;
+  let imageStartTime = 0;
+  let dupUrl         = '';
+  let attempts       = 0;
+  let roundResults   = [];
 
-  // DOM References
-  const displayNum      = document.getElementById('countdownNumber');
-  const displayName     = document.getElementById('playerNameDisplay');
-  const grid            = document.querySelector('.image-grid');
-  const playAgainBtn    = document.getElementById('playAgainBtn');
-  const backHomeBtn     = document.getElementById('backHomeBtn');
-  const startSimilarBtn = document.getElementById('startSimilarBtn');
+  // مراجع DOM
+  const displayNum   = document.getElementById('countdownNumber');
+  const displayName  = document.getElementById('playerNameDisplay');
+  const grid         = document.querySelector('.image-grid');
+  const startBtn     = document.getElementById('startSimilarBtn');
+  const againBtn     = document.getElementById('playAgainBtn');
+  const homeBtn      = document.getElementById('backHomeBtn');
 
-  // زر البداية من شاشة القوانين
-  startSimilarBtn?.addEventListener('click', () => {
-    if (!picPlayers.length) {
+  // إعادة تهيئة الحالة لكل لعبة
+  function resetGame() {
+    clearAllTimersSim();
+    currentIndex = 0;
+    dupUrl       = '';
+    attempts     = 0;
+    roundResults = [];
+  }
+
+  // زرّ البدء
+  startBtn.addEventListener('click', () => {
+    if (picPlayers.length === 0) {
       alert('لا يوجد لاعبين!');
       return;
     }
-    // إعادة تهيئة
-    currentIndex   = 0;
-    dupUrl         = '';
-    attempts       = 0;
-    roundResults   = [];
+    resetGame();
     runTurn();
   });
 
-  // إعادة اللعب وعودة للقائمة
-  playAgainBtn.addEventListener('click', () => {
-    currentIndex   = 0;
-    dupUrl         = '';
-    attempts       = 0;
-    roundResults   = [];
+  // زر إعادة اللعب
+  againBtn.addEventListener('click', () => {
+    resetGame();
     runTurn();
-  }); 
-  backHomeBtn.addEventListener('click', () => showScreen('gamesScreen'));
+  });
 
-  // —— 2) الدور الحالي ——
+  // زر العودة للقائمة
+  homeBtn.addEventListener('click', () => showScreenSim('gamesScreen'));
+
+  // 1) دور اللاعب: عدّ تنازلي
   function runTurn() {
     attempts = 0;
     const name = picPlayers[currentIndex];
-    displayName.textContent = `📱 أعطِ الهاتف إلى: ${name}`;
+    displayName.textContent = `📱 دور: ${name}`;
 
-    showScreen('countdownScreen');
+    showScreenSim('countdownScreen');
     let count = 3;
     displayNum.textContent = count;
     displayNum.classList.add('pop');
-    const iv = setInterval(() => {
+
+    clearAllTimersSim();
+    imageCountdownInterval = setInterval(() => {
       count--;
       displayNum.classList.remove('pop');
       void displayNum.offsetWidth;
       displayNum.classList.add('pop');
       displayNum.textContent = count;
-      if (count === 0) {
-        clearInterval(iv);
+      if (count <= 0) {
+        clearInterval(imageCountdownInterval);
+        imageCountdownInterval = null;
         startImagePhase();
       }
     }, 1000);
   }
 
-  // —— 3) مرحلة الصور ——
+  // 2) عرض الصور
   function startImagePhase() {
-    showScreen('imagesScreen');
+    showScreenSim('imagesScreen');
     setupImages();
   }
 
   function setupImages() {
-    const start = Math.floor(Math.random() * 12) + 1;
-    const names = Array.from({ length: 24 }, (_, i) => `${start + i}.avif`);
-    const dupIdx = Math.floor(Math.random() * names.length);
-    dupUrl = `./public/${names[dupIdx]}`;
+    const start   = Math.floor(Math.random() * 12) + 1;
+    const names   = Array.from({ length: 24 }, (_, i) => `${start + i}.avif`);
+    const dupIdx  = Math.floor(Math.random() * names.length);
+    dupUrl        = `./public/${names[dupIdx]}`;
 
     const final = names.map(n => `./public/${n}`);
     for (let i = 0; i < 2; i++) {
       let pos;
-      do { pos = Math.floor(Math.random() * (final.length + 1)); }
-      while (final[pos] === dupUrl);
+      do {
+        pos = Math.floor(Math.random() * (final.length + 1));
+      } while (final[pos] === dupUrl);
       final.splice(pos, 0, dupUrl);
     }
-    final.splice(25);
+    final.length = 25;
     final.sort(() => Math.random() - 0.5);
     imageStartTime = Date.now();
 
@@ -91,31 +125,38 @@ document.addEventListener('DOMContentLoaded', () => {
       const card = document.createElement('div');
       card.className = 'image-card';
       card.innerHTML = `<img src="${src}" alt="">`;
-      card.addEventListener('click', () => onImageClick(src, card));
+      card.onclick   = () => onImageClick(src, card);
       grid.appendChild(card);
     });
   }
 
+  // 3) التعامل مع نقر الصور
   function onImageClick(src, card) {
     if (!dupUrl) return;
     const name = picPlayers[currentIndex];
+
     if (src === dupUrl) {
-      const elapsed = (Date.now() - imageStartTime) / 1000;
-      roundResults.push({ name, time: elapsed, attempts, points: 0 });
+      const elapsed = ((Date.now() - imageStartTime) / 1000).toFixed(2);
+      roundResults.push({
+        name,
+        time: parseFloat(elapsed),
+        attempts,
+        points: 0
+      });
       card.classList.add('matched');
       dupUrl = '';
-      setTimeout(nextPlayer, 500);
+      advanceTimeoutSim = setTimeout(nextPlayer, 500);
     } else {
       attempts++;
       card.classList.add('error');
       if (attempts >= 2) {
         roundResults.push({ name, time: 90, attempts, points: 0 });
-        setTimeout(nextPlayer, 500);
+        advanceTimeoutSim = setTimeout(nextPlayer, 500);
       }
     }
   }
 
-  // —— 4) التالي ——
+  // 4) التالي أو إنهاء الجولة
   function nextPlayer() {
     currentIndex++;
     if (currentIndex < picPlayers.length) {
@@ -125,41 +166,43 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // —— 5) النتائج ——
+  // 5) حساب وعرض النتائج
   function showResults() {
     roundResults.sort((a, b) => a.time - b.time);
     const ptsArr = [20, 10, 5];
-    roundResults.forEach((r, i) => r.points = (i < 3 ? ptsArr[i] : 0));
+    roundResults.forEach((r, i) => r.points = i < 3 ? ptsArr[i] : 0);
 
     picPlayers.forEach(p => {
-      const prev = parseInt(localStorage.getItem(p)) || 0;
+      const prev = +localStorage.getItem(p) || 0;
       const curr = roundResults.find(r => r.name === p)?.points || 0;
       localStorage.setItem(p, prev + curr);
     });
 
-    const totalResults = picPlayers
-      .map(p => ({ name: p, total: parseInt(localStorage.getItem(p)) || 0 }))
-      .sort((a, b) => b.total - a.total);
+    document.getElementById('roundResultsBody').innerHTML =
+      roundResults.map((r, i) => `
+        <tr>
+          <td>${i+1}</td>
+          <td>${r.name}</td>
+          <td>${r.time.toFixed(2)}</td>
+          <td>${r.attempts}</td>
+          <td>${r.points}</td>
+        </tr>
+      `).join('');
 
-    populateRoundResults(roundResults);
-    populateTotalResults(totalResults);
-    showScreen('similarResultsScreen');
-  }
+    const totalArr = picPlayers.map(p => ({
+      name:  p,
+      total: +localStorage.getItem(p) || 0
+    })).sort((a,b) => b.total - a.total);
 
-  function populateRoundResults(arr) {
-    document.getElementById('roundResultsBody').innerHTML = arr.map((r, i) => `
-      <tr>
-        <td>${i+1}</td><td>${r.name}</td><td>${r.time.toFixed(2)}</td>
-        <td>${r.attempts}</td><td>${r.points}</td>
-      </tr>
-    `).join('');
-  }
+    document.getElementById('totalResultsBody').innerHTML =
+      totalArr.map((r, i) => `
+        <tr>
+          <td>${i+1}</td>
+          <td>${r.name}</td>
+          <td>${r.total}</td>
+        </tr>
+      `).join('');
 
-  function populateTotalResults(arr) {
-    document.getElementById('totalResultsBody').innerHTML = arr.map((r, i) => `
-      <tr>
-        <td>${i+1}</td><td>${r.name}</td><td>${r.total}</td>
-      </tr>
-    `).join('');
+    showScreenSim('similarResultsScreen');
   }
 });

@@ -1545,3 +1545,65 @@ body {
   from { opacity: 0; transform: translateY(40px); }
   to { opacity: 1; transform: translateY(0); }
 }
+/* الشريط العلوي styling موجود سابقًا تحت .game-header */
+
+/* شريط منزلق */
+.slider-wrapper {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin: .5rem 0 1rem;
+}
+.slider-wrapper span {
+  width: 3rem;
+  text-align: center;
+  font-size: .9rem;
+  color: #333;
+}
+.slider-wrapper input[type=range] {
+  flex: 1;
+  -webkit-appearance: none;
+  height: 4px;
+  background: #eee;
+  border-radius: 2px;
+}
+.slider-wrapper input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px; height: 16px;
+  background: #6200EA;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* قائمة الاختيارات */
+.checkbox-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+.checkbox-list li {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .5rem 0;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+.checkbox-list input {
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+/* زر العمليات */
+.buttons-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+/* اجعل قائمة الاختيارات scrollable */
+.checkbox-list.scrollable {
+  max-height: 300px;      /* يمكنك تعديل الارتفاع حسب التصميم */
+  overflow-y: auto;
+  padding-right: 0.5rem;  /* مساحة ليُرى شريط التمرير */
+}
+

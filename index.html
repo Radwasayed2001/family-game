@@ -12,6 +12,79 @@
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
+  <section id="playerScreen" class="screen active">
+    <div class="container">
+      <h1 class="title">ألعاب العائلة</h1>
+      <div class="player-input">
+        <input type="text" id="playerName" placeholder="اسم اللاعب" maxlength="20">
+        <button id="addPlayer" class="btn btn-primary">إضافة</button>
+      </div>
+      <p class="player-counter"><span id="playerCount">0</span>/12</p>
+      
+      <div class="player-list-container">
+        <h2>قائمة اللاعبين</h2>
+        <ul id="playerList" class="player-list"></ul>
+      </div>
+      
+      <button id="startButton" class="btn btn-start" disabled>ابدأ</button>
+    </div>
+  </section>
+  <!-- Jawwal on Head Rules Screen -->
+<!-- Jawwal on Head Rules Screen -->
+<section id="jawwalRulesScreen" class="screen">
+  <header class="game-header">
+    <div class="container">
+      <h1 class="game-header-title">🎲 لعبة: الجوال على الرأس 📱</h1>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="game-info">
+      <h2 class="game-title">⚙️ إعدادات اللعبة</h2>
+
+      <!-- إعداد الوقت -->
+      <div class="info-section">
+        <h3>⏲️ زمن التحدي:</h3>
+        <div class="slider-wrapper">
+          <span>1:00</span>
+          <input id="jawwalTimeSlider" type="range" min="60" max="120" step="30" value="60">
+          <span>2:00</span>
+        </div>
+        <small>اختر دقيقة، دقيقة ونصف، أو دقيقتين</small>
+      </div>
+
+      <!-- قائمة الاختيارات -->
+      <div class="info-section">
+        <h3>☐ إضافة مجموعات كلمات:</h3>
+        <ul class="checkbox-list scrollable">
+          <li><input type="checkbox" id="opt-food" /> <label for="opt-food">أطعمة ومأكولات 🍲🍛 </label></li>
+          <li><input type="checkbox" id="opt-places" /> <label for="opt-places">أماكن 🎡🏰🏥 </label></li>
+          <li><input type="checkbox" id="opt-animals" /> <label for="opt-animals">حيوانات 🐟🐍🐯 </label></li>
+          <li><input type="checkbox" id="opt-clothes" /> <label for="opt-clothes">ملابس 👖👠🧢 </label></li>
+          <li><input type="checkbox" id="opt-produce" /> <label for="opt-produce">خضار وفواكه 🥬🍉🍓 </label></li>
+          <li><input type="checkbox" id="opt-drinks" /> <label for="opt-drinks">مشروبات 🧃☕🥛 </label></li>
+          <li><input type="checkbox" id="opt-household" /> <label for="opt-household">أشياء منزلية 🚽🔪🛋️ </label></li>
+          <li><input type="checkbox" id="opt-vehicles" /> <label for="opt-vehicles">مركبات ومواصلات 🚓🚎✈️ </label></li>
+          <li><input type="checkbox" id="opt-cities" /> <label for="opt-cities">مدن 🗼🕋🗽 </label></li>
+          <li><input type="checkbox" id="opt-cartoons" /> <label for="opt-cartoons">شخصيات كرتونية 👸🎞️👑 </label></li>
+          <li><input type="checkbox" id="opt-games" /> <label for="opt-games">ألعاب 🎳♟️🎲 </label></li>
+          <li><input type="checkbox" id="opt-jobs" /> <label for="opt-jobs">وظائف 👦👮👷 </label></li>
+          <li><input type="checkbox" id="opt-sports" /> <label for="opt-sports">رياضات ⚽🏀🤸 </label></li>
+          <li><input type="checkbox" id="opt-langs" /> <label for="opt-langs">لغات ولهجات 🗣️🌍 </label></li>
+          <li><input type="checkbox" id="opt-countries" /> <label for="opt-countries">دول 🇸🇦🇮🇶🇹🇳 </label></li>
+        </ul>
+      </div>
+
+      <!-- زر البداية -->
+      <div class="buttons-row">
+        <button id="backToGamesBtn" class="btn btn-secondary">🔙 العودة للقائمة</button>
+        <button id="startJawwalBtn" class="btn btn-primary">ابدأ ▶️</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
   <section id="similarPicturesScreen" class="screen">
     <header class="game-header">
       <div class="container">
@@ -139,23 +212,7 @@
     </div>
   </section>
   <!-- Player Input Screen -->
-  <section id="playerScreen" class="screen active">
-    <div class="container">
-      <h1 class="title">ألعاب العائلة</h1>
-      <div class="player-input">
-        <input type="text" id="playerName" placeholder="اسم اللاعب" maxlength="20">
-        <button id="addPlayer" class="btn btn-primary">إضافة</button>
-      </div>
-      <p class="player-counter"><span id="playerCount">0</span>/12</p>
-      
-      <div class="player-list-container">
-        <h2>قائمة اللاعبين</h2>
-        <ul id="playerList" class="player-list"></ul>
-      </div>
-      
-      <button id="startButton" class="btn btn-start" disabled>ابدأ</button>
-    </div>
-  </section>
+  
 <!-- Boxes Game Rules Screen -->
 <section id="boxesRulesScreen" style="padding-bottom: 3rem !important;" class="screen">
   <header class="game-header">
