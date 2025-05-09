@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   const playersJawwal = loadPlayers();
-  let settingsJawwal       = { time: 3, categories: [] };
+  let settingsJawwal       = { time: 60, categories: [] };
   let order = [], idx = 0;
   let currentPlayerJawwal  = 0, correctCount = 0;
   let timerIdJ = null, wordTimerId = null;
