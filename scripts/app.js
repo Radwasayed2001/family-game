@@ -103,7 +103,7 @@ function addPlayer() {
   const name = playerNameInput.value.trim();
   const { isValid, error } = validatePlayerName(name, players);
   if (!isValid) {
-    alert(error);
+    showAlert('error',error);
     return;
   }
   players.push(name);

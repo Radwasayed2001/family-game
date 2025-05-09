@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   startBtn.addEventListener('click', () => {
-    if (playersBoxes.length < 3) return alert('يحتاج 3 لاعبين على الأقل');
+    if (playersBoxes.length < 3) return showAlert('error','يحتاج 3 لاعبين على الأقل');
     resetGame();
     playTurn();
   });

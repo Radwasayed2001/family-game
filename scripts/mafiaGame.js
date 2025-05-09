@@ -21,7 +21,7 @@ function startMafiaGame() {
   cnum = originalPlayers.length - Math.floor(playersMafia.length/4) - 2;
 
   if (originalPlayers.length < 5) {
-    alert('لعبة المافيا تحتاج على الأقل 5 لاعبين.');
+    showAlert('error', 'لعبة المافيا تحتاج على الأقل 5 لاعبين.');
     return;
   }
     // reset state
@@ -215,7 +215,7 @@ function roleShown(role) {
     // mafiaCurrentPlayerIndex++; 
     if (mafiaCurrentPlayerIndex > 0 && mafiaCurrentPlayerIndex <= playersMafia.length) {
       if (!flag && mafiaRoles[playersMafia[mafiaCurrentPlayerIndex -1]] === 'محقق') {
-        alert('Please make a choice before confirming.');
+        showAlert('error','Please make a choice before confirming.');
         flag = false;
         mafiaCurrentPlayerIndex-=2;
 
@@ -231,7 +231,7 @@ function roleShown(role) {
         // }
   
       } else if (!flag && mafiaRoles[playersMafia[mafiaCurrentPlayerIndex -1]] === 'مافيا') {
-        alert('Please make a choice before confirming.');
+        showAlert('error','Please make a choice before confirming.');
         flag = false;
         mafiaCurrentPlayerIndex-=2;
 
@@ -248,7 +248,7 @@ function roleShown(role) {
   
   
       } else if (!flag && mafiaRoles[playersMafia[mafiaCurrentPlayerIndex -1]] === 'طبيب') {
-        alert('Please make a choice before confirming.d');
+        showAlert('error','Please make a choice before confirming.d');
         flag = false;
         mafiaCurrentPlayerIndex-=2;
         showQuestionVote(mafiaRoles[playersMafia[mafiaCurrentPlayerIndex - 1]])
@@ -290,7 +290,7 @@ function roleShown(role) {
     // mafiaCurrentPlayerIndex++; 
     if (mafiaCurrentPlayerIndex > 0 && mafiaCurrentPlayerIndex <= playersMafia.length) {
       if (!flag && mafiaRoles[playersMafia[mafiaCurrentPlayerIndex -1]] === 'محقق') {
-        alert('Please make a choice before confirming.');
+        showAlert('error','Please make a choice before confirming.');
         flag = false;
         mafiaCurrentPlayerIndex-=2;
 
@@ -306,7 +306,7 @@ function roleShown(role) {
         // }
   
       } else if (!flag && mafiaRoles[playersMafia[mafiaCurrentPlayerIndex -1]] === 'مافيا') {
-        alert('Please make a choice before confirming.');
+        showAlert('error','Please make a choice before confirming.');
         flag = false;
         mafiaCurrentPlayerIndex-=2;
 
@@ -323,7 +323,7 @@ function roleShown(role) {
   
   
       } else if (!flag && mafiaRoles[playersMafia[mafiaCurrentPlayerIndex -1]] === 'طبيب') {
-        alert('Please make a choice before confirming.d');
+        showAlert('error','Please make a choice before confirming.d');
         flag = false;
         mafiaCurrentPlayerIndex-=2;
         showQuestionVoteMorning(mafiaRoles[playersMafia[mafiaCurrentPlayerIndex - 1]])
@@ -508,7 +508,7 @@ function roleShown(role) {
         btn.value = p;
         btn.addEventListener('click', () => {
           if (mafiaRoles[p] === 'مافيا') {
-            alert('لا يمكنك التصويت ضد زميلك في المافيا!');
+            showAlert('warning','لا يمكنك التصويت ضد زميلك في المافيا!');
 
           } else {
             console.log(`المافيا ${player} اختار قتل:`, p);
@@ -539,7 +539,7 @@ function roleShown(role) {
         btn.textContent = p;
         btn.addEventListener('click', () => {
           btn.value = p;
-          alert(btn.value + " : " + mafiaRoles[btn.value]);
+          showAlert('info',btn.value + " : " + mafiaRoles[btn.value]);
 
           console.log(`المحقق ${player} تحقّق من:`, p, '→ دورهم:', mafiaRoles[p]);
           document.querySelectorAll('#detectiveChoices .choice-btn')

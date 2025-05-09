@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const pool = selectedCategories.flatMap(cat => allQuestions[cat] || []);
 
     if (pool.length === 0) {
-      alert('اختر على الأقل تصنيف واحد!');
+      showAlert('warning', 'اختر على الأقل تصنيف واحد!');
       return;
     }
 
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     const selected = document.querySelector('input[name="vote"]:checked');
     if (!selected) {
-      alert('اختر لاعبًا للتصويت!');
+      showAlert('warning', 'اختر لاعبًا للتصويت!');
       return;
     }
 
@@ -131,3 +131,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 });
+function showAlert(type, message, duration = 4000) {
+  const icons = {
+    success: '✅',
+    info:    'ℹ️',
+    warning: '⚠️',
+    error:   '❌'
+  };
+  const alert = document.createElement('div');
+  alert.className = `alert alert-${type}`;
+  alert.innerHTML = `
+    <span class="icon">${icons[type]}</span>
+    <div class="message">${message}</div>
+    <button class="close-btn">&times;</button>
+  `;
+  const container = document.getElementById('alertContainer');
+  container.append(alert);
+
+  // Close on click:
+  alert.querySelector('.close-btn').onclick = () => dismiss(alert);
+
+  // Auto dismiss:
+  setTimeout(() => dismiss(alert), duration);
+}
+
+function dismiss(el) {
+  el.classList.add('exit');
+  el.addEventListener('animationend', () => el.remove());
+}

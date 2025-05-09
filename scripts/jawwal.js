@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   const playersJawwal = loadPlayers();
-  let settingsJawwal       = { time: 60, categories: [] };
+  let settingsJawwal       = { time: 3, categories: [] };
   let order = [], idx = 0;
   let currentPlayerJawwal  = 0, correctCount = 0;
   let timerIdJ = null, wordTimerId = null;
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
   startBtnJ.addEventListener('click', () => {
     settingsJawwal.categories = catsJ.filter(c => c.checked).map(c => c.value);
     if (!settingsJawwal.categories.length) {
-       alert('اختر مجموعة واحدة على الأقل!');
+       showAlert('warning','اختر مجموعة واحدة على الأقل!');
        return;
     }
     order = [];
