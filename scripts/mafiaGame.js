@@ -1,4 +1,5 @@
 let mafiaCurrentPlayerIndex = 0;
+let playersMafia = loadPlayers();
 let mafiaQuestionPairs = [];
 let mafiaCurrentQuestionIndex = 0;
 let mafiaVotes = {};
@@ -8,16 +9,16 @@ let flag = false; // Flag to track if a choice has been made
 let NightVotes = {};
 let pnum = 1;
 let mnum = 1;
-let mafianum = Math.floor(players.length/4);
-let cnum = players.length - Math.floor(players.length/4) - 2;
-let originalPlayers = [...players];
+let mafianum = Math.floor(playersMafia.length/4);
+let cnum = playersMafia.length - Math.floor(playersMafia.length/4) - 2;
+let originalPlayers = loadPlayers();
 function startMafiaGame() {
   originalPlayers = loadPlayers();
-  players = loadPlayers();
+  playersMafia = loadPlayers();
   pnum = 1;
   mnum = 1;
   mafianum = Math.floor(originalPlayers.length/4);
-  cnum = originalPlayers.length - Math.floor(players.length/4) - 2;
+  cnum = originalPlayers.length - Math.floor(playersMafia.length/4) - 2;
 
   if (originalPlayers.length < 5) {
     alert('لعبة المافيا تحتاج على الأقل 5 لاعبين.');
@@ -29,12 +30,12 @@ function startMafiaGame() {
     mafiaCurrentQuestionIndex = 0;
     mafiaVotes = {};
     mafiaScores = {};
-    players = [...originalPlayers];
-    // how many mafia members: one for every 4 players (rounded down)
-    const mafiaCount = Math.floor(players.length / 4);
+    playersMafia = [...originalPlayers];
+    // how many mafia members: one for every 4 playersMafia (rounded down)
+    const mafiaCount = Math.floor(playersMafia.length / 4);
   
-    // make a shuffled copy of players
-    const shuffled = [...players].sort(() => Math.random() - 0.5);
+    // make a shuffled copy of playersMafia
+    const shuffled = [...playersMafia].sort(() => Math.random() - 0.5);
   
     // pick mafia members
     const mafiaMembers = shuffled.slice(0, mafiaCount);
@@ -58,13 +59,13 @@ function startMafiaGame() {
     showMafiaRoleRevealScreen();
   }
 function showMafiaRoleRevealScreen() {
-  document.getElementById('mafiaPlayerConfirmButton').textContent = `أنا ${players[mafiaCurrentPlayerIndex]}`;
-  document.getElementById('playernameMafia').textContent = `${players[mafiaCurrentPlayerIndex]}`;
+  document.getElementById('mafiaPlayerConfirmButton').textContent = `أنا ${playersMafia[mafiaCurrentPlayerIndex]}`;
+  document.getElementById('playernameMafia').textContent = `${playersMafia[mafiaCurrentPlayerIndex]}`;
   showScreen('mafiaWarningScreen');
 }
 
 function showRole() {
-    const player = players[mafiaCurrentPlayerIndex];
+    const player = playersMafia[mafiaCurrentPlayerIndex];
   const content = document.getElementById('roleContent');
   document.querySelector('#roleScreen .player-name').textContent = player;
 
@@ -83,7 +84,7 @@ function showRole() {
     return;
 }
 function roleShown(role) {
-  const player = players[mafiaCurrentPlayerIndex];
+  const player = playersMafia[mafiaCurrentPlayerIndex];
   const content = document.getElementById('roleContent');
 
   if (role === 'مافيا') {
@@ -145,7 +146,7 @@ function roleShown(role) {
       el.textContent = cnum;
     });
     mafiaCurrentPlayerIndex++;
-    if (mafiaCurrentPlayerIndex < players.length) {
+    if (mafiaCurrentPlayerIndex < playersMafia.length) {
         showMafiaRoleRevealScreen();
     } else {
       
@@ -169,7 +170,7 @@ function roleShown(role) {
       el.textContent = cnum;
     });
     mafiaCurrentPlayerIndex++;
-    if (mafiaCurrentPlayerIndex < players.length) {
+    if (mafiaCurrentPlayerIndex < playersMafia.length) {
         showMafiaRoleRevealScreen();
     } else {
       
@@ -210,18 +211,18 @@ function roleShown(role) {
   }
   function showVote(){
     // mafiaCurrentPlayerIndex = 0;
-  // document.getElementById('playernameMafia').textContent = `${players[mafiaCurrentPlayerIndex]}`;
+  // document.getElementById('playernameMafia').textContent = `${playersMafia[mafiaCurrentPlayerIndex]}`;
     // mafiaCurrentPlayerIndex++; 
-    if (mafiaCurrentPlayerIndex > 0 && mafiaCurrentPlayerIndex <= players.length) {
-      if (!flag && mafiaRoles[players[mafiaCurrentPlayerIndex -1]] === 'محقق') {
+    if (mafiaCurrentPlayerIndex > 0 && mafiaCurrentPlayerIndex <= playersMafia.length) {
+      if (!flag && mafiaRoles[playersMafia[mafiaCurrentPlayerIndex -1]] === 'محقق') {
         alert('Please make a choice before confirming.');
         flag = false;
         mafiaCurrentPlayerIndex-=2;
 
-        showQuestionVote(mafiaRoles[players[mafiaCurrentPlayerIndex - 1]])
+        showQuestionVote(mafiaRoles[playersMafia[mafiaCurrentPlayerIndex - 1]])
 
 
-        // if (mafiaCurrentPlayerIndex < players.length) {
+        // if (mafiaCurrentPlayerIndex < playersMafia.length) {
 
         //   showScreen('mafiaVoting');
     
@@ -229,15 +230,15 @@ function roleShown(role) {
         //   console.log("any")
         // }
   
-      } else if (!flag && mafiaRoles[players[mafiaCurrentPlayerIndex -1]] === 'مافيا') {
+      } else if (!flag && mafiaRoles[playersMafia[mafiaCurrentPlayerIndex -1]] === 'مافيا') {
         alert('Please make a choice before confirming.');
         flag = false;
         mafiaCurrentPlayerIndex-=2;
 
-        showQuestionVote(mafiaRoles[players[mafiaCurrentPlayerIndex - 1]])
+        showQuestionVote(mafiaRoles[playersMafia[mafiaCurrentPlayerIndex - 1]])
 
 
-        // if (mafiaCurrentPlayerIndex < players.length) {
+        // if (mafiaCurrentPlayerIndex < playersMafia.length) {
 
         //   showScreen('mafiaVoting');
     
@@ -246,12 +247,12 @@ function roleShown(role) {
         // }
   
   
-      } else if (!flag && mafiaRoles[players[mafiaCurrentPlayerIndex -1]] === 'طبيب') {
+      } else if (!flag && mafiaRoles[playersMafia[mafiaCurrentPlayerIndex -1]] === 'طبيب') {
         alert('Please make a choice before confirming.d');
         flag = false;
         mafiaCurrentPlayerIndex-=2;
-        showQuestionVote(mafiaRoles[players[mafiaCurrentPlayerIndex - 1]])
-        // if (mafiaCurrentPlayerIndex < players.length) {
+        showQuestionVote(mafiaRoles[playersMafia[mafiaCurrentPlayerIndex - 1]])
+        // if (mafiaCurrentPlayerIndex < playersMafia.length) {
 
         //   showScreen('mafiaVoting');
     
@@ -263,7 +264,7 @@ function roleShown(role) {
       }
        else {
         // alert('كله تمام');
-        if (mafiaCurrentPlayerIndex < players.length) {
+        if (mafiaCurrentPlayerIndex < playersMafia.length) {
 
           showScreen('mafiaVoting');
     
@@ -272,9 +273,9 @@ function roleShown(role) {
         }
       }
     }
-  document.getElementById('mafiaPlayerVoteButton').textContent = `${players[mafiaCurrentPlayerIndex]}`;
+  document.getElementById('mafiaPlayerVoteButton').textContent = `${playersMafia[mafiaCurrentPlayerIndex]}`;
 
-    if (mafiaCurrentPlayerIndex < players.length) {
+    if (mafiaCurrentPlayerIndex < playersMafia.length) {
 
       showScreen('mafiaVoting');
 
@@ -285,18 +286,18 @@ function roleShown(role) {
   }
   function showVoteMorning(){
     // mafiaCurrentPlayerIndex = 0;
-  // document.getElementById('playernameMafia').textContent = `${players[mafiaCurrentPlayerIndex]}`;
+  // document.getElementById('playernameMafia').textContent = `${playersMafia[mafiaCurrentPlayerIndex]}`;
     // mafiaCurrentPlayerIndex++; 
-    if (mafiaCurrentPlayerIndex > 0 && mafiaCurrentPlayerIndex <= players.length) {
-      if (!flag && mafiaRoles[players[mafiaCurrentPlayerIndex -1]] === 'محقق') {
+    if (mafiaCurrentPlayerIndex > 0 && mafiaCurrentPlayerIndex <= playersMafia.length) {
+      if (!flag && mafiaRoles[playersMafia[mafiaCurrentPlayerIndex -1]] === 'محقق') {
         alert('Please make a choice before confirming.');
         flag = false;
         mafiaCurrentPlayerIndex-=2;
 
-        showQuestionVoteMorning(mafiaRoles[players[mafiaCurrentPlayerIndex - 1]])
+        showQuestionVoteMorning(mafiaRoles[playersMafia[mafiaCurrentPlayerIndex - 1]])
 
 
-        // if (mafiaCurrentPlayerIndex < players.length) {
+        // if (mafiaCurrentPlayerIndex < playersMafia.length) {
 
         //   showScreen('mafiaVoting');
     
@@ -304,15 +305,15 @@ function roleShown(role) {
         //   console.log("any")
         // }
   
-      } else if (!flag && mafiaRoles[players[mafiaCurrentPlayerIndex -1]] === 'مافيا') {
+      } else if (!flag && mafiaRoles[playersMafia[mafiaCurrentPlayerIndex -1]] === 'مافيا') {
         alert('Please make a choice before confirming.');
         flag = false;
         mafiaCurrentPlayerIndex-=2;
 
-        showQuestionVoteMorning(mafiaRoles[players[mafiaCurrentPlayerIndex - 1]])
+        showQuestionVoteMorning(mafiaRoles[playersMafia[mafiaCurrentPlayerIndex - 1]])
 
 
-        // if (mafiaCurrentPlayerIndex < players.length) {
+        // if (mafiaCurrentPlayerIndex < playersMafia.length) {
 
         //   showScreen('mafiaVoting');
     
@@ -321,12 +322,12 @@ function roleShown(role) {
         // }
   
   
-      } else if (!flag && mafiaRoles[players[mafiaCurrentPlayerIndex -1]] === 'طبيب') {
+      } else if (!flag && mafiaRoles[playersMafia[mafiaCurrentPlayerIndex -1]] === 'طبيب') {
         alert('Please make a choice before confirming.d');
         flag = false;
         mafiaCurrentPlayerIndex-=2;
-        showQuestionVoteMorning(mafiaRoles[players[mafiaCurrentPlayerIndex - 1]])
-        // if (mafiaCurrentPlayerIndex < players.length) {
+        showQuestionVoteMorning(mafiaRoles[playersMafia[mafiaCurrentPlayerIndex - 1]])
+        // if (mafiaCurrentPlayerIndex < playersMafia.length) {
 
         //   showScreen('mafiaVoting');
     
@@ -338,7 +339,7 @@ function roleShown(role) {
       }
        else {
         // alert('كله تمام');
-        if (mafiaCurrentPlayerIndex < players.length) {
+        if (mafiaCurrentPlayerIndex < playersMafia.length) {
 
           showScreen('mafiaVotingMorning');
     
@@ -347,9 +348,9 @@ function roleShown(role) {
         }
       }
     }
-  document.getElementById('mafiaPlayerVoteButtonMorning').textContent = `${players[mafiaCurrentPlayerIndex]}`;
+  document.getElementById('mafiaPlayerVoteButtonMorning').textContent = `${playersMafia[mafiaCurrentPlayerIndex]}`;
 
-    if (mafiaCurrentPlayerIndex < players.length) {
+    if (mafiaCurrentPlayerIndex < playersMafia.length) {
 
       showScreen('mafiaVotingMorning');
 
@@ -360,11 +361,11 @@ function roleShown(role) {
   }
   function showQuestion(){
     flag = false;
-    document.getElementById('player-name-vote').textContent = `${players[mafiaCurrentPlayerIndex]}`;
+    document.getElementById('player-name-vote').textContent = `${playersMafia[mafiaCurrentPlayerIndex]}`;
     
-    if (mafiaCurrentPlayerIndex < players.length) {
+    if (mafiaCurrentPlayerIndex < playersMafia.length) {
       
-    const player = players[mafiaCurrentPlayerIndex];
+    const player = playersMafia[mafiaCurrentPlayerIndex];
   const content = document.getElementById('VoteContent');
   document.querySelector('#VoteRoleScreen .player-name').textContent = player;
 
@@ -389,11 +390,11 @@ function roleShown(role) {
   }
   function showQuestionMorning(){
     flag = false;
-    document.getElementById('player-name-vote-morning').textContent = `${players[mafiaCurrentPlayerIndex]}`;
+    document.getElementById('player-name-vote-morning').textContent = `${playersMafia[mafiaCurrentPlayerIndex]}`;
     
-    if (mafiaCurrentPlayerIndex < players.length) {
+    if (mafiaCurrentPlayerIndex < playersMafia.length) {
       
-    const player = players[mafiaCurrentPlayerIndex];
+    const player = playersMafia[mafiaCurrentPlayerIndex];
   const content = document.getElementById('VoteContentMorning');
   document.querySelector('#VoteRoleScreenMorning .player-name').textContent = player;
 
@@ -418,11 +419,11 @@ function roleShown(role) {
   }
   function showQuestionVoteMorning(){
     flag = false;
-    document.getElementById('player-name-vote').textContent = `${players[mafiaCurrentPlayerIndex]}`;
+    document.getElementById('player-name-vote').textContent = `${playersMafia[mafiaCurrentPlayerIndex]}`;
     
-    if (mafiaCurrentPlayerIndex < players.length) {
+    if (mafiaCurrentPlayerIndex < playersMafia.length) {
       
-    const player = players[mafiaCurrentPlayerIndex];
+    const player = playersMafia[mafiaCurrentPlayerIndex];
   const content = document.getElementById('VoteContent');
   document.querySelector('#VoteRoleScreen .player-name').textContent = player;
 
@@ -446,7 +447,7 @@ function roleShown(role) {
     
   }
   function showQuestionVote(role) {
-  const player = players[mafiaCurrentPlayerIndex];
+  const player = playersMafia[mafiaCurrentPlayerIndex];
   const content = document.getElementById('VoteContent');
   const confirmBtn = document.getElementById('VoteConfirmButton');
 
@@ -470,7 +471,7 @@ function roleShown(role) {
       <div id="doctorChoices" class="choice-list"></div>
     `;
     const list = document.getElementById('doctorChoices');
-    players
+    playersMafia
       .forEach(p => {
         const btn = document.createElement('button');
         btn.className = 'btn btn-secondary choice-btn';
@@ -498,7 +499,7 @@ function roleShown(role) {
       <div id="mafiaChoices" class="choice-list"></div>
     `;
     const list = document.getElementById('mafiaChoices');
-    players
+    playersMafia
       .filter(p => p !== player)
       .forEach(p => {
         const btn = document.createElement('button');
@@ -530,7 +531,7 @@ function roleShown(role) {
       <div id="detectiveChoices" class="choice-list"></div>
     `;
     const list = document.getElementById('detectiveChoices');
-    players
+    playersMafia
       .filter(p => p !== player)
       .forEach(p => {
         const btn = document.createElement('button');
@@ -556,7 +557,7 @@ function roleShown(role) {
 
 }
 function showQuestionVoteMorning(role) {
-  const player = players[mafiaCurrentPlayerIndex];
+  const player = playersMafia[mafiaCurrentPlayerIndex];
   const content = document.getElementById('VoteContentMorning');
   const confirmBtn = document.getElementById('VoteConfirmButtonMorning');
 
@@ -566,7 +567,7 @@ function showQuestionVoteMorning(role) {
       <div id="mafiaChoicesMorning" class="choice-list"></div>
     `;
     const list = document.getElementById('mafiaChoicesMorning');
-    players
+    playersMafia
       .filter(p => p !== player)
       .forEach(p => {
         const btn = document.createElement('button');
@@ -602,12 +603,12 @@ document.getElementById('showNightRes').addEventListener('click', ()=>{
     }
   }
   console.log(maxPlayer);
-  console.log(max + " : mafia number = " + Math.floor(players.length/4));
+  console.log(max + " : mafia number = " + Math.floor(playersMafia.length/4));
   
   if (Math.floor(originalPlayers.length/4) == 1 && max == 1) {
     if(maxPlayer !== NightVotes["doctor"]){
       document.getElementById("nightResult").textContent = `تم استبعاد ${maxPlayer} من اللعبة`;
-      maxPlayer&&players.splice(players.indexOf(maxPlayer), 1);
+      maxPlayer&&playersMafia.splice(playersMafia.indexOf(maxPlayer), 1);
       if(mafiaRoles[maxPlayer] === "مافيا"){
         mafianum--;
     }
@@ -663,7 +664,7 @@ document.getElementById('showNightRes').addEventListener('click', ()=>{
     document.querySelectorAll('.cnum').forEach(el => {
       el.textContent = cnum;
     });
-      maxPlayer&&players.splice(players.indexOf(maxPlayer), 1);
+      maxPlayer&&playersMafia.splice(playersMafia.indexOf(maxPlayer), 1);
     }
     else
       document.getElementById("nightResult").textContent = "لم يتم استبعاد أحد من اللعبة";
@@ -677,10 +678,20 @@ document.getElementById('showNightRes').addEventListener('click', ()=>{
   document.getElementById("startMorn").style.display = 'block';
 
   if(mafianum == 0){
+    originalPlayers.forEach(player => {
+      if (mafiaRoles[player] !== 'مافيا'){
+        localStorage.setItem(player, localStorage.getItem(player)*1 +70);
+      }
+    });
     showScreen("finalCitizen");
     return;
   }
   if(!mnum && !pnum && !cnum ){
+    originalPlayers.forEach(player => {
+      if (mafiaRoles[player] === 'مافيا'){
+        localStorage.setItem(player, localStorage.getItem(player)*1 +70);
+      }
+    });
     showScreen("finalMafia");
     return;
   }
@@ -700,7 +711,7 @@ document.getElementById('showMorningRes').addEventListener('click', ()=>{
   }
   
   console.log(maxPlayer);
-  console.log(max + " : mafia number = " + Math.floor(players.length/4));
+  console.log(max + " : mafia number = " + Math.floor(playersMafia.length/4));
   if(equality == max ){
     document.getElementById("morningResult").textContent = "لم يتم استبعاد أحد من اللعبة بسبب تساوي الأصوات";
 
@@ -732,7 +743,7 @@ document.getElementById('showMorningRes').addEventListener('click', ()=>{
     document.querySelectorAll('.cnum').forEach(el => {
       el.textContent = cnum;
     });
-      maxPlayer&&players.splice(players.indexOf(maxPlayer), 1);
+      maxPlayer&&playersMafia.splice(playersMafia.indexOf(maxPlayer), 1);
   }
     else {
     document.getElementById("morningResult").textContent = "لم يتم استبعاد أحد من اللعبة";
@@ -743,21 +754,23 @@ document.getElementById('showMorningRes').addEventListener('click', ()=>{
   document.getElementById("startNight").style.display = 'block';
 
   if(mafianum == 0){
-    showScreen("finalCitizen");
     originalPlayers.forEach(player => {
       if (mafiaRoles[player] !== 'مافيا'){
         localStorage.setItem(player, localStorage.getItem(player)*1 +70);
       }
     });
+    showScreen("finalCitizen");
+    
     return;
   }
   if(!mnum && !pnum && !cnum ){
-    showScreen("finalMafia");
     originalPlayers.forEach(player => {
       if (mafiaRoles[player] === 'مافيا'){
         localStorage.setItem(player, localStorage.getItem(player)*1 +70);
       }
     });
+    showScreen("finalMafia");
+    
     return;
   }
 });
