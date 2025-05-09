@@ -55,6 +55,13 @@ const GAMES = [
     description: ''
   },
   {
+    id: 'treasure',
+    name: 'الكنز',
+    minPlayers: 3,
+    maxPlayers: 12,
+    description: ''
+  },
+  {
     id: 'balance',
     name: 'التوازن',
     minPlayers: 3,

@@ -58,9 +58,12 @@ function setupEventListeners() {
     if (card && getComputedStyle(card).opacity === '1') {
       if (card.dataset.gameId === 'outOfTopic') showScreen('outOfTopicScreen');
       else if (card.dataset.gameId === 'mafia') showScreen('mafiaScreen');
-      else if (card.dataset.gameId === 'phoneOnHead') showScreen('jawwalRulesScreen');
+      else if (card.dataset.gameId === 'phoneOnHead') showScreen('headsUpSettings');
       else if (card.dataset.gameId === 'similarPictures') showScreen('similarPicturesScreen');
       else if (card.dataset.gameId === 'boxes') showScreen('boxesRulesScreen');
+      else if (card.dataset.gameId === 'whoAmongUs') showScreen('whoRulesScreen');
+      else if (card.dataset.gameId === 'fastest') showScreen('fastRulesScreen');
+      else if (card.dataset.gameId === 'treasure') showScreen('treasureRulesScreen');
     }
   });
   submitGuessButton.addEventListener('click', calculateResults);
@@ -105,10 +108,17 @@ function addPlayer() {
   }
   players.push(name);
   savePlayers(players);
-  // re‐render and then reload everything
+
+  // تنظيف localStorage من كل المفاتيح سوى 'players'
+  Object.keys(localStorage).forEach(key => {
+    if (key !== 'players') {
+      localStorage.removeItem(key);
+    }
+  });
+
+  // إعادة الرسم وإعادة تحميل التطبيق
   renderPlayerList(players);
   clearPlayerInput();
-  // give the browser a tiny moment to update the UI (optional)
   setTimeout(() => location.reload(), 0);
 }
 
@@ -118,10 +128,18 @@ function addPlayer() {
 function removePlayer(index) {
   players.splice(index, 1);
   savePlayers(players);
-  // re‐render and then reload everything
+
+  // تنظيف localStorage من كل المفاتيح سوى 'players'
+  Object.keys(localStorage).forEach(key => {
+    if (key !== 'players') {
+      localStorage.removeItem(key);
+    }
+  });
+
   renderPlayerList(players);
   setTimeout(() => location.reload(), 0);
 }
+
 
 
 /**

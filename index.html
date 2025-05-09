@@ -1,810 +1,1366 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ألعاب العائلة</title>
-  <link rel="stylesheet" href="styles/reset.css">
-  <link rel="stylesheet" href="styles/main.css">
-  <link rel="stylesheet" href="styles/animations.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
-</head>
-<body>
-  <section id="playerScreen" class="screen active">
-    <div class="container">
-      <h1 class="title">ألعاب العائلة</h1>
-      <div class="player-input">
-        <input type="text" id="playerName" placeholder="اسم اللاعب" maxlength="20">
-        <button id="addPlayer" class="btn btn-primary">إضافة</button>
-      </div>
-      <p class="player-counter"><span id="playerCount">0</span>/12</p>
-      
-      <div class="player-list-container">
-        <h2>قائمة اللاعبين</h2>
-        <ul id="playerList" class="player-list"></ul>
-      </div>
-      
-      <button id="startButton" class="btn btn-start" disabled>ابدأ</button>
-    </div>
-  </section>
-  <!-- Jawwal on Head Rules Screen -->
-<!-- Jawwal on Head Rules Screen -->
-<section id="jawwalRulesScreen" class="screen">
-  <header class="game-header">
-    <div class="container">
-      <h1 class="game-header-title">🎲 لعبة: الجوال على الرأس 📱</h1>
-    </div>
-  </header>
-
-  <div class="container">
-    <div class="game-info">
-      <h2 class="game-title">⚙️ إعدادات اللعبة</h2>
-
-      <!-- إعداد الوقت -->
-      <div class="info-section">
-        <h3>⏲️ زمن التحدي:</h3>
-        <div class="slider-wrapper">
-          <span>1:00</span>
-          <input id="jawwalTimeSlider" type="range" min="60" max="120" step="30" value="60">
-          <span>2:00</span>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ألعاب العائلة</title>
+    <link rel="stylesheet" href="styles/reset.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/animations.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap"
+      rel="stylesheet">
+  </head>
+  <body>
+    <section id="playerScreen" class="screen active">
+      <div class="container">
+        <h1 class="title">ألعاب العائلة</h1>
+        <div class="player-input">
+          <input type="text" id="playerName" placeholder="اسم اللاعب"
+            maxlength="20">
+          <button id="addPlayer" class="btn btn-primary">إضافة</button>
         </div>
-        <small>اختر دقيقة، دقيقة ونصف، أو دقيقتين</small>
-      </div>
+        <p class="player-counter"><span id="playerCount">0</span>/12</p>
 
-      <!-- قائمة الاختيارات -->
-      <div class="info-section">
-        <h3>☐ إضافة مجموعات كلمات:</h3>
-        <ul class="checkbox-list scrollable">
-          <li><input type="checkbox" id="opt-food" /> <label for="opt-food">أطعمة ومأكولات 🍲🍛 </label></li>
-          <li><input type="checkbox" id="opt-places" /> <label for="opt-places">أماكن 🎡🏰🏥 </label></li>
-          <li><input type="checkbox" id="opt-animals" /> <label for="opt-animals">حيوانات 🐟🐍🐯 </label></li>
-          <li><input type="checkbox" id="opt-clothes" /> <label for="opt-clothes">ملابس 👖👠🧢 </label></li>
-          <li><input type="checkbox" id="opt-produce" /> <label for="opt-produce">خضار وفواكه 🥬🍉🍓 </label></li>
-          <li><input type="checkbox" id="opt-drinks" /> <label for="opt-drinks">مشروبات 🧃☕🥛 </label></li>
-          <li><input type="checkbox" id="opt-household" /> <label for="opt-household">أشياء منزلية 🚽🔪🛋️ </label></li>
-          <li><input type="checkbox" id="opt-vehicles" /> <label for="opt-vehicles">مركبات ومواصلات 🚓🚎✈️ </label></li>
-          <li><input type="checkbox" id="opt-cities" /> <label for="opt-cities">مدن 🗼🕋🗽 </label></li>
-          <li><input type="checkbox" id="opt-cartoons" /> <label for="opt-cartoons">شخصيات كرتونية 👸🎞️👑 </label></li>
-          <li><input type="checkbox" id="opt-games" /> <label for="opt-games">ألعاب 🎳♟️🎲 </label></li>
-          <li><input type="checkbox" id="opt-jobs" /> <label for="opt-jobs">وظائف 👦👮👷 </label></li>
-          <li><input type="checkbox" id="opt-sports" /> <label for="opt-sports">رياضات ⚽🏀🤸 </label></li>
-          <li><input type="checkbox" id="opt-langs" /> <label for="opt-langs">لغات ولهجات 🗣️🌍 </label></li>
-          <li><input type="checkbox" id="opt-countries" /> <label for="opt-countries">دول 🇸🇦🇮🇶🇹🇳 </label></li>
+        <div class="player-list-container">
+          <h2>قائمة اللاعبين</h2>
+          <ul id="playerList" class="player-list"></ul>
+        </div>
+
+        <button id="startButton" class="btn btn-start" disabled>ابدأ</button>
+      </div>
+    </section>
+    <section id="treasureRulesScreen" class="screen rules-screen">
+      <header class="game-header">
+        <div class="container">
+          <h1>📜 قوانين لعبة الكنز</h1>
+        </div>
+      </header>
+    
+      <div class="container">
+        <div class="rules-box">
+          <p class="rule-text">
+            🎮 <strong>عدد اللاعبين:</strong> اللعبة مناسبة من <strong>3 إلى 12 لاعب</strong>.
+          </p>
+    
+          <p class="rule-text">
+            🪙 <strong>فكرة اللعبة:</strong> كل مرة بيتم اختيار لاعب لإخفاء الهاتف 🤫 في مكان ما،
+            وباقي اللاعبين بيبدأوا رحلة البحث عنه 🔍.
+          </p>
+    
+          <p class="rule-text highlight">
+            🚨 السرعة والتركيز هما مفتاح الفوز! اللاعب اللي يلاقي الهاتف أسرع هو الكسبان 🏆.
+          </p>
+    
+          <div class="buttons">
+            <button id="nextButton" onclick="showScreen('gameSettingsScreen')" class="btn btn-primary">التالي</button>
+            <button id="backToMenuButtonT" class="btn btn-secondary">الرجوع</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="gameSettingsScreen" class="screen settings-screen">
+      <div class="container">
+        <h2>⚙️ إعدادات الجولة</h2>
+    
+        <label for="roundDuration" class="label">⏱ اختر وقت الجولة:</label>
+        <select id="roundDuration" class="duration-select">
+          <option value="2">2 دقائق</option>
+          <option value="3">3 دقائق</option>
+          <option value="4">4 دقائق</option>
+        </select>
+    
+        <button id="startGameButtonT" class="btn btn-primary">ابدأ</button>
+      </div>
+    </section>
+    <section id="hidePhoneScreen" class="screen hide-screen">
+      <div class="container">
+        <button id="startRoundButton" class="start-button">
+          الدور على <span id="hiderName">محمد</span> لإخفاء الهاتف 🔐<br>
+          بعد الإخفاء اضغط على هذا الزر لبدء الوقت وأخبر باقي اللاعبين
+        </button>
+      </div>
+    </section>
+    <section id="roundRunningScreen" class="screen round-screen">
+      <div class="container">
+        <h2>⏱ الجولة بدأت!</h2>
+        <p>الوقت المتبقي: <span id="timeLeft">3:00</span></p>
+    
+        <div class="action-buttons">
+          <button id="phoneFoundButton" class="btn btn-success">✅ تم العثور على الهاتف</button>
+          <button id="giveUpButton" class="btn btn-danger">❌ لم يتم العثور</button>
+        </div>
+      </div>
+    </section>
+    <section id="selectWinnerScreen" class="screen winner-screen">
+      <div class="container">
+        <h2>🎉 من وجد الهاتف؟</h2>
+    
+        <ul id="playersList" class="player-list">
         </ul>
       </div>
-
-      <!-- زر البداية -->
-      <div class="buttons-row">
-        <button id="backToGamesBtn" class="btn btn-secondary">🔙 العودة للقائمة</button>
-        <button id="startJawwalBtn" class="btn btn-primary">ابدأ ▶️</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-  <section id="similarPicturesScreen" class="screen">
-    <header class="game-header">
+    </section>
+    <section id="resultsScreenT" class="screen results-screen">
       <div class="container">
-        <h1 class="game-header-title">🎲 لعبة: الصور المتشابهة</h1>
-      </div>
-    </header>
-  
-    <div class="container">
-      <div class="game-info">
-        <h2 class="game-title">📜 قوانين لعبة الصور المتشابهة</h2>
-  
-        <div class="info-section">
-          <h3>👥 عدد اللاعبين المقترح:</h3>
-          <p>من 3 إلى 12 لاعب</p>
-        </div>
-  
-        <div class="info-section">
-          <h3>🎯 الهدف:</h3>
-          <p>
-            إيجاد الصورة المكررة 🔍 بأسرع وقت ممكن قبل انتهاء المحاولات ⏱️.
-          </p>
-        </div>
-  
-        <div class="info-section">
-          <h3>🎲 طريقة اللعب:</h3>
-          <ol>
-            <li>أعطِ الهاتف إلى اللاعب التالي في الدور 📱.</li>
-            <li>⏳ سيبدأ العد التنازلي: "سيبدأ الوقت بعد 3 ثواني...".</li>
-            <li>بعد انقضاء 3 ثوانٍ، تظهر شبكة مكونة من 25 صورة 🖼️، إحداها متكررة.</li>
-            <li>
-              اضغط على الصورة التي تعتقد أنها مكررة:
-              <ul>
-                <li>✅ إذا صحّ اختيارك.</li>
-                <li>❌ إذا أخطأت.</li>
-              </ul>
-            </li>
-            <li>🎯 لديك محاولتان فقط، ثم ينتهي وقتك بـ 90 ثانية تلقائياً.</li>
-            <li>بعد انتهاء دور اللاعب (صحيح أو انتهاء المحاولات)، ينتقل الدور إلى اللاعب التالي.</li>
-            <li>🔢 تُسجَّل نتائج كل لاعب (الوقت + عدد المحاولات) في النهاية.</li>
-          </ol>
-        </div>
-  
-        <div class="info-section">
-          <h3>💡 نصائح وإرشادات:</h3>
-          <p>
-            • ركّز على تفاصيل الصور 🎨.<br>
-            • لا تسرع بالاختيار—محاولتان فقط! ⚡<br>
-            • استمتع باللعب مع الأصدقاء والعائلة 👪.
-          </p>
-        </div>
-      </div>
-  
-      <button id="startSimilarBtn" class="btn btn-start">بدء اللعبة ▶️</button>
-      <button  class="btn btn-secondary">العودة للقائمة</button>
-    </div>
-  </section>
-  <section id="countdownScreen" class="screen">
-    <div class="countdown-container">
-      <div id="playerNameDisplay" class="player-name-display"></div>
-      <div id="countdownNumber" class="countdown-number"></div>
-    </div>
-  </section>
-  <div id="boxCountdownScreen" class="screen">
-    <div class="countdown-container">
-    <div id="playerBoxName" class="player-name-display"></div>
-    <div id="boxCountdownNumber" class="countdown-number"></div>
-  </div>
-</div>
-  <!-- Results Screen -->
-<section id="similarResultsScreen" class="screen">
-  <div class="container results-container">
-    <h1 class="results-title">🏆 النتائج النهائية</h1>
-    
-    <!-- جداول النتائج -->
-    <div class="results-tables">
-      <!-- جدول جولة اللعبة الحالية -->
-      <div class="results-box">
-        <h2 class="box-title">نتائج الجولة</h2>
+        <h2>📊 النتائج</h2>
         <table class="results-table">
           <thead>
             <tr>
-              <th>🏅 المركز</th>
-              <th>👤 اللاعب</th>
-              <th>⏱️ الوقت (ث)</th>
-              <th>✅ المحاولات</th>
-              <th>🌟 النقاط</th>
+              <th>المركز</th>
+              <th>اللاعب</th>
+              <th>مرات الفوز</th>
+              <th>نقاط الجولة</th>
+              <th>النقاط الكلية</th>
             </tr>
           </thead>
-          <tbody id="roundResultsBody">
-            <!-- تعبئة ديناميكياً عبر JS -->
-          </tbody>
-        </table>
-      </div>
-      
-      <!-- جدول النقاط التراكمية -->
-      <div class="results-box">
-        <h2 class="box-title">النقاط الإجمالية</h2>
-        <table class="results-table">
-          <thead>
+          <tbody id="resultsBody">
             <tr>
-              <th>🏆 الترتيب</th>
-              <th>👤 اللاعب</th>
-              <th>💯 المجموع الكلي</th>
+              <td>🥇 1</td>
+              <td>سارة</td>
+              <td>3</td>
+              <td>10</td>
+              <td>30</td>
             </tr>
-          </thead>
-          <tbody id="totalResultsBody">
-            <!-- تعبئة ديناميكياً عبر JS -->
+            <!-- باقي النتائج تتملأ ديناميكيًا -->
           </tbody>
         </table>
       </div>
-    </div>
-    
-    <!-- زر للعودة أو إعادة اللعب -->
-    <div class="results-actions">
-      <button id="playAgainBtn" class="btn btn-primary large">🔄 العب مرة أخرى</button>
-      <button id="backHomeBtn" class="btn btn-secondary large">🏠 العودة للقائمة</button>
-    </div>
-  </div>
-</section>
-
-  <section id="imagesScreen" class="screen">
-    <div class="container">
-      <div class="image-grid"></div>
-      <button id="nextTurnBtn" class="btn btn-primary">التالي ▶️</button>
-    </div>
-  </section>
-  <!-- Player Input Screen -->
-  
-<!-- Boxes Game Rules Screen -->
-<section id="boxesRulesScreen" style="padding-bottom: 3rem !important;" class="screen">
+    </section>
+                
+    <!-- ====== شاشة قوانين لعبة "الأسرع" ====== -->
+<section id="fastRulesScreen" class="screen">
   <header class="game-header">
     <div class="container">
-      <h1 class="game-header-title">🎲 لعبة الصناديق</h1>
+      <h1 class="game-header-title">⚡ لعبة الأسرع</h1>
     </div>
   </header>
-
   <div class="container">
     <div class="game-info">
-      <h2 class="game-title">📜 قوانين لعبة الصناديق</h2>
-
+      <h2 class="game-title">📜 قوانين لعبة «الأسرع»</h2>
+      
       <div class="info-section">
         <h3>👥 عدد اللاعبين المقترح:</h3>
         <p>من 3 إلى 12 لاعب</p>
       </div>
-
+      
       <div class="info-section">
-        <h3>🎉 عن اللعبة:</h3>
-        <p>لعبة الصناديق ممتعة 😄 وتعتمد على التركيز والسرعة بشكل كبير ⏱️. تُلعب بشكل كامل على الجهاز 📱.</p>
+        <h3>🔹 طبيعة اللعبة:</h3>
+        <ul>
+          <li>جماعية واجتماعية 🤝</li>
+          <li>مليئة بالتحديات الحركية 🤸‍♂️</li>
+          <li>تعتمد على الذكاء 🧠 وسرعة البديهة ⚡</li>
+        </ul>
       </div>
-
+      
       <div class="info-section">
-        <h3>🕹️ طريقة اللعب:</h3>
+        <h3>🔹 طريقة اللعب:</h3>
+        <p>بسيطة وسهلة — تعتمد على السرعة 🏎️ والتركيز 👁️ والتفكير السريع 🤔 في أداء المهام ✅</p>
+      </div>
+      
+      <div class="info-section">
+        <h3>🏅 تحديد الفائز:</h3>
+        <p>أول شخص ينجز المهمة يفوز بالنقطة 🔵  
+        إذا أنجز أكثر من لاعب المهمة في نفس الوقت، تُقرّر المجموعة الفائز الأول 🏆</p>
+      </div>
+      
+      <div class="info-section">
+        <h3>❗ متطلبات خاصة:</h3>
+        <ul>
+          <li>لا تتطلب إخفاء الهوية 🎭</li>
+          <li>لا تحتاج إلى توزيع أدوار</li>
+          <li>ينصح بعرض المحتوى على التلفزيون ليتمكن الجميع من المتابعة 👀</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="buttons-row">
+      <button id="backToGamesBtnFast" class="btn btn-secondary">🔙 العودة للقائمة</button>
+      <button id="startFastTimeBtn" class="btn btn-primary">التالي ▶️</button>
+    </div>
+  </div>
+</section>
+
+<!-- ====== شاشة اختيار زمن التحدي ====== -->
+<section id="fastTimeScreen" class="screen">
+  <header class="game-header">
+    <div class="container">
+      <h1 class="game-header-title">⏱️ اختيار مدة التحدي</h1>
+    </div>
+  </header>
+  <div class="container">
+    <div class="game-info">
+      <h2 class="game-title">حدد المدة (من 1 إلى 2 دقيقة)</h2>
+      
+      <div class="info-section slider-wrapper">
+        <span>1:00</span>
+        <input 
+          type="range" 
+          id="challengeTimeRange" 
+          min="60" max="120" step="10" 
+          value="60"
+        >
+        <span>2:00</span>
+      </div>
+      
+      <div class="info-section" style="text-align:center; margin-top:var(--space-md);">
+        <p>المدة المختارة: <strong id="selectedTime">1:00</strong></p>
+      </div>
+    </div>
+    
+    <div class="buttons-row">
+      <button id="backToRulesBtnFast" class="btn btn-secondary">🔙 العودة</button>
+      <button id="confirmFastTimeBtn" class="btn btn-primary">ابدأ التحدي ▶️</button>
+    </div>
+  </div>
+</section>
+<section id="fastChallengeScreen" class="screen">
+  <header class="game-header">
+    <div class="container">
+      <h1 class="game-header-title">🚀 جولة التحدي</h1>
+    </div>
+  </header>
+  <div class="container">
+    <!-- صندوق الكشف والعدّ التنازلي -->
+    <div class="challenge-box">
+      <button id="revealChallengeBtn" class="btn-challenge">اكشف السؤال</button>
+      <div id="countdownText" class="countdown-text" hidden>3</div>
+      <div id="challengeText" class="challenge-text" hidden>التحدي: أسرع واحد يجيب شباصة يفوز!</div>
+    </div>
+
+    <!-- أزرار بعد الكشف -->
+    <div class="buttons-row" id="postRevealButtons" hidden>
+      <button id="pickWinnerBtn" class="btn btn-primary">اختيار الفائز</button>
+      <button id="skipChallengeBtn" class="btn btn-secondary">لا يمكن تنفيذ التحدي</button>
+    </div>
+  </div>
+</section>
+
+<section id="fastResultsScreen" class="screen">
+  <div class="container results-container">
+    <h1 class="results-title">🏁 نتائج جولة التحدي</h1>
+    <table class="results-table">
+      <thead>
+        <tr>
+          <th>المركز</th>
+          <th>اللاعب</th>
+          <th>عدد التحديات</th>
+          <th>النقاط</th>
+          <th>النقاط الكلية</th>
+        </tr>
+      </thead>
+      <tbody id="fastResultsTableBody">
+        <!-- تُملأ ديناميكيًا -->
+      </tbody>
+    </table>
+    <div class="buttons-row results-actions">
+      <button id="nextFastChallengeBtn" class="btn btn-primary">تحدي آخر 🚀</button>
+      <button id="backToGamesBtnFastResults" class="btn btn-secondary">🏠 العودة للقائمة</button>
+    </div>
+  </div>
+</section>
+
+
+    <!-- القوانين -->
+    <!-- شاشة القوانين -->
+    <!-- شاشة القوانين -->
+    <!-- Rules Screen -->
+<section id="whoRulesScreen" class="screen">
+  <header class="game-header">
+    <div class="container">
+      <h1 class="game-header-title">👧🏽 لعبة: مين فينا؟</h1>
+    </div>
+  </header>
+  <div class="container">
+    <div class="game-info">
+      <h2 class="game-title">📜 قوانين اللعبة</h2>
+      <div class="info-section">
+        <h3>👥 عدد اللاعبين المقترح:</h3>
+        <p>من 3 إلى 12 لاعب</p>
+      </div>
+      <div class="info-section">
+        <h3>🔹 ما هي اللعبة؟</h3>
+        <p>لعبة اجتماعية مسليّة تكشف آراء اللاعبين عن بعضهم بشكل سري.</p>
+      </div>
+      <div class="info-section">
+        <h3>🔹 كيف تُلعب؟</h3>
         <ol>
-          <li>اضغط على زر البدء ▶️ لبدء التحدي.</li>
-          <li>ستظهر أمامك 20 صندوقًا 📦 بترتيب عشوائي.</li>
-          <li>مهمتك: النقر على الصناديق بالترتيب من 1 إلى 20 بأسرع ما يمكن.</li>
-          <li>🚨 أي خطأ يعيدك إلى نقطة البداية 🔙.</li>
+          <li>📖 اقرأ السؤال بصوت عالٍ.</li>
+          <li>📱 أعطِ الهاتف للاعب التالي مع إخفاء الشاشة عن الآخرين.</li>
+          <li>🕵️‍♂️ سرّيّة التصويت: كل لاعب يصوّت على الشخص الذي ينطبق عليه الوصف.</li>
+          <li>🔄 لديك فرصتان لتغيير السؤال إذا كان محرِجًا جدًا.</li>
+          <li>😂 استمتعوا بالضحك واكتشاف آراء بعضكم!</li>
         </ol>
       </div>
-
       <div class="info-section">
-        <h3>⏳ الوقت:</h3>
-        <p>لديك 60 ثانية 🕒 لإكمال التحدي 🏁.</p>
-      </div>
-
-      <div class="info-section">
-        <h3>🏆 الفوز:</h3>
-        <p>أسرع لاعب ينهي التحدي هو الفائز! 🏅</p>
-      </div>
-
-      <div class="info-section">
-        <h3>💡 تحديات إضافية:</h3>
-        <p>
-          ابتكروا تحديات مجنونة لإضافة المرح 😂:<br>
-          • جولة الأصبع: استخدم إصبعًا واحدًا فقط ☝️ للنقر.<br>
-          • جولة الكوع: حاول النقر بالكوع! 🤜<br>
-          • جولة الأنف: هل يمكنك النقر بأنفك؟ 👃
-        </p>
-      </div>
-
-      <div class="info-section">
-        <h3>🎖️ نظام النقاط:</h3>
-        <ul>
-          <li>🥇 المركز الأول: 20 نقطة</li>
-          <li>🥈 المركز الثاني: 10 نقاط</li>
-          <li>🥉 المركز الثالث: 5 نقاط</li>
-        </ul>
+        <h3>🟡 النقاط:</h3>
+        <p>لا توجد نقاط؛ الهدف هو المتعة والتقارب.</p>
       </div>
     </div>
 
     <div class="buttons-row">
-      <button id="backToGamesBtn" class="btn btn-secondary">🔙 العودة للقائمة</button>
-      <button id="startBoxesBtn" class="btn btn-primary">▶️ بدء اللعبة</button>
+      <button id="backToGamesBtnWho" class="btn btn-secondary">🔙 العودة للقائمة</button>
+      <button id="startWhoBtn" class="btn btn-primary">ابدأ ▶️</button>
     </div>
   </div>
 </section>
 
-<div id="boxGameScreen" class="screen">
-  <div id="boxTimer">⏰ 60s</div>
-  <div class="box-grid"></div>
-</div>
-<div id="boxResultsScreen" class="screen results-container">
-  <h2 class="results-title">نتائج الجولة 🏁</h2>
-
-  <div class="results-tables">
-    <div class="results-box">
-      <div class="box-title">نتائج الجولة</div>
-      <table class="results-table">
-        <thead>
-          <tr><th>#</th><th>اللاعب</th><th>الزمن</th><th>النقاط</th></tr>
-        </thead>
-        <tbody id="roundResultsBody1"></tbody>
-      </table>
-    </div>
-
-    <div class="results-box">
-      <div class="box-title">النقاط التراكمية 🏆</div>
-      <table class="results-table">
-        <thead>
-          <tr><th>#</th><th>اللاعب</th><th>المجموع</th></tr>
-        </thead>
-        <tbody id="totalResultsBody1"></tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="results-actions">
-    <button id="boxPlayAgainBtn" class="btn large">🔁 إعادة اللعب</button>
-    <button id="boxBackHomeBtn" class="btn large">🏠 العودة للقائمة الرئيسية</button>
-  </div>
-</div>
-
-
-  <!-- Games Menu Screen -->
-  <section id="gamesScreen" class="screen">
-    <div class="container">
-      <h1 class="title">قائمة الألعاب</h1>
-      
-      <div class="games-grid">
-        <!-- Game cards will be inserted here dynamically -->
-      </div>
-      
-      <button id="backButton" class="btn btn-secondary">العودة</button>
-    </div>
-  </section>
-
-  <!-- Out of Topic Game Screen -->
-  <section id="outOfTopicScreen" class="screen">
-    <header class="game-header">
-      <div class="container">
-        <h1 class="game-header-title">🎲 لعبة: خارج الموضوع</h1>
-      </div>
-    </header>
-
-    <div class="container">
-      <div class="game-info">
-        <h2 class="game-title">قوانين لعبة خارج الموضوع</h2>
-        
-        <div class="info-section">
-          <h3>عدد اللاعبين المقترح:</h3>
-          <p>من 3 إلى 12 لاعب</p>
-        </div>
-        
-        <div class="info-section">
-          <h3>🎯 الهدف:</h3>
-          <p>اكتشف من هو اللاعب "خارج الموضوع" 😲 عن طريق طرح الأسئلة 🧑‍🤝‍🧑🙆‍♀️ وملاحظة الإجابات 🤨.</p>
-        </div>
-
-        <div class="info-section">
-          <h3>🎲 طريقة اللعب:</h3>
-          <ol>
-            <li>اختيار الكلمة السرية: 😲 يختار التطبيق بشكل عشوائي كلمة أو موضوع سيعرفه الجميع ماعدا لاعب واحد.</li>
-            <li>توزيع الأدوار: 🎭 سيتم اختيار اللاعب "خارج الموضوع" بشكل عشوائي أيضًا. لن يعلم هذا اللاعب بالكلمة السرية.</li>
-            <li>الدور: 🎙️ يتناوب اللاعبون على طرح الأسئلة 🙋‍♀️ على بعضهم البعض، بهدف اكتشاف هوية اللاعب 🙆‍♂️ "خارج الموضوع".</li>
-            <li>الإجابات: 🤔 يجب على اللاعبين الإجابة على الأسئلة بشكل طبيعي ودون الكشف عن هويتهم الحقيقية 🤐 , خاصة اللاعب "خارج الصندوق" الذي سيحاول التظاهر بأنه على علم بالكلمة. </li>
-            <li>التصويت: 🗳️ بعد انتهاء فترة الأسئلة 👑 يصوت كل لاعب على من يعتقد أنه اللاعب "خارج الموضوع" 😲.</li>
-            <li>الكشف: يكشف التطبيق عن هوية اللاعب "خارج الموضوع" 😲. يحصل كل لاعب بشكل صحيح على 25 نقطة 🏆.</li>
-            <li>الجولات التالية: 🔄 تستمر اللعبة بعدد من الجولات حسب رغبة اللاعبين 🎲، مع اختيار كلمة سرية جديدة في كل جولة.</li>
-
-          </ol>
-        </div>
-
-        <div class="info-section">
-          <h3>نصائح وإرشادات 🧠:</h3>
-          <p> استخدموا خيالكم! كلما كانت الأسئلة أكثر إبداعًا 🎨، زادت متعة اللعبة وصعوبة اكتشاف اللاعب "خارج الموضوع" 😲. انتبهوا لإشارات الكلام ولغة الجسد! 👀 قد تكشف بعض التصرفات هوية اللاعب "خارج الموضوع" 😲. لا تنسوا الاستمتاع! 😆 تهدف اللعبة إلى قضاء وقت ممتع مع العائلة والأصدقاء 👨‍👩‍👧‍👦 بدون عصبية وتوتر.</p>
-        </div>
-
-      </div>
-      
-      <button id="startGameButton" class="btn btn-start">بدء اللعبة</button>
-      <button id="backToGamesButton" class="btn btn-secondary">العودة للقائمة</button>
-    </div>
-  </section>
-  <section id="mafiaScreen" class="screen">
-    <header class="game-header">
-      <div class="container">
-        <h1 class="game-header-title">🎲 لعبة: 🕵️‍♂️ المافيا</h1>
-      </div>
-    </header>
-  
-    <div class="container">
-      <div class="game-info">
-        <h2 class="game-title">📜 قوانين لعبة المافيا</h2>
-        
-        <div class="info-section">
-          <h3>عدد اللاعبين المقترح:</h3>
-          <p>من 5 إلى 12 لاعب</p>
-        </div>
-        
-        <div class="info-section">
-          <h3>💡 فكرة اللعبة:</h3>
-          <p>
-            تدور أحداث اللعبة في قرية صغيرة تحتوي على أعضاء المافيا 💀 والمواطنين 👩‍🌾، الذين يحاول كل منهم التخلص من الآخر.
-            المواطنون لا يعرفون من هم المافيا، ويحاولون اكتشافهم عن طريق النقاش والتصويت، بينما يعرف أعضاء المافيا بعضهم البعض سرا 🕵️‍♂️
-            ويحاولون قتل المواطنين خلال الجولات الليلية 🌙 دون أن يتم كشفهم.
-          </p>
-        </div>
-        
-        <div class="info-section">
-          <h3>📝 الأدوار:</h3>
-          <ul>
-            <li>💀 <strong>المافيا:</strong> يوجد عضو مافيا لكل 4 لاعبين تقريبًا. يحاولون قتل باقي الشخصيات دون أن يُكشف أمرهم.</li>
-            <li>🩺 <strong>الطبيب:</strong> مواطن يستطيع حماية أي لاعب (بما في ذلك نفسه) من القتل في الجولة المسائية.</li>
-            <li>🕵️‍♂️ <strong>المحقق:</strong> مواطن يستطيع التحقق من هوية لاعب واحد في كل جولة مسائية.</li>
-            <li>🧑‍🌾 <strong>المواطن:</strong> يحاول النجاة والتصويت لقتل أعضاء المافيا خلال الجولات الصباحية.</li>
-          </ul>
-        </div>
-  
-        <div class="info-section">
-          <h3>📚 كيفية لعب المافيا:</h3>
-          <p>اللعبة تنقسم إلى جولتين في كل دورة: جولة مسائية وجولة صباحية.</p>
-          
-          <h4>🌙 الجولات المسائية:</h4>
-          <ul>
-            <li>🏙️ تبدأ اللعبة بجولة مسائية سرّية، حيث تقوم المافيا بقتل أحد اللاعبين (قد يكون مواطن، طبيب، أو محقق).</li>
-            <li>🩺 يقوم الطبيب باختيار لاعب لحمايته. إذا حمى اللاعب الذي استهدفته المافيا، ينجو من الموت.</li>
-            <li>🕵️‍♂️ المحقق يختار لاعبًا ليتحقق من هويته سراً (هل هو من المافيا أم لا).</li>
-            <li>😴 المواطنون العاديون لا يشاركون ويُفترض أنهم نائمون.</li>
-          </ul>
-          <p>
-            بعد انتهاء الجولة، يتم عرض نتائجها. إذا تم قتل لاعب ولم يكن محميًا، يُستبعد من اللعبة.
-            ثم تبدأ الجولة الصباحية.
-          </p>
-  
-          <h4>🌄 الجولات الصباحية:</h4>
-          <ul>
-            <li>يتناقش اللاعبون ويحاولون معرفة من هم أعضاء المافيا بناءً على التصرفات والشكوك.</li>
-            <li>كل لاعب يستطيع اتهام أحدهم، وعلى اللاعب المتهم الدفاع عن نفسه.</li>
-            <li>📦 بعد النقاش، يُطلب من الجميع التصويت لقتل لاعب يظنون أنه من المافيا.</li>
-            <li>💀 يُعلن عن اللاعب الذي حصل على أكثر عدد من الأصوات ويُستبعد من اللعبة.</li>
-          </ul>
-          <p>ثم تبدأ دورة جديدة بجولة مسائية تليها جولة صباحية، وهكذا حتى تنتهي اللعبة.</p>
-        </div>
-  
-        <div class="info-section">
-          <h3>🏁 نهاية اللعبة:</h3>
-          <p>⏳ تنتهي اللعبة عندما:</p>
-          <ul>
-            <li>يتم قتل جميع أفراد المافيا (فوز المواطنين).</li>
-            <li>أو يتم قتل جميع المواطنين (فوز المافيا).</li>
-          </ul>
-        </div>
-  
-        <div class="info-section">
-          <h3>🏅 النقاط:</h3>
-          <p>الفريق الفائز يحصل على <strong>٧٠ نقطة</strong> عن كل لاعب بقي حيًّا في فريقه.</p>
-        </div>
-  
-        <div class="info-section">
-          <h3>📌 ملاحظات مهمة:</h3>
-          <ul>
-            <li>🤐 يجب إبقاء الأدوار سرية وعدم الإفصاح عنها لباقي اللاعبين.</li>
-            <li>🔍 لا تكشف أنك المحقق أو الطبيب حتى لا تُستهدف.</li>
-            <li>❌ لا تتسرع بالحكم على أحد، استمع جيدًا لجميع الآراء.</li>
-            <li>🧠 دافع عن نفسك بأسباب منطقية، ولا تتهرب من النقاش.</li>
-            <li>😶 إذا خرجت من اللعبة، لا تتحدث أو تؤثر على سير اللعبة.</li>
-            <li>🎭 لا تستخدم القسم بالله أثناء اللعب — اللعبة تعتمد على الذكاء والخداع!</li>
-          </ul>
-        </div>
-  
-        <div class="info-section">
-          <h3>📣 نصائح وإرشادات:</h3>
-          <p>
-            استخدموا خيالكم! كلما كانت الأسئلة والحوارات أكثر إبداعًا، زادت متعة اللعبة.
-            انتبهوا لإشارات الكلام ولغة الجسد! قد تكشف بعض التصرفات من هو عضو المافيا.
-            الأهم من كل ذلك: استمتعوا باللعبة 😄! هي وسيلة لقضاء وقت ممتع مع العائلة والأصدقاء 👨‍👩‍👧‍👦.
-          </p>
-        </div>
-  
-      </div>
-  
-      <button id="startMafiaGameButton" onclick="startMafiaGame()" class="btn btn-start">بدء اللعبة</button>
-      <button  class="btn btn-secondary">العودة للقائمة</button>
-    </div>
-  </section>
-  
-  <!-- Category Selection Screen -->
-  <section id="categoryScreen" class="screen">
-    <header class="game-header">
-      <div class="container">
-        <h1>اختر التصنيف</h1>
-      </div>
-    </header>
-    <div class="container">
-      <div class="category-grid">
-        <button class="category-card" data-category="food"><span style="font-size: 3rem;">🍔</span> مأكولات</button>
-      <button class="category-card" data-category="places"><span style="font-size: 3rem;">🌍</span> أماكن</button>
-      <button class="category-card" data-category="animals"><span style="font-size: 3rem;">🐶</span> حيوانات</button>
-      <button class="category-card" data-category="clothes"><span style="font-size: 3rem;">👕</span> ملابس</button>
-      <button class="category-card" data-category="produce"><span style="font-size: 3rem;">🥕</span> خضار وفاكهة</button>
-      <button class="category-card" data-category="drinks"><span style="font-size: 3rem;">🥤</span> مشروبات</button>
-      <button class="category-card" data-category="household"><span style="font-size: 3rem;">🏠</span> أشياء منزلية</button>
-      <button class="category-card" data-category="vehicles"><span style="font-size: 3rem;">🚗</span> مركبات ومواصلات</button>
-      <button class="category-card" data-category="cities"><span style="font-size: 3rem;">🏙️</span> مدن</button>
-      <button class="category-card" data-category="cartoons"><span style="font-size: 3rem;">🎬</span> شخصيات كرتونية</button>
-      <button class="category-card" data-category="games"><span style="font-size: 3rem;">🎮</span> ألعاب</button>
-      <button class="category-card" data-category="jobs"><span style="font-size: 3rem;">💼</span> وظائف</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Warning Screen -->
-  <section id="warningScreen" class="screen">
-    <div class="container">
-      <div class="warning-box">
-        <h2 class="warning-title">حافظ على الخصوصية</h2>
-        <p class="warning-text">
-          كل اللاعبين ماعدا لاعب واحد سيعرفون نفس الكلمة السرية.<br>
-          حافظ على خصوصية الشاشة بعيدًا عن أعين باقي اللاعبين.<br>
-          لا تجعلهم ينظروا لمحتوى الشاشة التالية.
-        </p>
-        <button id="playerConfirmButton" class="btn btn-primary"></button>
-      </div>
-    </div>
-  </section>
-  <section id="mafiaWarningScreen" class="screen">
-    <div class="container">
-      <div class="warning-box">
-        <h2>اعط الهاتف ل<span id="playernameMafia"></span></h2>
-        <h2 class="warning-title">حافظ على الخصوصية</h2>
-        <p class="warning-text">
-          حافظ على خصوصية الشاشة التالية. سيتم تحديد الأدوار بشكل عشوائي
-        </p>
-        <button id="mafiaPlayerConfirmButton" class="btn btn-primary"></button>
-      </div>
-    </div>
-  </section>
-  <section id="mafiaVoting" class="screen">
-    <div class="container">
-      <div class="warning-box">
-        <h2>اعط الهاتف ل<span id="playernameVote"></span></h2>
-        <h2 class="warning-title">حافظ على الخصوصية</h2>
-        <p class="warning-text">
-          بحسب دورك في اللعبة, صوت على اللاعب المناسب
-        </p>
-        <button id="mafiaPlayerVoteButton" class="btn btn-primary"></button>
-      </div>
-    </div>
-    
-  </section>
-  <section id="mafiaVotingMorning" class="screen">
-    <div class="container">
-      <div class="warning-box">
-        <h2>اعط الهاتف ل<span id="playernameVoteMorning"></span></h2>
-        <h2 class="warning-title">حافظ على الخصوصية</h2>
-        <p class="warning-text">
-          بحسب دورك في اللعبة, صوت على اللاعب المناسب
-        </p>
-        <button id="mafiaPlayerVoteButtonMorning" class="btn btn-primary"></button>
-      </div>
-    </div>
-    
-  </section>
-  <section id="VoteRoleScreen" class="screen">
-    <div class="container">
-      <div class="secret-box">
-        <h2 class="greeting-title">مرحبا</h2>
-        <h3 id="player-name-vote" class="player-name"></h3>
-        <div id="VoteContent" class="secret-content">
-          <button id="voteConButton" class="btn btn-primary">انقر</button>
-        </div>
-        <button onclick="showVote()" id="VoteConfirmButton" class="btn btn-primary" style="display: none;">موافق</button>
-      </div>
-    </div>
-  </section>
-  <section id="VoteRoleScreenMorning" class="screen">
-    <div class="container">
-      <div class="secret-box">
-        <h2 class="greeting-title">مرحبا</h2>
-        <h3 id="player-name-vote-morning" class="player-name"></h3>
-        <div id="VoteContentMorning" class="secret-content">
-          <button id="voteConButtonMorning" class="btn btn-primary">انقر</button>
-        </div>
-        <button onclick="showVoteMorning()" id="VoteConfirmButtonMorning" class="btn btn-primary" style="display: none;">موافق</button>
-      </div>
-    </div>
-  </section>
-  <section id="NightRes" class="screen">
-    <div class="container">
-      <div class="secret-box">
-        <h2 class="greeting-title">نتيجة الجولة المسائية</h2>
-        <p>انتهى التصويت اظهر الشاشة للجميع</p>
-        <p id="nightResult"></p> <!-- Dynamically added paragraph -->
-  <button  id="showNightRes" class="btn btn-primary" style="margin-top: 1rem;">موافق</button>
-  <button id="startMorn" onclick="showScreen('MorningDurationScreen')" class="btn btn-primary" style="margin-top: 1rem; display: none;">بدء الجولة الصباحية</button>
-      </div>
-    </div>
-  </section>
-  <section id="morningRes" class="screen">
-    <div class="container">
-      <div class="secret-box">
-        <h2 class="greeting-title">نتيجة الجولة المسائية</h2>
-        <p>انتهى التصويت اظهر الشاشة للجميع</p>
-        <p id="morningResult"></p> <!-- Dynamically added paragraph -->
-  <button  id="showMorningRes" class="btn btn-primary" style="margin-top: 1rem;">موافق</button>
-  <button id="startNight" onclick="showScreen('NightDurationScreen')" class="btn btn-primary" style="margin-top: 1rem; display: none;">بدء الجولة الصباحية</button>
-      </div>
-    </div>
-  </section>
-  <!-- Secret Word Screen -->
-  <section id="secretScreen" class="screen">
-    <div class="container">
-      <div class="secret-box">
-        <h2 id="playerGreeting" class="greeting-title">مرحبا</h2>
-        <h3 id="playerName" class="player-name"></h3>
-        <div id="secretContent" class="secret-content">
-          <button id="revealButton" class="btn btn-primary">انقر</button>
-        </div>
-        <button id="secretConfirmButton" class="btn btn-primary" style="display: none;">موافق</button>
-      </div>
-    </div>
-  </section>
-  <section id="roleScreen" class="screen">
-    <div class="container">
-      <div class="secret-box">
-        <h2 id="playerGreeting" class="greeting-title">مرحبا</h2>
-        <h3 id="playerName" class="player-name"></h3>
-        <div id="roleContent" class="secret-content">
-          <button id="revealButtonMafia" class="btn btn-primary">انقر</button>
-        </div>
-        <button id="roleConfirmButton" class="btn btn-primary" style="display: none;">موافق</button>
-      </div>
-    </div>
-  </section>
-  <section id="roleScreenMorning" class="screen">
-    <div class="container">
-      <div class="secret-box">
-        <h2 id="playerGreetingMorning" class="greeting-title">مرحبا</h2>
-        <h3 id="playerNameMorning" class="player-name"></h3>
-        <div id="roleContentMorning" class="secret-content">
-          <button id="revealButtonMafiaMorning" class="btn btn-primary">انقر</button>
-        </div>
-        <button id="roleConfirmButtonMorning" class="btn btn-primary" style="display: none;">موافق</button>
-      </div>
-    </div>
-  </section>
-  <!-- Questions Round Screen -->
-  <section id="questionsScreen" class="screen">
-    <header class="game-header">
-      <!-- <img src="assets/magnifier.svg" class="header-icon" alt=""> -->
-      <h1>⏱️ وقت الأسئلة</h1>
-    </header>
-    <div class="container">
-      <div class="questions-box">
-        <p class="questions-instructions">
-          في هذه الجولة كل لاعب يطرح سؤال عام عن الموضوع على اللاعب الآخر.<br>
-          لا تعطوا إجابات واضحة جدًا حتى لا يعرف اللاعب خارج الموضوع الموضوع.<br>
-          يمنع إعادة نفس السؤال مرة أخرى.
-        </p>
-        <div id="currentQuestion" class="current-question"></div>
-        <button id="nextQuestionButton" class="btn btn-primary">السؤال التالي</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Voting Round Screen -->
-  <section id="votingScreen" class="screen">
-    <header class="game-header">
-      <div class="container">
-        <h1>جولة التصويت على الخارج</h1>
-      </div>
-    </header>
-    <div class="container">
-      <div class="voting-box">
-        <div class="voting-instructions">
-          <p>
-            كل لاعب يصوت على من يظن أنه خارج الموضوع.<br>
-            كل صوت صحيح يمنح صاحب السؤال 25 نقطة.<br>
-            إذا تصوت الأغلبية على الشخص الصحيح، يحصل الجميع على 100 نقطة إضافية.
-          </p>
-        </div>
-        <div id="votingArea" class="voting-area"></div>
-      </div>
-    </div>
-  </section>
-  <!-- Secret Word Guess Screen -->
-<section id="guessScreen" class="screen">
+<!-- Settings Screen -->
+<section id="whoSettingsScreen" class="screen">
   <header class="game-header">
     <div class="container">
-      <h1>تخمين الكلمة السرية</h1>
+      <h1 class="game-header-title">⚙️ إعدادات مين فينا؟</h1>
     </div>
   </header>
   <div class="container">
-    <div class="guess-box">
-      <p>أنت خارج الموضوع، <span id="guessingPlayer"></span>. حاول تخمين الكلمة السرية:</p>
-      <div id="guessWord" class="voting-area"></div>
-      <button id="submitGuessButton" class="btn btn-primary">تأكيد</button>
+    <div class="game-info">
+      <h2 class="game-title">اختر نوع الأسئلة</h2>
+      <div class="info-section">
+        <form id="categoriesForm" class="checkbox-list scrollable">
+          <label>
+            <input type="checkbox" name="category" value="general" checked>
+            🐶 <span>أسئلة عامة</span>
+          </label><br>
+          <label>
+            <input type="checkbox" name="category" value="guess">
+            🔮 <span>أسئلة توقع</span>
+          </label><br>
+          <label>
+            <input type="checkbox" name="category" value="food">
+            🍔 <span>مأكولات ومشروبات</span>
+          </label><br>
+          <label>
+            <input type="checkbox" name="category" value="movies">
+            🎬 <span>أفلام ومسلسلات</span>
+          </label><br>
+          <label>
+            <input type="checkbox" name="category" value="awkward">
+            😳 <span>أسئلة محرجة</span>
+          </label><br>
+        </form>
+      </div>
+
+      <div class="buttons-row">
+        <button id="startWhoSettingsBtn" class="btn btn-primary btn-start">ابدأ اللعبة 🎲</button>
+      </div>
     </div>
   </div>
 </section>
-  <!-- Results Screen -->
-  <section id="resultsScreen" class="screen">
-    <header class="game-header">
-      <div class="container">
-        <h1>النتائج النهائية</h1>
-      </div>
-    </header>
+
+<!-- Pass Phone Screen -->
+<section id="whoPassScreen" class="screen">
+  <div class="container">
+    <div class="game-info">
+      <h2 class="game-title">📱 حان دور التصويت</h2>
+      <div id="whoPassText" class="info-section player-name-display"></div>
+    </div>
+    <div class="buttons-row">
+      <button id="whoPassNextBtn" class="btn btn-primary">▶️ ابدأ التصويت</button>
+    </div>
+  </div>
+</section>
+
+<!-- Vote Screen -->
+<section id="whoVoteScreen" class="screen">
+  <header class="game-header">
     <div class="container">
+      <h1 id="whoQuestion" class="game-header-title"></h1>
+    </div>
+  </header>
+  <div class="container">
+    <form id="voteForm" class="vote-form info-section">
+      <!-- تُملأ خيارات التصويت ديناميكيًا -->
+    </form>
+    <div class="buttons-row">
+      <button id="whoSubmitVote" class="btn btn-primary">✅ تسجيل التصويت</button>
+    </div>
+  </div>
+</section>
+
+<!-- Results Screen -->
+<section id="whoResultsScreen" class="screen">
+  <div class="container results-container">
+    <h1 class="results-title">🏆 النتائج</h1>
+    <div id="whoResultsList" class="results-list info-section">
+      <!-- تُعرض النتائج هنا -->
+    </div>
+    <div class="results-actions buttons-row">
+      <button id="whoReplayBtn" class="btn btn-primary">🔄 إعادة اللعب</button>
+      <button id="whoBackBtn" class="btn btn-secondary">🏠 العودة للقائمة</button>
+    </div>
+  </div>
+</section>
+
+
+    <!-- Jawwal on Head Rules Screen -->
+    <!-- Jawwal on Head Rules Screen -->
+    <section id="headsUpSettings" class="screen">
+      <header class="game-header">
+        <div class="container">
+          <h1 class="game-header-title">🎲 لعبة: الجوال على الرأس 📱</h1>
+        </div>
+      </header>
+
+      <div class="container">
+        <div class="game-info">
+          <h2 class="game-title">⚙️ إعدادات اللعبة</h2>
+
+          <!-- إعداد الوقت -->
+          <div class="info-section">
+            <h3>⏲️ زمن التحدي:</h3>
+            <div class="slider-wrapper">
+              <span>1:00</span>
+              <input id="timeSlider" type="range" min="60" max="120" step="30"
+                value="60">
+              <span id="timeValue">1 دقيقة</span>
+            </div>
+            <small>اختر دقيقة، دقيقة ونصف، أو دقيقتين</small>
+          </div>
+
+          <!-- قائمة الاختيارات -->
+          <div class="info-section">
+            <h3>☐ إضافة مجموعات كلمات:</h3>
+            <ul class="checkbox-list scrollable">
+              <li>
+                <input type="checkbox" id="cat-food" value="food" />
+                <label for="cat-food">أطعمة ومأكولات 🍲🍛</label>
+              </li>
+              <li>
+                <input type="checkbox" id="cat-places" value="places" />
+                <label for="cat-places">أماكن 🎡🏰🏥</label>
+              </li>
+              <li>
+                <input type="checkbox" id="cat-animals" value="animals" />
+                <label for="cat-animals">حيوانات 🐟🐍🐯</label>
+              </li>
+              <li>
+                <input type="checkbox" id="cat-clothes" value="clothes" />
+                <label for="cat-clothes">ملابس 👖👠🧢</label>
+              </li>
+              <li>
+                <input type="checkbox" id="cat-produce" value="produce" />
+                <label for="cat-produce">خضار وفواكه 🥬🍉🍓</label>
+              </li>
+              <li>
+                <input type="checkbox" id="cat-drinks" value="drinks" />
+                <label for="cat-drinks">مشروبات 🧃☕🥛</label>
+              </li>
+              <li>
+                <input type="checkbox" id="cat-household" value="household" />
+                <label for="cat-household">أشياء منزلية 🚽🔪🛋️</label>
+              </li>
+              <li>
+                <input type="checkbox" id="cat-vehicles" value="vehicles" />
+                <label for="cat-vehicles">مركبات ومواصلات 🚓🚎✈️</label>
+              </li>
+              <li>
+                <input type="checkbox" id="cat-cities" value="cities" />
+                <label for="cat-cities">مدن 🗼🕋🗽</label>
+              </li>
+              <li>
+                <input type="checkbox" id="cat-cartoons" value="cartoons" />
+                <label for="cat-cartoons">شخصيات كرتونية 👸🎞️👑</label>
+              </li>
+              <li>
+                <input type="checkbox" id="cat-games" value="games" />
+                <label for="cat-games">ألعاب 🎳♟️🎲</label>
+              </li>
+              <li>
+                <input type="checkbox" id="cat-jobs" value="jobs" />
+                <label for="cat-jobs">وظائف 👦👮👷</label>
+              </li>
+              <li>
+                <input type="checkbox" id="cat-sports" value="sports" />
+                <label for="cat-sports">رياضات ⚽🏀🤸</label>
+              </li>
+              <li>
+                <input type="checkbox" id="cat-langs" value="langs" />
+                <label for="cat-langs">لغات ولهجات 🗣️🌍</label>
+              </li>
+              <li>
+                <input type="checkbox" id="cat-countries" value="countries" />
+                <label for="cat-countries">دول 🇸🇦🇮🇶🇹🇳</label>
+              </li>
+            </ul>
+
+          </div>
+
+          <!-- زر البداية -->
+          <div class="buttons-row">
+            <button id="backToGamesBtnJ" class="btn btn-secondary">🔙 العودة
+              للقائمة</button>
+            <button id="startHeadsUp" class="btn btn-primary">ابدأ ▶️</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="headsUpPassPhone" class="screen">
+      <div class="container">
+        <div id="headsUpPlayerName" class="player-name-display"></div>
+        <div id="headsUpCount" class="countdown-number"></div>
+      </div>
+    </section>
+
+    <section id="headsUpGameScreen" class="screen">
+      <div class="container">
+        <div id="headsUpTimer" class="timer-display"></div>
+        <div id="headsUpWord" class="word-display"></div>
+        <div class="game-controls">
+          <button id="btnCorrect" class="btn ">✓</button>
+          <button id="btnSkip" class="btn">✗</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="headsUpEndTurn" class="screen">
+      <div class="container">
+        <h2>انتهى الوقت!</h2>
+        <p>عدد الكلمات الصحيحة: <span id="headsUpCountCorrect"></span></p>
+        <button id="btnNextPlayer" class="btn">التالي ▶️</button>
+      </div>
+    </section>
+
+    <section id="headsUpResults" class="screen">
+      <div class="container results-container">
+        <h1>🏆 النتائج النهائية</h1>
+        <table class="results-table">
+          <thead>
+            <tr><th>#</th><th>اللاعب</th><th>الكلمات المخمنة</th>
+              <th>النقاط</th>
+              <th>النقاط الكلية</th>
+            </tr>
+          </thead>
+          <tbody id="headsUpResultsBody"></tbody>
+        </table>
+        <div class="results-actions">
+          <button id="btnReplayHeadsUp" class="btn btn-primary">🔄 العب مرة
+            أخرى</button>
+          <button id="btnBackHeadsUp" class="btn btn-secondary">🏠 العودة
+            للقائمة</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="similarPicturesScreen" class="screen">
+      <header class="game-header">
+        <div class="container">
+          <h1 class="game-header-title">🎲 لعبة: الصور المتشابهة</h1>
+        </div>
+      </header>
+
+      <div class="container">
+        <div class="game-info">
+          <h2 class="game-title">📜 قوانين لعبة الصور المتشابهة</h2>
+
+          <div class="info-section">
+            <h3>👥 عدد اللاعبين المقترح:</h3>
+            <p>من 3 إلى 12 لاعب</p>
+          </div>
+
+          <div class="info-section">
+            <h3>🎯 الهدف:</h3>
+            <p>
+              إيجاد الصورة المكررة 🔍 بأسرع وقت ممكن قبل انتهاء المحاولات ⏱️.
+            </p>
+          </div>
+
+          <div class="info-section">
+            <h3>🎲 طريقة اللعب:</h3>
+            <ol>
+              <li>أعطِ الهاتف إلى اللاعب التالي في الدور 📱.</li>
+              <li>⏳ سيبدأ العد التنازلي: "سيبدأ الوقت بعد 3 ثواني...".</li>
+              <li>بعد انقضاء 3 ثوانٍ، تظهر شبكة مكونة من 25 صورة 🖼️، إحداها
+                متكررة.</li>
+              <li>
+                اضغط على الصورة التي تعتقد أنها مكررة:
+                <ul>
+                  <li>✅ إذا صحّ اختيارك.</li>
+                  <li>❌ إذا أخطأت.</li>
+                </ul>
+              </li>
+              <li>🎯 لديك محاولتان فقط، ثم ينتهي وقتك بـ 90 ثانية تلقائياً.</li>
+              <li>بعد انتهاء دور اللاعب (صحيح أو انتهاء المحاولات)، ينتقل الدور
+                إلى اللاعب التالي.</li>
+              <li>🔢 تُسجَّل نتائج كل لاعب (الوقت + عدد المحاولات) في
+                النهاية.</li>
+            </ol>
+          </div>
+
+          <div class="info-section">
+            <h3>💡 نصائح وإرشادات:</h3>
+            <p>
+              • ركّز على تفاصيل الصور 🎨.<br>
+              • لا تسرع بالاختيار—محاولتان فقط! ⚡<br>
+              • استمتع باللعب مع الأصدقاء والعائلة 👪.
+            </p>
+          </div>
+        </div>
+
+        <button id="startSimilarBtn" class="btn btn-start">بدء اللعبة
+          ▶️</button>
+        <button class="btn btn-secondary">العودة للقائمة</button>
+      </div>
+    </section>
+    <section id="countdownScreen" class="screen">
+      <div class="countdown-container">
+        <div id="playerNameDisplay" class="player-name-display"></div>
+        <div id="countdownNumber" class="countdown-number"></div>
+      </div>
+    </section>
+    <div id="boxCountdownScreen" class="screen">
+      <div class="countdown-container">
+        <div id="playerBoxName" class="player-name-display"></div>
+        <div id="boxCountdownNumber" class="countdown-number"></div>
+      </div>
+    </div>
+    <!-- Results Screen -->
+    <section id="similarResultsScreen" class="screen">
+      <div class="container results-container">
+        <h1 class="results-title">🏆 النتائج النهائية</h1>
+
+        <!-- جداول النتائج -->
+        <div class="results-tables">
+          <!-- جدول جولة اللعبة الحالية -->
+          <div class="results-box">
+            <h2 class="box-title">نتائج الجولة</h2>
+            <table class="results-table">
+              <thead>
+                <tr>
+                  <th>🏅 المركز</th>
+                  <th>👤 اللاعب</th>
+                  <th>⏱️ الوقت (ث)</th>
+                  <th>✅ المحاولات</th>
+                  <th>🌟 النقاط</th>
+                </tr>
+              </thead>
+              <tbody id="roundResultsBody">
+                <!-- تعبئة ديناميكياً عبر JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- جدول النقاط التراكمية -->
+          <div class="results-box">
+            <h2 class="box-title">النقاط الإجمالية</h2>
+            <table class="results-table">
+              <thead>
+                <tr>
+                  <th>🏆 الترتيب</th>
+                  <th>👤 اللاعب</th>
+                  <th>💯 المجموع الكلي</th>
+                </tr>
+              </thead>
+              <tbody id="totalResultsBody">
+                <!-- تعبئة ديناميكياً عبر JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- زر للعودة أو إعادة اللعب -->
+        <div class="results-actions">
+          <button id="playAgainBtn" class="btn btn-primary large">🔄 العب مرة
+            أخرى</button>
+          <button id="backHomeBtn" class="btn btn-secondary large">🏠 العودة
+            للقائمة</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="imagesScreen" class="screen">
+      <div class="container">
+        <div class="image-grid"></div>
+        <button id="nextTurnBtn" class="btn btn-primary">التالي ▶️</button>
+      </div>
+    </section>
+    <!-- Player Input Screen -->
+
+    <!-- Boxes Game Rules Screen -->
+    <section id="boxesRulesScreen" style="padding-bottom: 3rem !important;"
+      class="screen">
+      <header class="game-header">
+        <div class="container">
+          <h1 class="game-header-title">🎲 لعبة الصناديق</h1>
+        </div>
+      </header>
+
+      <div class="container">
+        <div class="game-info">
+          <h2 class="game-title">📜 قوانين لعبة الصناديق</h2>
+
+          <div class="info-section">
+            <h3>👥 عدد اللاعبين المقترح:</h3>
+            <p>من 3 إلى 12 لاعب</p>
+          </div>
+
+          <div class="info-section">
+            <h3>🎉 عن اللعبة:</h3>
+            <p>لعبة الصناديق ممتعة 😄 وتعتمد على التركيز والسرعة بشكل كبير ⏱️.
+              تُلعب بشكل كامل على الجهاز 📱.</p>
+          </div>
+
+          <div class="info-section">
+            <h3>🕹️ طريقة اللعب:</h3>
+            <ol>
+              <li>اضغط على زر البدء ▶️ لبدء التحدي.</li>
+              <li>ستظهر أمامك 20 صندوقًا 📦 بترتيب عشوائي.</li>
+              <li>مهمتك: النقر على الصناديق بالترتيب من 1 إلى 20 بأسرع ما
+                يمكن.</li>
+              <li>🚨 أي خطأ يعيدك إلى نقطة البداية 🔙.</li>
+            </ol>
+          </div>
+
+          <div class="info-section">
+            <h3>⏳ الوقت:</h3>
+            <p>لديك 60 ثانية 🕒 لإكمال التحدي 🏁.</p>
+          </div>
+
+          <div class="info-section">
+            <h3>🏆 الفوز:</h3>
+            <p>أسرع لاعب ينهي التحدي هو الفائز! 🏅</p>
+          </div>
+
+          <div class="info-section">
+            <h3>💡 تحديات إضافية:</h3>
+            <p>
+              ابتكروا تحديات مجنونة لإضافة المرح 😂:<br>
+              • جولة الأصبع: استخدم إصبعًا واحدًا فقط ☝️ للنقر.<br>
+              • جولة الكوع: حاول النقر بالكوع! 🤜<br>
+              • جولة الأنف: هل يمكنك النقر بأنفك؟ 👃
+            </p>
+          </div>
+
+          <div class="info-section">
+            <h3>🎖️ نظام النقاط:</h3>
+            <ul>
+              <li>🥇 المركز الأول: 20 نقطة</li>
+              <li>🥈 المركز الثاني: 10 نقاط</li>
+              <li>🥉 المركز الثالث: 5 نقاط</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="buttons-row">
+          <button id="backToGamesBtn" class="btn btn-secondary">🔙 العودة
+            للقائمة</button>
+          <button id="startBoxesBtn" class="btn btn-primary">▶️ بدء
+            اللعبة</button>
+        </div>
+      </div>
+    </section>
+
+    <div id="boxGameScreen" class="screen">
+      <div id="boxTimer">⏰ 60s</div>
+      <div class="box-grid"></div>
+    </div>
+    <div id="boxResultsScreen" class="screen results-container">
+      <h2 class="results-title">نتائج الجولة 🏁</h2>
+
+      <div class="results-tables">
+        <div class="results-box">
+          <div class="box-title">نتائج الجولة</div>
+          <table class="results-table">
+            <thead>
+              <tr><th>#</th><th>اللاعب</th><th>الزمن</th><th>النقاط</th></tr>
+            </thead>
+            <tbody id="roundResultsBody1"></tbody>
+          </table>
+        </div>
+
+        <div class="results-box">
+          <div class="box-title">النقاط التراكمية 🏆</div>
+          <table class="results-table">
+            <thead>
+              <tr><th>#</th><th>اللاعب</th><th>المجموع</th></tr>
+            </thead>
+            <tbody id="totalResultsBody1"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="results-actions">
+        <button id="boxPlayAgainBtn" class="btn large">🔁 إعادة اللعب</button>
+        <button id="boxBackHomeBtn" class="btn large">🏠 العودة للقائمة
+          الرئيسية</button>
+      </div>
+    </div>
+
+    <!-- Games Menu Screen -->
+    <section id="gamesScreen" class="screen">
+      <div class="container">
+        <h1 class="title">قائمة الألعاب</h1>
+
+        <div class="games-grid">
+          <!-- Game cards will be inserted here dynamically -->
+        </div>
+
+        <button id="backButton" class="btn btn-secondary">العودة</button>
+      </div>
+    </section>
+
+    <!-- Out of Topic Game Screen -->
+    <section id="outOfTopicScreen" class="screen">
+      <header class="game-header">
+        <div class="container">
+          <h1 class="game-header-title">🎲 لعبة: خارج الموضوع</h1>
+        </div>
+      </header>
+
+      <div class="container">
+        <div class="game-info">
+          <h2 class="game-title">قوانين لعبة خارج الموضوع</h2>
+
+          <div class="info-section">
+            <h3>عدد اللاعبين المقترح:</h3>
+            <p>من 3 إلى 12 لاعب</p>
+          </div>
+
+          <div class="info-section">
+            <h3>🎯 الهدف:</h3>
+            <p>اكتشف من هو اللاعب "خارج الموضوع" 😲 عن طريق طرح الأسئلة
+              🧑‍🤝‍🧑🙆‍♀️ وملاحظة الإجابات 🤨.</p>
+          </div>
+
+          <div class="info-section">
+            <h3>🎲 طريقة اللعب:</h3>
+            <ol>
+              <li>اختيار الكلمة السرية: 😲 يختار التطبيق بشكل عشوائي كلمة أو
+                موضوع سيعرفه الجميع ماعدا لاعب واحد.</li>
+              <li>توزيع الأدوار: 🎭 سيتم اختيار اللاعب "خارج الموضوع" بشكل
+                عشوائي أيضًا. لن يعلم هذا اللاعب بالكلمة السرية.</li>
+              <li>الدور: 🎙️ يتناوب اللاعبون على طرح الأسئلة 🙋‍♀️ على بعضهم
+                البعض، بهدف اكتشاف هوية اللاعب 🙆‍♂️ "خارج الموضوع".</li>
+              <li>الإجابات: 🤔 يجب على اللاعبين الإجابة على الأسئلة بشكل طبيعي
+                ودون الكشف عن هويتهم الحقيقية 🤐 , خاصة اللاعب "خارج الصندوق"
+                الذي سيحاول التظاهر بأنه على علم بالكلمة. </li>
+              <li>التصويت: 🗳️ بعد انتهاء فترة الأسئلة 👑 يصوت كل لاعب على من
+                يعتقد أنه اللاعب "خارج الموضوع" 😲.</li>
+              <li>الكشف: يكشف التطبيق عن هوية اللاعب "خارج الموضوع" 😲. يحصل كل
+                لاعب بشكل صحيح على 25 نقطة 🏆.</li>
+              <li>الجولات التالية: 🔄 تستمر اللعبة بعدد من الجولات حسب رغبة
+                اللاعبين 🎲، مع اختيار كلمة سرية جديدة في كل جولة.</li>
+
+            </ol>
+          </div>
+
+          <div class="info-section">
+            <h3>نصائح وإرشادات 🧠:</h3>
+            <p> استخدموا خيالكم! كلما كانت الأسئلة أكثر إبداعًا 🎨، زادت متعة
+              اللعبة وصعوبة اكتشاف اللاعب "خارج الموضوع" 😲. انتبهوا لإشارات
+              الكلام ولغة الجسد! 👀 قد تكشف بعض التصرفات هوية اللاعب
+              "خارج الموضوع" 😲. لا تنسوا الاستمتاع! 😆 تهدف اللعبة إلى قضاء وقت
+              ممتع مع العائلة والأصدقاء 👨‍👩‍👧‍👦 بدون عصبية وتوتر.</p>
+          </div>
+
+        </div>
+
+        <button id="startGameButton" class="btn btn-start">بدء اللعبة</button>
+        <button id="backToGamesButton" class="btn btn-secondary">العودة
+          للقائمة</button>
+      </div>
+    </section>
+    <section id="mafiaScreen" class="screen">
+      <header class="game-header">
+        <div class="container">
+          <h1 class="game-header-title">🎲 لعبة: 🕵️‍♂️ المافيا</h1>
+        </div>
+      </header>
+
+      <div class="container">
+        <div class="game-info">
+          <h2 class="game-title">📜 قوانين لعبة المافيا</h2>
+
+          <div class="info-section">
+            <h3>عدد اللاعبين المقترح:</h3>
+            <p>من 5 إلى 12 لاعب</p>
+          </div>
+
+          <div class="info-section">
+            <h3>💡 فكرة اللعبة:</h3>
+            <p>
+              تدور أحداث اللعبة في قرية صغيرة تحتوي على أعضاء المافيا 💀
+              والمواطنين 👩‍🌾، الذين يحاول كل منهم التخلص من الآخر.
+              المواطنون لا يعرفون من هم المافيا، ويحاولون اكتشافهم عن طريق
+              النقاش والتصويت، بينما يعرف أعضاء المافيا بعضهم البعض سرا 🕵️‍♂️
+              ويحاولون قتل المواطنين خلال الجولات الليلية 🌙 دون أن يتم كشفهم.
+            </p>
+          </div>
+
+          <div class="info-section">
+            <h3>📝 الأدوار:</h3>
+            <ul>
+              <li>💀 <strong>المافيا:</strong> يوجد عضو مافيا لكل 4 لاعبين
+                تقريبًا. يحاولون قتل باقي الشخصيات دون أن يُكشف أمرهم.</li>
+              <li>🩺 <strong>الطبيب:</strong> مواطن يستطيع حماية أي لاعب (بما في
+                ذلك نفسه) من القتل في الجولة المسائية.</li>
+              <li>🕵️‍♂️ <strong>المحقق:</strong> مواطن يستطيع التحقق من هوية
+                لاعب واحد في كل جولة مسائية.</li>
+              <li>🧑‍🌾 <strong>المواطن:</strong> يحاول النجاة والتصويت لقتل
+                أعضاء المافيا خلال الجولات الصباحية.</li>
+            </ul>
+          </div>
+
+          <div class="info-section">
+            <h3>📚 كيفية لعب المافيا:</h3>
+            <p>اللعبة تنقسم إلى جولتين في كل دورة: جولة مسائية وجولة صباحية.</p>
+
+            <h4>🌙 الجولات المسائية:</h4>
+            <ul>
+              <li>🏙️ تبدأ اللعبة بجولة مسائية سرّية، حيث تقوم المافيا بقتل أحد
+                اللاعبين (قد يكون مواطن، طبيب، أو محقق).</li>
+              <li>🩺 يقوم الطبيب باختيار لاعب لحمايته. إذا حمى اللاعب الذي
+                استهدفته المافيا، ينجو من الموت.</li>
+              <li>🕵️‍♂️ المحقق يختار لاعبًا ليتحقق من هويته سراً (هل هو من
+                المافيا أم لا).</li>
+              <li>😴 المواطنون العاديون لا يشاركون ويُفترض أنهم نائمون.</li>
+            </ul>
+            <p>
+              بعد انتهاء الجولة، يتم عرض نتائجها. إذا تم قتل لاعب ولم يكن
+              محميًا، يُستبعد من اللعبة.
+              ثم تبدأ الجولة الصباحية.
+            </p>
+
+            <h4>🌄 الجولات الصباحية:</h4>
+            <ul>
+              <li>يتناقش اللاعبون ويحاولون معرفة من هم أعضاء المافيا بناءً على
+                التصرفات والشكوك.</li>
+              <li>كل لاعب يستطيع اتهام أحدهم، وعلى اللاعب المتهم الدفاع عن
+                نفسه.</li>
+              <li>📦 بعد النقاش، يُطلب من الجميع التصويت لقتل لاعب يظنون أنه من
+                المافيا.</li>
+              <li>💀 يُعلن عن اللاعب الذي حصل على أكثر عدد من الأصوات ويُستبعد
+                من اللعبة.</li>
+            </ul>
+            <p>ثم تبدأ دورة جديدة بجولة مسائية تليها جولة صباحية، وهكذا حتى
+              تنتهي اللعبة.</p>
+          </div>
+
+          <div class="info-section">
+            <h3>🏁 نهاية اللعبة:</h3>
+            <p>⏳ تنتهي اللعبة عندما:</p>
+            <ul>
+              <li>يتم قتل جميع أفراد المافيا (فوز المواطنين).</li>
+              <li>أو يتم قتل جميع المواطنين (فوز المافيا).</li>
+            </ul>
+          </div>
+
+          <div class="info-section">
+            <h3>🏅 النقاط:</h3>
+            <p>الفريق الفائز يحصل على <strong>٧٠ نقطة</strong> عن كل لاعب بقي
+              حيًّا في فريقه.</p>
+          </div>
+
+          <div class="info-section">
+            <h3>📌 ملاحظات مهمة:</h3>
+            <ul>
+              <li>🤐 يجب إبقاء الأدوار سرية وعدم الإفصاح عنها لباقي
+                اللاعبين.</li>
+              <li>🔍 لا تكشف أنك المحقق أو الطبيب حتى لا تُستهدف.</li>
+              <li>❌ لا تتسرع بالحكم على أحد، استمع جيدًا لجميع الآراء.</li>
+              <li>🧠 دافع عن نفسك بأسباب منطقية، ولا تتهرب من النقاش.</li>
+              <li>😶 إذا خرجت من اللعبة، لا تتحدث أو تؤثر على سير اللعبة.</li>
+              <li>🎭 لا تستخدم القسم بالله أثناء اللعب — اللعبة تعتمد على الذكاء
+                والخداع!</li>
+            </ul>
+          </div>
+
+          <div class="info-section">
+            <h3>📣 نصائح وإرشادات:</h3>
+            <p>
+              استخدموا خيالكم! كلما كانت الأسئلة والحوارات أكثر إبداعًا، زادت
+              متعة اللعبة.
+              انتبهوا لإشارات الكلام ولغة الجسد! قد تكشف بعض التصرفات من هو عضو
+              المافيا.
+              الأهم من كل ذلك: استمتعوا باللعبة 😄! هي وسيلة لقضاء وقت ممتع مع
+              العائلة والأصدقاء 👨‍👩‍👧‍👦.
+            </p>
+          </div>
+
+        </div>
+
+        <button id="startMafiaGameButton" onclick="startMafiaGame()"
+          class="btn btn-start">بدء اللعبة</button>
+        <button class="btn btn-secondary">العودة للقائمة</button>
+      </div>
+    </section>
+
+    <!-- Category Selection Screen -->
+    <section id="categoryScreen" class="screen">
+      <header class="game-header">
+        <div class="container">
+          <h1>اختر التصنيف</h1>
+        </div>
+      </header>
+      <div class="container">
+        <div class="category-grid">
+          <button class="category-card" data-category="food"><span
+              style="font-size: 3rem;">🍔</span> مأكولات</button>
+          <button class="category-card" data-category="places"><span
+              style="font-size: 3rem;">🌍</span> أماكن</button>
+          <button class="category-card" data-category="animals"><span
+              style="font-size: 3rem;">🐶</span> حيوانات</button>
+          <button class="category-card" data-category="clothes"><span
+              style="font-size: 3rem;">👕</span> ملابس</button>
+          <button class="category-card" data-category="produce"><span
+              style="font-size: 3rem;">🥕</span> خضار وفاكهة</button>
+          <button class="category-card" data-category="drinks"><span
+              style="font-size: 3rem;">🥤</span> مشروبات</button>
+          <button class="category-card" data-category="household"><span
+              style="font-size: 3rem;">🏠</span> أشياء منزلية</button>
+          <button class="category-card" data-category="vehicles"><span
+              style="font-size: 3rem;">🚗</span> مركبات ومواصلات</button>
+          <button class="category-card" data-category="cities"><span
+              style="font-size: 3rem;">🏙️</span> مدن</button>
+          <button class="category-card" data-category="cartoons"><span
+              style="font-size: 3rem;">🎬</span> شخصيات كرتونية</button>
+          <button class="category-card" data-category="games"><span
+              style="font-size: 3rem;">🎮</span> ألعاب</button>
+          <button class="category-card" data-category="jobs"><span
+              style="font-size: 3rem;">💼</span> وظائف</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Warning Screen -->
+    <section id="warningScreen" class="screen">
+      <div class="container">
+        <div class="warning-box">
+          <h2 class="warning-title">حافظ على الخصوصية</h2>
+          <p class="warning-text">
+            كل اللاعبين ماعدا لاعب واحد سيعرفون نفس الكلمة السرية.<br>
+            حافظ على خصوصية الشاشة بعيدًا عن أعين باقي اللاعبين.<br>
+            لا تجعلهم ينظروا لمحتوى الشاشة التالية.
+          </p>
+          <button id="playerConfirmButton" class="btn btn-primary"></button>
+        </div>
+      </div>
+    </section>
+    <section id="mafiaWarningScreen" class="screen">
+      <div class="container">
+        <div class="warning-box">
+          <h2>اعط الهاتف ل<span id="playernameMafia"></span></h2>
+          <h2 class="warning-title">حافظ على الخصوصية</h2>
+          <p class="warning-text">
+            حافظ على خصوصية الشاشة التالية. سيتم تحديد الأدوار بشكل عشوائي
+          </p>
+          <button id="mafiaPlayerConfirmButton"
+            class="btn btn-primary"></button>
+        </div>
+      </div>
+    </section>
+    <section id="mafiaVoting" class="screen">
+      <div class="container">
+        <div class="warning-box">
+          <h2>اعط الهاتف ل<span id="playernameVote"></span></h2>
+          <h2 class="warning-title">حافظ على الخصوصية</h2>
+          <p class="warning-text">
+            بحسب دورك في اللعبة, صوت على اللاعب المناسب
+          </p>
+          <button id="mafiaPlayerVoteButton" class="btn btn-primary"></button>
+        </div>
+      </div>
+
+    </section>
+    <section id="mafiaVotingMorning" class="screen">
+      <div class="container">
+        <div class="warning-box">
+          <h2>اعط الهاتف ل<span id="playernameVoteMorning"></span></h2>
+          <h2 class="warning-title">حافظ على الخصوصية</h2>
+          <p class="warning-text">
+            بحسب دورك في اللعبة, صوت على اللاعب المناسب
+          </p>
+          <button id="mafiaPlayerVoteButtonMorning"
+            class="btn btn-primary"></button>
+        </div>
+      </div>
+
+    </section>
+    <section id="VoteRoleScreen" class="screen">
+      <div class="container">
+        <div class="secret-box">
+          <h2 class="greeting-title">مرحبا</h2>
+          <h3 id="player-name-vote" class="player-name"></h3>
+          <div id="VoteContent" class="secret-content">
+            <button id="voteConButton" class="btn btn-primary">انقر</button>
+          </div>
+          <button onclick="showVote()" id="VoteConfirmButton"
+            class="btn btn-primary" style="display: none;">موافق</button>
+        </div>
+      </div>
+    </section>
+    <section id="VoteRoleScreenMorning" class="screen">
+      <div class="container">
+        <div class="secret-box">
+          <h2 class="greeting-title">مرحبا</h2>
+          <h3 id="player-name-vote-morning" class="player-name"></h3>
+          <div id="VoteContentMorning" class="secret-content">
+            <button id="voteConButtonMorning"
+              class="btn btn-primary">انقر</button>
+          </div>
+          <button onclick="showVoteMorning()" id="VoteConfirmButtonMorning"
+            class="btn btn-primary" style="display: none;">موافق</button>
+        </div>
+      </div>
+    </section>
+    <section id="NightRes" class="screen">
+      <div class="container">
+        <div class="secret-box">
+          <h2 class="greeting-title">نتيجة الجولة المسائية</h2>
+          <p>انتهى التصويت اظهر الشاشة للجميع</p>
+          <p id="nightResult"></p> <!-- Dynamically added paragraph -->
+          <button id="showNightRes" class="btn btn-primary"
+            style="margin-top: 1rem;">موافق</button>
+          <button id="startMorn" onclick="showScreen('MorningDurationScreen')"
+            class="btn btn-primary" style="margin-top: 1rem; display: none;">بدء
+            الجولة الصباحية</button>
+        </div>
+      </div>
+    </section>
+    <section id="morningRes" class="screen">
+      <div class="container">
+        <div class="secret-box">
+          <h2 class="greeting-title">نتيجة الجولة المسائية</h2>
+          <p>انتهى التصويت اظهر الشاشة للجميع</p>
+          <p id="morningResult"></p> <!-- Dynamically added paragraph -->
+          <button id="showMorningRes" class="btn btn-primary"
+            style="margin-top: 1rem;">موافق</button>
+          <button id="startNight" onclick="showScreen('NightDurationScreen')"
+            class="btn btn-primary" style="margin-top: 1rem; display: none;">بدء
+            الجولة الصباحية</button>
+        </div>
+      </div>
+    </section>
+    <!-- Secret Word Screen -->
+    <section id="secretScreen" class="screen">
+      <div class="container">
+        <div class="secret-box">
+          <h2 id="playerGreeting" class="greeting-title">مرحبا</h2>
+          <h3 id="playerName" class="player-name"></h3>
+          <div id="secretContent" class="secret-content">
+            <button id="revealButton" class="btn btn-primary">انقر</button>
+          </div>
+          <button id="secretConfirmButton" class="btn btn-primary"
+            style="display: none;">موافق</button>
+        </div>
+      </div>
+    </section>
+    <section id="roleScreen" class="screen">
+      <div class="container">
+        <div class="secret-box">
+          <h2 id="playerGreeting" class="greeting-title">مرحبا</h2>
+          <h3 id="playerName" class="player-name"></h3>
+          <div id="roleContent" class="secret-content">
+            <button id="revealButtonMafia" class="btn btn-primary">انقر</button>
+          </div>
+          <button id="roleConfirmButton" class="btn btn-primary"
+            style="display: none;">موافق</button>
+        </div>
+      </div>
+    </section>
+    <section id="roleScreenMorning" class="screen">
+      <div class="container">
+        <div class="secret-box">
+          <h2 id="playerGreetingMorning" class="greeting-title">مرحبا</h2>
+          <h3 id="playerNameMorning" class="player-name"></h3>
+          <div id="roleContentMorning" class="secret-content">
+            <button id="revealButtonMafiaMorning"
+              class="btn btn-primary">انقر</button>
+          </div>
+          <button id="roleConfirmButtonMorning" class="btn btn-primary"
+            style="display: none;">موافق</button>
+        </div>
+      </div>
+    </section>
+    <!-- Questions Round Screen -->
+    <section id="questionsScreen" class="screen">
+      <header class="game-header">
+        <!-- <img src="assets/magnifier.svg" class="header-icon" alt=""> -->
+        <h1>⏱️ وقت الأسئلة</h1>
+      </header>
+      <div class="container">
+        <div class="questions-box">
+          <p class="questions-instructions">
+            في هذه الجولة كل لاعب يطرح سؤال عام عن الموضوع على اللاعب الآخر.<br>
+            لا تعطوا إجابات واضحة جدًا حتى لا يعرف اللاعب خارج الموضوع
+            الموضوع.<br>
+            يمنع إعادة نفس السؤال مرة أخرى.
+          </p>
+          <div id="currentQuestion" class="current-question"></div>
+          <button id="nextQuestionButton" class="btn btn-primary">السؤال
+            التالي</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Voting Round Screen -->
+    <section id="votingScreen" class="screen">
+      <header class="game-header">
+        <div class="container">
+          <h1>جولة التصويت على الخارج</h1>
+        </div>
+      </header>
+      <div class="container">
+        <div class="voting-box">
+          <div class="voting-instructions">
+            <p>
+              كل لاعب يصوت على من يظن أنه خارج الموضوع.<br>
+              كل صوت صحيح يمنح صاحب السؤال 25 نقطة.<br>
+              إذا تصوت الأغلبية على الشخص الصحيح، يحصل الجميع على 100 نقطة
+              إضافية.
+            </p>
+          </div>
+          <div id="votingArea" class="voting-area"></div>
+        </div>
+      </div>
+    </section>
+    <!-- Secret Word Guess Screen -->
+    <section id="guessScreen" class="screen">
+      <header class="game-header">
+        <div class="container">
+          <h1>تخمين الكلمة السرية</h1>
+        </div>
+      </header>
+      <div class="container">
+        <div class="guess-box">
+          <p>أنت خارج الموضوع، <span id="guessingPlayer"></span>. حاول تخمين
+            الكلمة السرية:</p>
+          <div id="guessWord" class="voting-area"></div>
+          <button id="submitGuessButton" class="btn btn-primary">تأكيد</button>
+        </div>
+      </div>
+    </section>
+    <!-- Results Screen -->
+    <section id="resultsScreen" class="screen results-screen">
+      <header class="game-header">
+        <div class="container">
+          <h1 class="results-title">🏆 النتائج النهائية 🏆</h1>
+        </div>
+      </header>
+      <div class="container">
+        <div class="results-box">
+          <div id="resultsArea" class="results-area"></div>
+          <button id="backToMenuButton" class="btn btn-primary back-btn">العودة للقائمة الرئيسية</button>
+        </div>
+      </div>
+    </section>
+    
+    <section id="finalCitizen" class="screen">
+      <header class="game-header">
+        <div class="container">
+          <h1>النتائج النهائية</h1>
+        </div>
+      </header>
       <div class="results-box">
-        <div id="resultsArea" class="results-area"></div>
-        <button id="backToMenuButton" class="btn btn-primary">العودة للقائمة الرئيسية</button>
+        <p>انتهت اللعبة بفوز المواطنين🎉</p>
+        <button onclick="loadStoredResultsMafia()" class="btn btn-primary">إظهار
+          النتيجة</button>
+
       </div>
-    </div>
-  </section>
-  <section id="finalCitizen" class="screen">
-    <header class="game-header">
+    </section>
+    <section id="finalMafia" class="screen">
+      <header class="game-header">
+        <div class="container">
+          <h1>النتائج النهائية</h1>
+        </div>
+      </header>
+      <div class="results-box">
+        <p>انتهت اللعبة بفوز المافيا🎉</p>
+        <button onclick="loadStoredResultsMafia()" class="btn btn-primary">إظهار
+          النتيجة</button>
+
+      </div>
+    </section>
+    <section id="MorningDurationScreen" class="screen">
+      <header class="game-header">
+        <div class="container">
+          <h1>🕵️‍♂️ لعبة: المافيا</h1>
+        </div>
+      </header>
+
       <div class="container">
-        <h1>النتائج النهائية</h1>
+        <div class="sub-title">الجولة التالية هي الجولة الصباحية</div>
+
+        <!-- Illustration: use your own asset or replace with SVG markup -->
+        <img src="./public/discussion.png" alt="Mafia Morning"
+          class="illustration" style="width: 100%;">
+
+        <div class="description">
+          <p>💡قبل بدء الجولة الصباحية🌞, ناقشوا💬 واتهموا بعضكم البعض لمعرفة
+            أعضاء المافيا بينكم ☠️, ستبدأ الجولة الصباحية بالتصويت على القاتل🔪
+          </p>
+          <p>وسيتم استبعاد🚫 صاحب أغلبية الأصوات حتى لو كان بريئا</p>
+        </div>
+
+        <button onclick="startMafiaVotingMorning()" class="btn-start-night">بدء
+          الجولة الصباحية 🌞</button>
+
+        <div class="stats">
+          <div class="stat"><span>💀</span> مافيا: <strong
+              class="mafianum">123456</strong></div>
+          <div class="stat"><span>👩‍🌾</span> مواطن: <strong
+              class="cnum"></strong></div>
+          <div class="stat"><span>🕵️‍♂️</span> محقق: <strong
+              class="pnum"></strong></div>
+          <div class="stat"><span>🩺</span> طبيب: <strong
+              class="mnum"></strong></div>
+        </div>
       </div>
-    </header>
-    <div class="results-box">
-    <p>انتهت اللعبة بفوز  المواطنين🎉</p>
-    <button onclick="loadStoredResultsMafia()" class="btn btn-primary">إظهار النتيجة</button>
+    </section>
+    <section id="NightDurationScreen" class="screen">
+      <header class="game-header">
+        <div class="container">
+          <h1>🕵️‍♂️ لعبة: المافيا</h1>
+        </div>
+      </header>
 
-
-      
-    </div>
-  </section>
-  <section id="finalMafia" class="screen">
-    <header class="game-header">
       <div class="container">
-        <h1>النتائج النهائية</h1>
+        <div class="sub-title">الجولة التالية هي الجولة المسائية</div>
+
+        <!-- Illustration: use your own asset or replace with SVG markup -->
+        <img src="./public/mafia2.png" alt="Mafia Night" class="illustration"
+          style="width: 100%;">
+
+        <div class="description">
+          <p>💡 خلال الجولة المسائية، ينام المواطنون 😴 بينما تنشط المافيا 🔪
+            لقتل لاعب واحد،</p>
+          <p>🩺 ويحاول الطبيب إنقاذه 🎗️، و🕵️‍♂️ المحقق يكشف سرًا عن هوية أحد
+            أعضاء المافيا.</p>
+          <p>🌅 يبدأ النقاش وتبادل الاتهامات بعد انتهاء الليل.</p>
+        </div>
+
+        <button onclick="startMafiaVoting()" class="btn-start-night">ابدأ الجولة
+          المسائية ⚫️ zZz</button>
+
+        <div class="stats">
+          <div class="stat"><span>💀</span> مافيا: <strong
+              class="mafianum"></strong></div>
+          <div class="stat"><span>👩‍🌾</span> مواطن: <strong
+              class="cnum"></strong></div>
+          <div class="stat"><span>🕵️‍♂️</span> محقق: <strong
+              class="pnum"></strong></div>
+          <div class="stat"><span>🩺</span> طبيب: <strong
+              class="mnum"></strong></div>
+        </div>
       </div>
-    </header>
-    <div class="results-box">
-    <p>انتهت اللعبة بفوز  المافيا🎉</p>
-    <button onclick="loadStoredResultsMafia()" class="btn btn-primary">إظهار النتيجة</button>
-      
-    </div>
-  </section>
-  <section id="MorningDurationScreen" class="screen">
-    <header class="game-header">
-      <div class="container">
-        <h1>🕵️‍♂️ لعبة: المافيا</h1>
-      </div>
-    </header>
+    </section>
 
-    <div class="container">
-      <div class="sub-title">الجولة التالية هي الجولة الصباحية</div>
-
-      <!-- Illustration: use your own asset or replace with SVG markup -->
-      <img src="./public/discussion.png" alt="Mafia Morning" class="illustration" style="width: 100%;">
-
-      <div class="description">
-        <p>💡قبل بدء الجولة الصباحية🌞, ناقشوا💬 واتهموا بعضكم البعض لمعرفة أعضاء المافيا بينكم ☠️, ستبدأ الجولة الصباحية بالتصويت على القاتل🔪 </p>
-        <p>وسيتم استبعاد🚫 صاحب أغلبية الأصوات حتى لو كان بريئا</p>
-      </div>
-
-      <button onclick="startMafiaVotingMorning()" class="btn-start-night">بدء الجولة الصباحية 🌞</button>
-
-      <div class="stats">
-        <div class="stat"><span>💀</span> مافيا: <strong class="mafianum">123456</strong></div>
-        <div class="stat"><span>👩‍🌾</span> مواطن: <strong class="cnum"></strong></div>
-        <div class="stat"><span>🕵️‍♂️</span> محقق: <strong class="pnum"></strong></div>
-        <div class="stat"><span>🩺</span> طبيب: <strong class="mnum"></strong></div>
-      </div>
-    </div>
-  </section>
-  <section id="NightDurationScreen" class="screen">
-    <header class="game-header">
-      <div class="container">
-        <h1>🕵️‍♂️ لعبة: المافيا</h1>
-      </div>
-    </header>
-
-    <div class="container">
-      <div class="sub-title">الجولة التالية هي الجولة المسائية</div>
-
-      <!-- Illustration: use your own asset or replace with SVG markup -->
-      <img src="./public/mafia2.png" alt="Mafia Night" class="illustration" style="width: 100%;">
-
-      <div class="description">
-        <p>💡 خلال الجولة المسائية، ينام المواطنون 😴 بينما تنشط المافيا 🔪 لقتل لاعب واحد،</p>
-        <p>🩺 ويحاول الطبيب إنقاذه 🎗️، و🕵️‍♂️ المحقق يكشف سرًا عن هوية أحد أعضاء المافيا.</p>
-        <p>🌅 يبدأ النقاش وتبادل الاتهامات بعد انتهاء الليل.</p>
-      </div>
-
-      <button onclick="startMafiaVoting()" class="btn-start-night">ابدأ الجولة المسائية ⚫️  zZz</button>
-
-      <div class="stats">
-        <div class="stat"><span>💀</span> مافيا: <strong class="mafianum"></strong></div>
-        <div class="stat"><span>👩‍🌾</span> مواطن: <strong class="cnum"></strong></div>
-        <div class="stat"><span>🕵️‍♂️</span> محقق: <strong class="pnum"></strong></div>
-        <div class="stat"><span>🩺</span> طبيب: <strong class="mnum"></strong></div>
-      </div>
-    </div>
-  </section>
-
-  <nav class="bottom-nav">
-    <button class="nav-btn" id="nav-players">اللاعبين</button>
-    <button class="nav-btn" id="nav-games">الألعاب</button>
-    <button class="nav-btn" id="nav-results">النتائج</button>
-  </nav>
-  <script src="scripts/constants.js"></script>
-  <script src="scripts/storage.js"></script>
-  <script src="scripts/ui.js"></script>
-  <script src="scripts/validation.js"></script>
-  <script src="scripts/app.js"></script>
-  <script src="scripts/mafiaGame.js"></script>
-  <script src="scripts/similarpic.js"></script>
-  <script src="scripts/boxes.js"></script>
-</body>
+    <nav class="bottom-nav">
+      <button class="nav-btn" id="nav-players">اللاعبين</button>
+      <button class="nav-btn" id="nav-games">الألعاب</button>
+      <button class="nav-btn" id="nav-results">النتائج</button>
+    </nav>
+    <script src="scripts/constants.js"></script>
+    <script src="scripts/storage.js"></script>
+    <script src="scripts/ui.js"></script>
+    <script src="scripts/validation.js"></script>
+    <script src="scripts/app.js"></script>
+    <script src="scripts/mafiaGame.js"></script>
+    <script src="scripts/similarpic.js"></script>
+    <script src="scripts/boxes.js"></script>
+    <script src="scripts/jawwal.js"></script>
+    <script src="scripts/who.js"></script>
+    <script src="scripts/fastest.js"></script>
+    <script src="scripts/kanz.js"></script>
+  </body>
 </html>
