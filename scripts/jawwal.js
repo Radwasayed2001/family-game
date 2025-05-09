@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const players = loadPlayers();
-  let settings       = { time: 60, categories: [] };
+  const playersJawwal = loadPlayers();
+  let settingsJawwal       = { time: 60, categories: [] };
   let order = [], idx = 0;
-  let currentPlayer  = 0, correctCount = 0;
-  let timerId = null, wordTimerId = null;
-  const roundResults = [];
+  let currentPlayerJawwal  = 0, correctCount = 0;
+  let timerIdJ = null, wordTimerId = null;
+  const roundResultsJ = [];
 
   // عتبة الميل بالنسبة للـ delta عن baseline
   const TILT_THRESHOLD = 30;  
@@ -13,10 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // DOM refs
   const timeSlider    = document.getElementById('timeSlider');
-  const timeValue     = document.getElementById('timeValue');
-  const cats          = [...document.querySelectorAll('.checkbox-list input')];
-  const startBtn      = document.getElementById('startHeadsUp');
-  const backSettings  = document.getElementById('backToGamesBtnJ');
+  const timeValueJ     = document.getElementById('timeValueJ');
+  const catsJ          = [...document.querySelectorAll('.checkbox-list input')];
+  const startBtnJ      = document.getElementById('startHeadsUp');
+  const backSettingsJ  = document.getElementById('backToGamesBtnJ');
 
   const passName      = document.getElementById('headsUpPlayerName');
   const passCount     = document.getElementById('headsUpCount');
@@ -26,38 +26,39 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnSkip       = document.getElementById('btnSkip');
 
   const endCount      = document.getElementById('headsUpCountCorrect');
-  const nextPlayerBtn = document.getElementById('btnNextPlayer');
+  const nextPlayerBtnJ = document.getElementById('btnNextPlayer');
 
   const resultsBody   = document.getElementById('headsUpResultsBody');
   const replayBtn     = document.getElementById('btnReplayHeadsUp');
-  const backGameBtn   = document.getElementById('btnBackHeadsUp');
+  const backGameBtnJ   = document.getElementById('btnBackHeadsUp');
 
   // يمسح كل المؤقتات
-  function clearTimers() {
-    clearInterval(timerId);
+  function clearTimersJ() {
+    clearInterval(timerIdJ);
     clearInterval(wordTimerId);
   }
 
   // ضبط نص السلايدر
   timeSlider.addEventListener('input', e => {
     const v = +e.target.value;
-    settings.time = v;
-    timeValue.textContent = v === 60 ? '1 دقيقة'
+    settingsJawwal.time = v;
+    timeValueJ.textContent = v === 60 ? '1 دقيقة'
                           : v === 90 ? '1.5 دقيقة'
                                      : '2 دقائق';
   });
 
   // العودة للقائمة
-  backSettings.onclick = () => showScreen('gamesScreen');
+  backSettingsJ.onclick = () => showScreen('gamesScreen');
 
   // زر/ابدأ
-  startBtn.addEventListener('click', () => {
-    settings.categories = cats.filter(c => c.checked).map(c => c.value);
-    if (!settings.categories.length) {
-      return alert('اختر مجموعة واحدة على الأقل!');
+  startBtnJ.addEventListener('click', () => {
+    settingsJawwal.categories = catsJ.filter(c => c.checked).map(c => c.value);
+    if (!settingsJawwal.categories.length) {
+       alert('اختر مجموعة واحدة على الأقل!');
+       return;
     }
     order = [];
-    for (const cat of settings.categories) {
+    for (const cat of settingsJawwal.categories) {
       if (Array.isArray(WORDS[cat])) {
           order.push(...WORDS[cat]);
       } else {
@@ -67,8 +68,8 @@ document.addEventListener('DOMContentLoaded', () => {
   
     shuffle(order);
     idx = 0;
-    currentPlayer = 0;
-    roundResults.length = 0;
+    currentPlayerJawwal = 0;
+    roundResultsJ.length = 0;
     runTurn();
   });
 
@@ -94,9 +95,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // بداية دور لاعب
   function runTurn() {
-    clearTimers();
+    clearTimersJ();
     correctCount = 0;
-    passName.textContent  = `📱 أعطِ الهاتف إلى: ${players[currentPlayer]}`;
+    passName.textContent  = `📱 أعطِ الهاتف إلى: ${playersJawwal[currentPlayerJawwal]}`;
     passCount.textContent = '3';
     showScreen('headsUpPassPhone');
 
@@ -112,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // بدء الجولة
   function startRound() {
-    clearTimers();
+    clearTimersJ();
     resetTilt();
     showScreen('headsUpGameScreen');
 
@@ -122,9 +123,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // تفعيل مستمع الميل
     window.addEventListener('deviceorientation', onTilt);
 
-    let timeLeft = settings.time;
+    let timeLeft = settingsJawwal.time;
     gameTimer.textContent = `⏰ ${timeLeft}s`;
-    timerId = setInterval(() => {
+    timerIdJ = setInterval(() => {
       timeLeft--;
       gameTimer.textContent = `⏰ ${timeLeft}s`;
       if (timeLeft <= 0) endRound();
@@ -153,32 +154,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // نهاية الجولة
   function endRound() {
-    clearTimers();
+    clearTimersJ();
     window.removeEventListener('deviceorientation', onTilt);
     btnCorrect.style.display = btnSkip.style.display = 'none';
 
-    const name  = players[currentPlayer];
+    const name  = playersJawwal[currentPlayerJawwal];
     const score = correctCount * 5;
     const prev  = parseInt(localStorage.getItem(name)) || 0;
     const total = prev + score;
     localStorage.setItem(name, total);
 
-    roundResults.push({ name, correct: correctCount, score, total });
+    roundResultsJ.push({ name, correct: correctCount, score, total });
     endCount.textContent = correctCount;
     showScreen('headsUpEndTurn');
   }
 
   // التالي أو النتائج
-  nextPlayerBtn.addEventListener('click', () => {
-    currentPlayer++;
-    if (currentPlayer < players.length) runTurn();
+  nextPlayerBtnJ.addEventListener('click', () => {
+    currentPlayerJawwal++;
+    if (currentPlayerJawwal < playersJawwal.length) runTurn();
     else showResults();
   });
 
   // عرض النتائج النهائية
   function showResults() {
-    roundResults.sort((a,b) => b.correct - a.correct);
-    resultsBody.innerHTML = roundResults.map((r,i) => `
+    roundResultsJ.sort((a,b) => b.correct - a.correct);
+    resultsBody.innerHTML = roundResultsJ.map((r,i) => `
       <tr>
         <td>${i+1}</td>
         <td>${r.name}</td>
@@ -192,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // إعادة لعب أو عودة
   replayBtn.onclick   = () => showScreen('headsUpSettings');
-  backGameBtn.onclick = () => showScreen('gamesScreen');
+  backGameBtnJ.onclick = () => showScreen('gamesScreen');
 });
 
 // تقليب مصفوفة
