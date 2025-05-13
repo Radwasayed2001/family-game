@@ -58,17 +58,29 @@ function setupEventListeners() {
     if (card && getComputedStyle(card).opacity === '1') {
       if (card.dataset.gameId === 'outOfTopic') showScreen('outOfTopicScreen');
       else if (card.dataset.gameId === 'mafia') showScreen('mafiaScreen');
-      else if (card.dataset.gameId === 'phoneOnHead') showScreen('headsUpSettings');
+      else if (card.dataset.gameId === 'phoneOnHead') showScreen('jawwalRulesScreen');
       else if (card.dataset.gameId === 'similarPictures') showScreen('similarPicturesScreen');
       else if (card.dataset.gameId === 'boxes') showScreen('boxesRulesScreen');
       else if (card.dataset.gameId === 'whoAmongUs') showScreen('whoRulesScreen');
       else if (card.dataset.gameId === 'fastest') showScreen('fastRulesScreen');
       else if (card.dataset.gameId === 'treasure') showScreen('treasureRulesScreen');
+      else if (card.dataset.gameId === 'balance') showScreen('balanceRulesScreen');
+      else if (card.dataset.gameId === 'noSpeech') showScreen('charadesRulesScreen');
+      else if (card.dataset.gameId === 'ghomza') showScreen('winkRulesScreen');
+      else if (card.dataset.gameId === 'jassos') showScreen('spyRulesScreen');
+
     }
   });
   submitGuessButton.addEventListener('click', calculateResults);
   document.getElementById('backToGamesButton').addEventListener('click', () => showScreen('gamesScreen'));
-  document.getElementById('startGameButton').addEventListener('click', () => showScreen('categoryScreen'));
+  document.getElementById('startGameButton').addEventListener('click', () => {
+    if (players.length < 3 || players.length > 12) {
+      showAlert('error', 'يتطلب من 3 إلى 12 لاعبين للعب! حالياً: ' + players.length);
+      return;
+
+    } 
+    showScreen('categoryScreen')
+  });
   document.querySelector('.category-grid').addEventListener('click', e => {
     // find the nearest ancestor (or self) that has the .category-card class
     const card = e.target.closest('.category-card');
@@ -146,6 +158,7 @@ function removePlayer(index) {
  * Start the OutOfTopic game flow
  */
 function startGame() {
+  
   currentPlayerIndex = 0;
   questionPairs = [];
   currentQuestionIndex = 0;
@@ -453,19 +466,31 @@ function resetGame() {
 }
 // في app.js أو ui.js
 document.getElementById('nav-players').addEventListener('click', () => {
+  clearAllTimersSim();
+  clearBoxAllTimers();
+  clearInterval(timerIntervalT);
+
   showScreen('playerScreen');
 });
 document.getElementById('nav-games').addEventListener('click', () => {
   renderGamesList();
+  clearAllTimersSim();
+  clearBoxAllTimers();
+  clearInterval(timerIntervalT);
+
   showScreen('gamesScreen');
 });
 document.getElementById('nav-results').addEventListener('click', () => {
-  
+  clearAllTimersSim();
+  clearBoxAllTimers() ;
+  clearInterval(timerIntervalT);
+
   loadStoredResults()
 });
 
 // دالة مساعدة لإظهار الشاشة المطلوبة
 function showScreen(screenId) {
+  console.log("klddddddddddddddddddddd")
   document.querySelectorAll('.screen').forEach(sec => {
     sec.classList.toggle('active', sec.id === screenId);
   });

@@ -1,29 +1,30 @@
 // scripts/treasure.js
 // Dependencies: loadPlayers(), showScreen(id)
 
+let timerIntervalT = null;
+
 document.addEventListener('DOMContentLoaded', () => {
-  // عناصر DOM
+  // --- DOM refs ---
   const durationSelect   = document.getElementById("roundDuration");
   const startGameButtonT = document.getElementById("startGameButtonT");
+  const nextButton       = document.getElementById("nextButton");
   const startRoundButton = document.getElementById("startRoundButton");
   const phoneFoundButton = document.getElementById("phoneFoundButton");
   const giveUpButton     = document.getElementById("giveUpButton");
   const playersList      = document.getElementById("playersList");
   const resultsBody      = document.getElementById("resultsBody");
   const timeLeftDisplay  = document.getElementById("timeLeft");
-  const hiderName        = document.getElementById("hiderName");
+  const hiderNameDisplay = document.getElementById("hiderName");
 
-  // بيانات اللاعبين
-  const playersT = loadPlayers(); // [ "Alice", "Bob", ... ]
-
-  // scoresT structure: { "Alice": { wins: 0, roundPoints: 0, totalPoints: 0 }, ... }
-  const scoresT = {};
+  // --- State & scores ---
+  const playersT = loadPlayers();
+  const scoresT  = {};
   let currentPlayerIndexT = 0;
-  let roundDurationT      = 2; // دقائق
-  let timerIntervalT;
-  let secondsRemaining    = 0;
+  let hiderPlayer = null;
+  let roundDurationT = 2;  // minutes
+  let secondsRemaining = 0;
 
-  // تهيئة النقاط من localStorage
+  // initialize scores from localStorage
   playersT.forEach(name => {
     scoresT[name] = {
       wins: 0,
@@ -32,26 +33,35 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   });
 
-  // العودة للقائمة الرئيسية
-
-  // بدء اللعبة: اختر مدة الجولة
+  // --- Step 1: pick hider and go to settings ---
   startGameButtonT.addEventListener("click", () => {
     roundDurationT = parseInt(durationSelect.value, 10);
-    hiderName.textContent = playersT[currentPlayerIndexT];
+    hiderPlayer   = playersT[currentPlayerIndexT];
+    hiderNameDisplay.textContent = hiderPlayer;
     showScreen("hidePhoneScreen");
   });
 
-  // بدء العد التنازلي
+  nextButton.onclick = () => {
+    if (playersT.length < 3) {
+      showAlert('error',
+        `لعبة الكنز تتطلب 3 لاعبين على الأقل! الآن: ${playersT.length}`);
+      return;
+    }
+    showScreen('gameSettingsScreen');
+  };
+
+  // --- Step 2: start round countdown ---
   startRoundButton.addEventListener("click", () => {
     secondsRemaining = roundDurationT * 60;
     updateTimeDisplay();
     showScreen("roundRunningScreen");
+
     timerIntervalT = setInterval(() => {
       secondsRemaining--;
       updateTimeDisplay();
       if (secondsRemaining <= 0) {
         clearInterval(timerIntervalT);
-        showWinnerScreen();
+        handleHiderWins();  // nobody found
       }
     }, 1000);
   });
@@ -59,32 +69,30 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateTimeDisplay() {
     const m = Math.floor(secondsRemaining / 60);
     const s = secondsRemaining % 60;
-    timeLeftDisplay.textContent = `${m}:${s.toString().padStart(2, "0")}`;
+    timeLeftDisplay.textContent = `${m}:${s.toString().padStart(2,"0")}`;
   }
 
-  // عند العثور على الهاتف
+  // --- Step 3: someone finds the phone ---
   phoneFoundButton.addEventListener("click", () => {
     clearInterval(timerIntervalT);
-    // يحصل الـ hider على صفر نقاط هذه الجولة
-    scoresT[playersT[currentPlayerIndexT]].roundPoints = 0;
-    showWinnerScreen();
+    showWinnerSelection();
   });
 
-  // استسلام: يعطي صفر نقاط أيضاً
+  // --- Step 4: give up (treated as nobody found) ---
   giveUpButton.addEventListener("click", () => {
     clearInterval(timerIntervalT);
-    scoresT[playersT[currentPlayerIndexT]].roundPoints = 0;
-    showWinnerScreen();
+    handleHiderWins();
   });
 
-  // عرض شاشة اختيار الذي وجد الهاتف
-  function showWinnerScreen() {
+  // --- build list to pick who found it ---
+  function showWinnerSelection() {
     playersList.innerHTML = "";
     playersT.forEach(name => {
+      if (name === hiderPlayer) return; // hider cannot find
       const btn = document.createElement("button");
       btn.textContent = name;
       btn.className = "player-btn";
-      btn.addEventListener("click", () => handleWinnerSelected(name));
+      btn.addEventListener("click", () => handleFinder(name));
       const li = document.createElement("li");
       li.appendChild(btn);
       playersList.appendChild(li);
@@ -92,50 +100,57 @@ document.addEventListener('DOMContentLoaded', () => {
     showScreen("selectWinnerScreen");
   }
 
-  // من اختار الفائز يضاف له 10 نقاط
-  function handleWinnerSelected(winner) {
-    scoresT[winner].wins++;
-    scoresT[winner].roundPoints = 10;
-    scoresT[winner].totalPoints += 10;
-
-    // حدِّث localStorage
-    localStorage.setItem(winner, scoresT[winner].totalPoints);
-
-    nextRoundT();
+  // --- only the finder gets 10 points ---
+  function handleFinder(finder) {
+    scoresT[finder].wins++;
+    scoresT[finder].roundPoints = 10;
+    scoresT[finder].totalPoints += 10;
+    localStorage.setItem(finder, scoresT[finder].totalPoints);
+    advanceRound();
   }
 
-  // انتقال لجولة تالية أو عرض النتيجة النهائية
-  function nextRoundT() {
-    // دورة اللاعب التالي
+  // --- hider wins 20 if nobody found ---
+  function handleHiderWins() {
+    scoresT[hiderPlayer].wins++;
+    scoresT[hiderPlayer].roundPoints = 20;
+    scoresT[hiderPlayer].totalPoints += 20;
+    localStorage.setItem(hiderPlayer, scoresT[hiderPlayer].totalPoints);
+    advanceRound();
+  }
+
+  // --- move to next hider or show final results ---
+  function advanceRound() {
+    // reset roundPoints
+    playersT.forEach(p => { scoresT[p].roundPoints = 0; });
     currentPlayerIndexT = (currentPlayerIndexT + 1) % playersT.length;
-    hiderName.textContent = playersT[currentPlayerIndexT];
-    showResultsT();
+
+    if (currentPlayerIndexT === 0) {
+      showResultsT();
+    } else {
+      hiderPlayer = playersT[currentPlayerIndexT];
+      hiderNameDisplay.textContent = hiderPlayer;
+      showScreen("hidePhoneScreen");
+    }
   }
 
-  // عرض نتائج اللعبة كما في باقي الألعاب
+  // --- final results table ---
   function showResultsT() {
-    // رتب وفق المجموع الكلي
-    const sorted = [...playersT].sort((a, b) =>
+    const sorted = [...playersT].sort((a,b) =>
       scoresT[b].totalPoints - scoresT[a].totalPoints
     );
 
-    // أفرغ الجدول ثم أضف الصفوف
-    resultsBody.innerHTML = "";
-    sorted.forEach((player, idx) => {
+    resultsBody.innerHTML = sorted.map((player, idx) => {
       const { wins, roundPoints, totalPoints } = scoresT[player];
-      const row = document.createElement("tr");
-      row.innerHTML = `
-        <td>${idx + 1}</td>
-        <td>${player}</td>
-        <td>${wins}</td>
-        <td>${roundPoints}</td>
-        <td>${totalPoints}</td>
+      return `
+        <tr>
+          <td>${idx+1}</td>
+          <td>${player}</td>
+          <td>${wins}</td>
+          <td>${roundPoints}</td>
+          <td>${totalPoints}</td>
+        </tr>
       `;
-      resultsBody.appendChild(row);
-    });
-
-    // بعد العرض، صفِّر نقاط الجولة لكل اللاعبين
-    playersT.forEach(p => scoresT[p].roundPoints = 0);
+    }).join('');
 
     showScreen("resultsScreenT");
   }

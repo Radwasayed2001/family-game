@@ -51,7 +51,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const backGamesBtn = document.getElementById('whoBackBtn');
 
   backBtn.onclick = () => showScreen('gamesScreen');
-  startBtn.onclick = () => showScreen('whoSettingsScreen');
+  startBtn.onclick = () => {
+    if (playersWho.length < 3) {
+      showAlert('error', ' لعبة مين فينا تتطلب 3 لاعبين على الأقل للعب! حالياً: ' + playersWho.length);
+      return;
+    } 
+    showScreen('whoSettingsScreen')
+  };
   replayBtn.onclick = () => showScreen('whoRulesScreen');
   backGamesBtn.onclick = () => showScreen('gamesScreen');
 

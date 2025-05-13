@@ -164,7 +164,13 @@ document.addEventListener('DOMContentLoaded', () => {
     display.textContent = formatSeconds(+range.value);
   });
   backToGamesBtnFast.onclick = () => showScreen('gamesScreen');
-  startFastTimeBtn.onclick = () => showScreen('fastTimeScreen');
+  startFastTimeBtn.onclick = () => {
+    if (loadPlayers().length < 3) {
+      showAlert('error', ' لعبة الأسرع تتطلب 3 لاعبين على الأقل للعب! حالياً: ' + loadPlayers().length);
+      return;
+    } 
+    showScreen('fastTimeScreen');
+  }
   backToRulesBtnFast.onclick = () => showScreen('fastRulesScreen');
   confirmFastTimeBtn.onclick = () => startFastGame(+range.value);
   nextFastChallengeBtn.onclick = () => startFastGame(challengeDuration);

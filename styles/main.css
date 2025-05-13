@@ -1490,3 +1490,279 @@ h2 {
   .alert { font-size: 0.9rem; padding: 0.75rem 1rem; }
   .alert .icon { font-size: 1.25rem; }
 }
+/* ------------ Balance Game Styles ------------ */
+#balancePassScreen .btn.btn-black {
+  background-color: #000;
+  color: #fff;
+  border: 2px solid #fff;
+  padding: 1rem;
+  font-size: 1.1rem;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 1.5rem;
+}
+
+#balanceGameScreen .btn {
+  width: 45%;
+  font-size: 1.2rem;
+  margin: 0.5rem;
+}
+
+#balanceTimer {
+  font-size: 2rem;
+  text-align: center;
+  margin: 1rem 0;
+}
+
+/* reuse your .screen, .container, .buttons-row, .game-header, etc. */
+.movement-display {
+  margin: 1em 0;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 5px rgba(0,0,0,0.8);
+  background: rgba(0,0,0,0.3);
+  padding: 0.5em 1em;
+  border-radius: 0.5em;
+  display: inline-block;
+}
+/* make the shake counter big, centered, and contrasting */
+#balanceMovementDisplay {
+  font-size: 4rem;
+  font-weight: bold;
+  color: #ff9800;
+  text-align: center;
+  margin: 1em 0;
+}
+
+/* ensure the timer is also prominent */
+#balanceTimer {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #2196f3;
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.btn {
+  padding: 0.6em 1.2em;
+  border: none;
+  cursor: pointer;
+  font-size: 1em;
+  border-radius: 4px;
+  margin: 0.5em;
+}
+.btn-primary      { background: #1976d2; color: #fff; }
+.btn-secondary    { background: #555;    color: #fff; }
+.btn-success      { background: #388e3c; color: #fff; }
+.btn-danger       { background: #d32f2f; color: #fff; }
+.btn-dark-outline {
+  background: transparent;
+  color: #000;
+  border: 2px solid #000;
+}
+.timer-display {
+  font-size: 2em;
+  text-align: center;
+  margin: 1em 0;
+}
+.player-name-display {
+  font-size: 1.2em;
+  text-align: center;
+  margin-bottom: 1em;
+}
+.teams-input input {
+  width: 48%;
+  padding: 0.5em;
+  margin: 0.2em;
+}
+.info-section { margin: 1em 0; }
+.slider-wrapper {
+  display: flex;
+  align-items: center;
+}
+.slider-wrapper span { width: 3em; text-align: center; }
+.slider-wrapper input[type=range] { flex: 1; margin: 0 0.5em; }
+
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1em;
+}
+.results-table th,
+.results-table td {
+  border: 1px solid #ccc;
+  padding: 0.5em;
+  text-align: center;
+}
+.team-assignment-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+.team-assignment-form .player-item {
+  flex: 1 1 calc(50% - 1em);
+  background: #f9f9f9;
+  padding: 0.5em;
+  border-radius: 4px;
+}
+.player-item label {
+  display: block;
+  margin-bottom: 0.3em;
+}
+.player-item input[type="radio"] {
+  margin-right: 0.3em;
+}
+/* Apply only to the settings screen */
+#winkSettingsScreen.animated-screen {
+  opacity: 0;
+  animation: fadeInScreen 0.6s ease-out forwards;
+}
+
+/* Slide-up the container, white card */
+#winkSettingsScreen .container {
+  transform: translateY(20px);
+  animation: slideUpContainer 0.6s ease-out forwards;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 600px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Title styling */
+#winkSettingsScreen .settings-title {
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+  color: #333;
+  text-align: center;
+}
+
+/* Info paragraphs */
+#winkSettingsScreen .settings-info {
+  color: #555;
+  font-size: 1.1rem;
+  margin: 0.5rem 0;
+  text-align: center;
+}
+
+/* Center and space the buttons */
+#winkSettingsScreen .buttons-row {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* Animated button base */
+#winkSettingsScreen .btn-animated {
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.3s, transform 0.2s;
+}
+#winkSettingsScreen .btn-animated::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 0; height: 0;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.4s ease-out, height 0.4s ease-out;
+}
+#winkSettingsScreen .btn-animated:hover {
+  transform: translateY(-2px);
+}
+#winkSettingsScreen .btn-animated:active::after {
+  width: 200%; height: 200%;
+  transition: 0s;
+}
+
+/* Secondary button */
+#winkSettingsScreen .btn-secondary {
+  background: transparent;
+  border: 2px solid #888;
+  color: #555;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 6px;
+}
+
+/* Primary button */
+#winkSettingsScreen .btn-primary {
+  background: #007bff;
+  border: 2px solid #007bff;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 6px;
+}
+
+/* Fade & slide keyframes */
+@keyframes fadeInScreen {
+  to { opacity: 1; }
+}
+@keyframes slideUpContainer {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+/* Shared box style for all Wink stages */
+.wink-box {
+  background: var(--color-bg-light);
+  border: 4px dashed var(--color-yellow);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  text-align: center;
+  max-width: 600px;
+  margin: var(--space-xl) auto;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+  animation: wobble 1s;
+}
+
+/* Titles inside the wink-box */
+.wink-box .settings-title,
+.wink-box .game-header-title {
+  font-family: 'Luckiest Guy', cursive;
+  font-size: 2rem;
+  color: var(--color-error);
+  margin-bottom: var(--space-lg);
+}
+
+/* Info text */
+.wink-box .settings-info {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
+/* Player name display style */
+.player-name-display {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #222;
+}
+
+/* Player list buttons */
+.player-list li {
+  list-style: none;
+  margin: 0.5rem 0;
+}
+.player-list .player-btn {
+  width: 100%;
+  padding: 0.6rem;
+  border: 2px solid #007bff;
+  background: #fff;
+  color: #007bff;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: background 0.3s, color 0.3s;
+}
+.player-list .player-btn:hover {
+  background: #007bff;
+  color: #fff;
+}
+

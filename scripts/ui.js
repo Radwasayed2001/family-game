@@ -15,6 +15,7 @@ const submitGuessButton = document.getElementById("submitGuessButton");
  * @param {string} screenId - The ID of the screen to show
  */
 function showScreen(screenId) {
+  console.log("uiuiuiuiuiuiuiuiuiuiu")
   // Hide all screens
   document.querySelectorAll('.screen').forEach(screen => {
     screen.classList.remove('active');
