@@ -469,7 +469,7 @@ document.getElementById('nav-players').addEventListener('click', () => {
   clearAllTimersSim();
   clearBoxAllTimers();
   clearInterval(timerIntervalT);
-
+  clearTimersJ();
   showScreen('playerScreen');
 });
 document.getElementById('nav-games').addEventListener('click', () => {
@@ -477,14 +477,14 @@ document.getElementById('nav-games').addEventListener('click', () => {
   clearAllTimersSim();
   clearBoxAllTimers();
   clearInterval(timerIntervalT);
-
+  clearTimersJ();
   showScreen('gamesScreen');
 });
 document.getElementById('nav-results').addEventListener('click', () => {
   clearAllTimersSim();
   clearBoxAllTimers() ;
   clearInterval(timerIntervalT);
-
+  clearTimersJ();
   loadStoredResults()
 });
 
