@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (top === players[killerIndex]) {
       // innocents win
-      remaining.filter(p => p !== top).forEach(p => {
+      players.filter(p => p !== top).forEach(p => {
         scores[p] += 25;
         localStorage.setItem(p, scores[p]);
       });
