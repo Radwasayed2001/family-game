@@ -54,10 +54,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // زرّ البدء
   startBtn.addEventListener('click', () => {
-    if (picPlayers.length < 3) {
-      showAlert('error','لعبة الصور المتشابهة تحتاج على الأقل 3 لاعبين.');
-      return;
-    }
+    if (picPlayers.length < 1) {
+      showAlert('error', 'لعبة الصور المتشابهة تتطلب لاعب واحد على الأقل');
+      return; 
+    } 
     resetGame();
     runTurn();
   });
