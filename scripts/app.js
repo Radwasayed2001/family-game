@@ -133,7 +133,7 @@ function addPlayer() {
   clearPlayerInput();
   setTimeout(() => location.reload(), 0);
 }
-
+      
 /**
  * Remove a player and reload the app so every game picks up the change
  */
@@ -470,6 +470,7 @@ document.getElementById('nav-players').addEventListener('click', () => {
   clearBoxAllTimers();
   clearInterval(timerIntervalT);
   clearTimersJ();
+  // clearInterval(countdownId);
   showScreen('playerScreen');
 });
 document.getElementById('nav-games').addEventListener('click', () => {
@@ -478,6 +479,7 @@ document.getElementById('nav-games').addEventListener('click', () => {
   clearBoxAllTimers();
   clearInterval(timerIntervalT);
   clearTimersJ();
+  // clearInterval(countdownId);
   showScreen('gamesScreen');
 });
 document.getElementById('nav-results').addEventListener('click', () => {
@@ -485,6 +487,7 @@ document.getElementById('nav-results').addEventListener('click', () => {
   clearBoxAllTimers() ;
   clearInterval(timerIntervalT);
   clearTimersJ();
+  // clearInterval(countdownId);
   loadStoredResults()
 });
 
