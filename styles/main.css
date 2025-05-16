@@ -1760,3 +1760,6 @@ h2 {
   background: #007bff;
   color: #fff;
 }
+#winkSettingsScreen{
+  padding: 1rem !important;
+}
