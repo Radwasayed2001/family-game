@@ -75,25 +75,28 @@ function renderPlayerList(players) {
 function renderGamesList() {
   // Clear the current grid
   gamesGrid.innerHTML = '';
-  
+
   // Get the current number of players
   const playerCount = loadPlayers().length;
-  
+
   // Add each game to the grid
   GAMES.forEach(game => {
     const gameCard = document.createElement('div');
     gameCard.classList.add('game-card');
     gameCard.dataset.gameId = game.id;
-    
-    // Check if the game is playable with current number of players
-    const isPlayable = playerCount >= game.minPlayers && playerCount <= game.maxPlayers;
-    
-    // Set opacity for non-playable games
-    if (!isPlayable) {
+
+    const isTooFew    = playerCount < game.minPlayers;
+    const isTooMany   = playerCount > game.maxPlayers;
+    const isPlayable  = !isTooFew && !isTooMany;
+
+    // Shade background if too few players
+    if (isTooFew) {
+      gameCard.style.backgroundColor = '#dedede';
+    // If too many, you can also dim or disallow if you like:
+    } else if (isTooMany) {
       gameCard.style.opacity = '0.6';
-      gameCard.style.cursor = 'pointer';
     }
-    
+
     gameCard.innerHTML = `
       <h3>${game.name}</h3>
       <div class="players-required">
@@ -102,18 +105,19 @@ function renderGamesList() {
       </div>
       <p>${game.description}</p>
     `;
-    
+
     if (isPlayable) {
       gameCard.addEventListener('click', () => {
-        // Log the selected game and players
         console.log('Selected game:', game.name);
         console.log('Players:', loadPlayers());
+        // ... launch game ...
       });
     }
-    
+
     gamesGrid.appendChild(gameCard);
   });
 }
+
 
 /**
  * Clear the player name input field
@@ -122,4 +126,3 @@ function clearPlayerInput() {
   playerNameInput.value = '';
   addPlayerButton.disabled = true;
 }
-
