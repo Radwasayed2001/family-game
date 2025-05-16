@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // DOM refs
   const timeSlider    = document.getElementById('timeSlider');
-  const timeValueJ     = document.getElementById('timeValueJ');
+  const timeValueJ     = document.getElementById('timeValue');
   const catsJ          = [...document.querySelectorAll('.checkbox-list input')];
   const startBtnJ      = document.getElementById('startHeadsUp');
   const backSettingsJ  = document.getElementById('backToGamesBtnJ');
@@ -74,6 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
     runTurn();
   });
 
+  
   // معايرة نقطة المرجع وتصفير tiltHandled
   function resetTilt() {
     baselineBeta = null;
@@ -283,3 +284,10 @@ const WORDS = {
     'كندا','أستراليا','البرازيل','الأرجنتين','الهند','الصين','اليابان','كوريا_الجنوبية','المكسيك','روسيا'
   ]
 };
+function startJawwalGame(){
+  if (players.length < 2) {
+    showAlert('error', 'لعبة التوازن تتطلب لاعبين 2 على الأقل  ');
+    return; 
+  } 
+  showScreen('headsUpSettings')
+}
