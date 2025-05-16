@@ -98,6 +98,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 2) عرض الصور
   function startImagePhase() {
+    document.getElementById("picgamename")
+            .textContent = `دورك يا ${picPlayers[currentIndex]}`;
     showScreen('imagesScreen');
     setupImages();
   }
