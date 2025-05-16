@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ألعاب العائلة</title>
+    <title>ألعاب قصة</title>
     <link rel="stylesheet" href="styles/reset.css">
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/animations.css">
@@ -20,7 +20,7 @@
     
     <section id="playerScreen" class="screen active">
       <div class="container">
-        <h1 class="title">ألعاب العائلة</h1>
+        <h1 class="title">ألعاب قصة</h1>
         <div class="player-input">
           <input type="text" id="playerName" placeholder="اسم اللاعب"
             maxlength="20">
@@ -522,7 +522,7 @@
   <div class="container">
     <div class="game-info">
       <h2 class="game-title">📜 قوانين اللعبة</h2>
-      <p>عدد اللاعبين: من 3 إلى 12 لاعب.</p>
+      <p>عدد اللاعبين: من 1 إلى 12 لاعب.</p>
       <p>لعبة حركية تتطلب ثباتاً وتركيزاً! 🏃‍♂️</p>
       <ol>
         <li>اتفقوا على حركة توازن (وقوف على رجل واحدة، أو أطراف الأصابع…).</li>
@@ -547,8 +547,9 @@
   <div class="container">
     <div class="info-section">
       <h3>⏲️ زمن الجولة:</h3>
+
+      <small>اختر من 10 إلى 60 ثانية</small>
       <div class="slider-wrapper">
-        <span>10s</span>
         <input
           id="balanceTimeSlider"
           type="range"
@@ -559,7 +560,6 @@
         >
         <span id="balanceTimeValue">10 ثانية</span>
       </div>
-      <small>اختر من 10 إلى 60 ثانية</small>
     </div>
     <div class="buttons-row">
       <button id="backToRulesBtnBalance" class="btn btn-secondary">🔙 الرجوع</button>
@@ -652,7 +652,7 @@
     
           <div class="buttons">
             <button id="nextButton"  class="btn btn-primary">التالي</button>
-            <button id="backToMenuButtonT" onclick="showScreen('gamesScreen')"  class="btn btn-secondary">الرجوع</button>
+            <button id="backToMenuButtonT" onclick="showScreen('gamesScreen')" class="btn btn-secondary">الرجوع</button>
           </div>
         </div>
       </div>
@@ -1000,7 +1000,7 @@
 
     <div class="game-info">
       <h3>👥 عدد اللاعبين:</h3>
-      <p>من 5 إلى 12 لاعب.</p>
+      <p>من 2 إلى 12 لاعب.</p>
 
       <h3>💡 فكرة اللعبة:</h3>
       <p>
@@ -1028,7 +1028,7 @@
 
     <div class="buttons-row">
       <button id="backToGamesBtnJawwal" onclick="showScreen('gamesScreen')" class="btn btn-secondary">🔙 الرجوع</button>
-      <button id="startJawwalBtn" onclick="showScreen('headsUpSettings')" class="btn btn-primary">ابدأ ▶️</button>
+      <button id="startJawwalBtn" onclick="startJawwalGame()" class="btn btn-primary">ابدأ ▶️</button>
     </div>
   </div>
 </section>
@@ -1047,13 +1047,13 @@
           <!-- إعداد الوقت -->
           <div class="info-section">
             <h3>⏲️ زمن التحدي:</h3>
+
+            <small>اختر دقيقة، دقيقة ونصف، أو دقيقتين</small>
             <div class="slider-wrapper">
-              <span>1:00</span>
               <input id="timeSlider" type="range" min="60" max="120" step="30"
                 value="60">
               <span id="timeValue">1 دقيقة</span>
             </div>
-            <small>اختر دقيقة، دقيقة ونصف، أو دقيقتين</small>
           </div>
 
           <!-- قائمة الاختيارات -->
@@ -1193,7 +1193,7 @@
 
           <div class="info-section">
             <h3>👥 عدد اللاعبين المقترح:</h3>
-            <p>من 3 إلى 12 لاعب</p>
+            <p>من 1 إلى 12 لاعب</p>
           </div>
 
           <div class="info-section">
@@ -1237,7 +1237,8 @@
 
         <button id="startSimilarBtn" class="btn btn-start">بدء اللعبة
           ▶️</button>
-        <button class="btn btn-secondary" onclick="showScreen('gamesScreen')">العودة للقائمة</button>
+          <button class="btn btn-secondary" onclick="showScreen('gamesScreen')">العودة للقائمة</button>
+
       </div>
     </section>
     <section id="countdownScreen" class="screen">
@@ -1619,7 +1620,7 @@
 
         <button id="startMafiaGameButton" onclick="startMafiaGame()"
           class="btn btn-start">بدء اللعبة</button>
-          <button class="btn btn-secondary" onclick="showScreen('gamesScreen')">العودة للقائمة</button>
+        <button class="btn btn-secondary" onclick="showScreen('gamesScreen')">العودة للقائمة</button>
       </div>
     </section>
 
@@ -2005,5 +2006,6 @@
     <script src="scripts/wink.js"></script>
     <script src="scripts/spy.js"></script>
     <script src="scripts/clearTimers.js"></script>
+    <script src="scripts/players.js"></script>
   </body>
 </html>
