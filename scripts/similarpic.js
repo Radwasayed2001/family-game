@@ -4,7 +4,7 @@
 // مؤقتات عامة
 // ───────────────
 let imageCountdownInterval = null;
-let advanceTimeoutSim         = null;
+let advanceTimeoutSim      = null;
 
 // يمسح كل مؤقتات العدّ التنازلي والمؤقتات المتأخرة
 function clearAllTimersSim() {
@@ -19,12 +19,11 @@ function clearAllTimersSim() {
 }
 
 // تبديل الشاشات + تنظيف المؤقتات
-// function showScreen(id) {
-//   console.log("ksljflskdjflsdkjflkdsjflk")
-//   clearAllTimersSim();
-//   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-//   document.getElementById(id).classList.add('active');
-// }
+function showScreen(id) {
+  clearAllTimersSim();
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   // تحميل قائمة اللاعبين
@@ -56,8 +55,8 @@ document.addEventListener('DOMContentLoaded', () => {
   startBtn.addEventListener('click', () => {
     if (picPlayers.length < 1) {
       showAlert('error', 'لعبة الصور المتشابهة تتطلب لاعب واحد على الأقل');
-      return; 
-    } 
+      return;
+    }
     resetGame();
     runTurn();
   });
@@ -104,17 +103,17 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function setupImages() {
+    // تحضير قائمة الصور بزوج مكرر
     const start   = Math.floor(Math.random() * 12) + 1;
     const names   = Array.from({ length: 24 }, (_, i) => `${start + i}.avif`);
     const dupIdx  = Math.floor(Math.random() * names.length);
     dupUrl        = `./public/${names[dupIdx]}`;
-
-    const final = names.map(n => `./public/${n}`);
+    const final   = names.map(n => `./public/${n}`);
+    // إدخال المكرر مرتين
     for (let i = 0; i < 2; i++) {
       let pos;
-      do {
-        pos = Math.floor(Math.random() * (final.length + 1));
-      } while (final[pos] === dupUrl);
+      do { pos = Math.floor(Math.random() * (final.length + 1)); }
+      while (final[pos] === dupUrl);
       final.splice(pos, 0, dupUrl);
     }
     final.length = 25;
@@ -137,21 +136,32 @@ document.addEventListener('DOMContentLoaded', () => {
     const name = picPlayers[currentIndex];
 
     if (src === dupUrl) {
+      // نجح اللاعب
       const elapsed = ((Date.now() - imageStartTime) / 1000).toFixed(2);
       roundResults.push({
         name,
-        time: parseFloat(elapsed),
+        time:   parseFloat(elapsed),
         attempts,
-        points: 0
+        incomplete: false,
+        points: 0 // سيحسب لاحقًا
       });
       card.classList.add('matched');
       dupUrl = '';
       advanceTimeoutSim = setTimeout(nextPlayer, 500);
+
     } else {
+      // خطأ في التخمين
       attempts++;
       card.classList.add('error');
       if (attempts >= 2) {
-        roundResults.push({ name, time: 90, attempts, points: 0 });
+        // استُنفدت المحاولات → فشل اللاعب
+        roundResults.push({
+          name,
+          time:   null,     // null للدلالة على "لم يُكمل"
+          attempts,
+          incomplete: true,
+          points: 0
+        });
         advanceTimeoutSim = setTimeout(nextPlayer, 500);
       }
     }
@@ -169,31 +179,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 5) حساب وعرض النتائج
   function showResults() {
-    roundResults.sort((a, b) => a.time - b.time);
-    const ptsArr = [20, 10, 5];
-    roundResults.forEach((r, i) => r.points = i < 3 ? ptsArr[i] : 0);
+    // نفرز: أولًا المكتملين حسب الزمن، ثم غير المكتملين
+    roundResults.sort((a, b) => {
+      if (a.incomplete && b.incomplete) return 0;
+      if (a.incomplete) return 1;
+      if (b.incomplete) return -1;
+      return a.time - b.time;
+    });
 
+    const ptsArr = [20, 10, 5];
+    roundResults.forEach((r, i) => {
+      r.points = r.incomplete ? 0 : (i < 3 ? ptsArr[i] : 0);
+    });
+
+    // احتساب النقاط في localStorage
     picPlayers.forEach(p => {
       const prev = +localStorage.getItem(p) || 0;
       const curr = roundResults.find(r => r.name === p)?.points || 0;
       localStorage.setItem(p, prev + curr);
     });
 
+    // جدول نتائج الجولة
     document.getElementById('roundResultsBody').innerHTML =
       roundResults.map((r, i) => `
         <tr>
           <td>${i+1}</td>
           <td>${r.name}</td>
-          <td>${r.time.toFixed(2)}</td>
+          <td>${r.incomplete ? 'استنفذ المحاولات' : r.time.toFixed(2)}</td>
           <td>${r.attempts}</td>
           <td>${r.points}</td>
         </tr>
       `).join('');
 
+    // جدول النقاط الإجمالية
     const totalArr = picPlayers.map(p => ({
       name:  p,
       total: +localStorage.getItem(p) || 0
-    })).sort((a,b) => b.total - a.total);
+    })).sort((a, b) => b.total - a.total);
 
     document.getElementById('totalResultsBody').innerHTML =
       totalArr.map((r, i) => `

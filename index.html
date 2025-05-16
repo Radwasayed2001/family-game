@@ -433,6 +433,9 @@
       على الفريق اختيار لاعب واحد فقط للتمثيل
       <br>
       يجب على الفريق الخصم مشاهدة محتوى الشاشة التالية للحكم في حال نجح الفريق في معرفة العنوان
+      <br><br>
+      اضغط هنا للبدء
+      <br>
     </button>
   </div>
 </section>
@@ -577,6 +580,9 @@
   <span id="balanceCurrentPlayer"></span><br>
       امسك الهاتف بثبات أثناء دورك وحاول عدم التحرك و الإلتزام بالحركة المتفق عليها مع باقي اللاعبين. <br>
       الفائز هو من يحصل على أقل نقاط
+      <br><br>
+      اضغط هنا للبدء
+      <br>
 </button>
   </div>
 </section>
@@ -590,10 +596,6 @@
     <!-- New movement counter -->
     <div class="movement-display">
       حركة: <span id="balanceMovementDisplay">0</span>
-    </div>
-    <div class="game-controls">
-      <button id="balanceStillBtn"  class="btn btn-secondary">ما زلت ثابتًا</button>
-      <button id="balanceMoveBtn"   class="btn btn-danger">لقد تحركت</button>
     </div>
   </div>
 </section>
@@ -978,12 +980,12 @@
       <!-- تُعرض النتائج هنا -->
     </div>
     <div class="results-actions buttons-row">
-      <button id="whoReplayBtn" class="btn btn-primary">🔄 إعادة اللعب</button>
-      <button id="whoBackBtn" class="btn btn-secondary">🏠 العودة للقائمة</button>
+      <button id="whoNextQuestionBtn" class="btn btn-primary">❓ السؤال التالي</button>
+      <button id="whoChangeCategoriesBtn" class="btn btn-secondary">🔄 تغيير تصنيفات الأسئلة</button>
+      <button id="whoBackBtn" onclick="showScreen('gamesScreen')" class="btn btn-secondary">🏠 العودة للقائمة</button>
     </div>
   </div>
 </section>
-
 
     <!-- Jawwal on Head Rules Screen -->
     <!-- Jawwal on Head Rules Screen -->
@@ -1390,7 +1392,10 @@
     </section>
 
     <div id="boxGameScreen" class="screen">
-      <div id="boxTimer">⏰ 60s</div>
+      <div style="padding-right: 3rem;">
+        <h3 id="boxgamename"></h3>
+        <div id="boxTimer" style="font-size: 1rem;font-weight: bold;">باقي لك: ⏰ 60s</div>  
+      </div>
       <div class="box-grid"></div>
     </div>
     <div id="boxResultsScreen" class="screen results-container">

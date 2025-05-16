@@ -35,62 +35,65 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   let selectedQuestion = '';
+  let selectedCategories = [];
   let currentVoterIndex = 0;
-  let currentVotes = {};
+  let currentVotes      = {};
 
-  const startBtn = document.getElementById('startWhoBtn');
-  const startSettingsBtn = document.getElementById('startWhoSettingsBtn');
-  const backBtn = document.getElementById('backToGamesBtnWho');
-  const questionEl = document.getElementById('whoQuestion');
-  const voteForm = document.getElementById('voteForm');
-  const submitVoteBtn = document.getElementById('whoSubmitVote');
-  const passText = document.getElementById('whoPassText');
-  const passNextBtn = document.getElementById('whoPassNextBtn');
-  const resultsList = document.getElementById('whoResultsList');
-  const replayBtn = document.getElementById('whoReplayBtn');
-  const backGamesBtn = document.getElementById('whoBackBtn');
+  // DOM refs
+  const startBtn              = document.getElementById('startWhoBtn');
+  const startSettingsBtn      = document.getElementById('startWhoSettingsBtn');
+  const backBtn               = document.getElementById('backToGamesBtnWho');
+  const questionEl            = document.getElementById('whoQuestion');
+  const voteForm              = document.getElementById('voteForm');
+  const submitVoteBtn         = document.getElementById('whoSubmitVote');
+  const passText              = document.getElementById('whoPassText');
+  const passNextBtn           = document.getElementById('whoPassNextBtn');
+  const resultsList           = document.getElementById('whoResultsList');
+  const nextQuestionBtn       = document.getElementById('whoNextQuestionBtn');
+  const changeCategoriesBtn   = document.getElementById('whoChangeCategoriesBtn');
 
   backBtn.onclick = () => showScreen('gamesScreen');
+
   startBtn.onclick = () => {
     if (playersWho.length < 3) {
-      showAlert('error', ' لعبة مين فينا تتطلب 3 لاعبين على الأقل للعب! حالياً: ' + playersWho.length);
+      showAlert('error', `لعبة مين فينا تتطلب 3 لاعبين على الأقل! حالياً: ${playersWho.length}`);
       return;
-    } 
-    showScreen('whoSettingsScreen')
+    }
+    showScreen('whoSettingsScreen');
   };
-  replayBtn.onclick = () => showScreen('whoRulesScreen');
-  backGamesBtn.onclick = () => showScreen('gamesScreen');
 
+  // إعداد التصنيفات
   startSettingsBtn.onclick = () => {
     const form = new FormData(document.getElementById('categoriesForm'));
-    const selectedCategories = form.getAll('category');
+    selectedCategories = form.getAll('category');
     const pool = selectedCategories.flatMap(cat => allQuestions[cat] || []);
-
     if (pool.length === 0) {
       showAlert('warning', 'اختر على الأقل تصنيف واحد!');
       return;
     }
-
+    // نختار سؤال عشوائي
     selectedQuestion = pool[Math.floor(Math.random() * pool.length)];
-    currentVotes = {};
-    currentVoterIndex = 0;
+    resetVoting();
     showPassScreen();
   };
+
+  // إعادة تهيئة عملية التصويت
+  function resetVoting() {
+    currentVotes = {};
+    currentVoterIndex = 0;
+  }
 
   passNextBtn.onclick = () => showVoteScreenForPlayer();
 
   submitVoteBtn.onclick = e => {
     e.preventDefault();
-    const selected = document.querySelector('input[name="vote"]:checked');
-    if (!selected) {
+    const sel = voteForm.querySelector('input[name="vote"]:checked');
+    if (!sel) {
       showAlert('warning', 'اختر لاعبًا للتصويت!');
       return;
     }
-
-    const votedFor = selected.value;
-    currentVotes[votedFor] = (currentVotes[votedFor] || 0) + 1;
+    currentVotes[sel.value] = (currentVotes[sel.value] || 0) + 1;
     currentVoterIndex++;
-
     if (currentVoterIndex >= playersWho.length) {
       showResultsWho();
     } else {
@@ -109,59 +112,42 @@ document.addEventListener('DOMContentLoaded', () => {
     questionEl.textContent = selectedQuestion;
     voteForm.innerHTML = playersWho
       .filter(p => p !== currentPlayer)
-      .map(p => `
-        <label><input type="radio" name="vote" value="${p}"> ${p}</label><br>
-      `).join('');
+      .map(p => `<label><input type="radio" name="vote" value="${p}"> ${p}</label>`)
+      .join('<br>');
     showScreen('whoVoteScreen');
   }
 
   function showResultsWho() {
-    const sorted = Object.entries(currentVotes).sort((a, b) => b[1] - a[1]);
-    const mostVoted = sorted.length > 0 ? `${sorted[0][0]} ✅` : 'لا أحد';
-    const votesList = sorted.map(([name, count]) => `${name} (${count} صوت)`).join('، ');
+    // ترجمة الأصوات إلى مصفوفة مفروزة
+    const sorted = Object.entries(currentVotes)
+      .sort((a,b) => b[1] - a[1]);
+    const mostVoted = sorted.length
+      ? `${sorted[0][0]} (${sorted[0][1]} صوت)`
+      : 'لا أحد';
+    const votesList = sorted
+      .map(([name, count]) => `${name} (${count} صوت)`)
+      .join('، ') || 'لا أصوات';
 
     resultsList.innerHTML = `
       <div class="result-block">
         <h3>${selectedQuestion}</h3>
-        <p>📊 النتائج: ${votesList || 'لا أصوات'}</p>
+        <p>📊 النتائج: ${votesList}</p>
         <p>🏆 الأكثر تصويتًا: <strong>${mostVoted}</strong></p>
       </div>
     `;
     showScreen('whoResultsScreen');
   }
 
-  function shuffleArray(arr) {
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-  }
-});
-function showAlert(type, message, duration = 4000) {
-  const icons = {
-    success: '✅',
-    info:    'ℹ️',
-    warning: '⚠️',
-    error:   '❌'
+  // ** الأزرار الجديدة في شاشة النتائج **
+  nextQuestionBtn.onclick = () => {
+    // نعيد اختيار سؤال جديد من نفس التصنيفات
+    const pool = selectedCategories.flatMap(cat => allQuestions[cat] || []);
+    selectedQuestion = pool[Math.floor(Math.random() * pool.length)];
+    resetVoting();
+    showPassScreen();
   };
-  const alert = document.createElement('div');
-  alert.className = `alert alert-${type}`;
-  alert.innerHTML = `
-    <span class="icon">${icons[type]}</span>
-    <div class="message">${message}</div>
-    <button class="close-btn">&times;</button>
-  `;
-  const container = document.getElementById('alertContainer');
-  container.append(alert);
 
-  // Close on click:
-  alert.querySelector('.close-btn').onclick = () => dismiss(alert);
-
-  // Auto dismiss:
-  setTimeout(() => dismiss(alert), duration);
-}
-
-function dismiss(el) {
-  el.classList.add('exit');
-  el.addEventListener('animationend', () => el.remove());
-}
+  changeCategoriesBtn.onclick = () => {
+    showScreen('whoSettingsScreen');
+  };
+});

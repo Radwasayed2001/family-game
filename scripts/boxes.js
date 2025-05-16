@@ -1,4 +1,5 @@
 // scripts/boxes.js
+// Dependencies: loadPlayers(), showScreen(id)
 
 let boxTimerIntervalBox = null;
 let boxCountDownIntervalBox = null;
@@ -48,14 +49,18 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   startBtn.addEventListener('click', () => {
-    if (playersBoxes.length < 3) return showAlert('error','يحتاج 3 لاعبين على الأقل');
+    if (playersBoxes.length < 3) {
+      return showAlert('error','يحتاج 3 لاعبين على الأقل');
+    }
     resetGame();
     playTurn();
   });
+
   againBtn.addEventListener('click', () => {
     resetGame();
     playTurn();
   });
+
   homeBtn.addEventListener('click', () => showScreen('gamesScreen'));
 
   function playTurn() {
@@ -65,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
     playerLabel.textContent = `📱 دور: ${playersBoxes[currentPlayer]}`;
     showScreen('boxCountdownScreen');
 
-    // عدّ تنازلي 3
+    // عدّ تنازلي 3 ثوانٍ
     let c = 3;
     countdownNumber.textContent = c;
     boxCountDownIntervalBox = setInterval(() => {
@@ -83,22 +88,26 @@ document.addEventListener('DOMContentLoaded', () => {
     showScreen('boxGameScreen');
     startTime = Date.now();
     renderBoxes();
+    document.getElementById("boxgamename")
+            .textContent = `دورك يا ${playersBoxes[currentPlayer]}`;
+    timerLabel.textContent = `باقي لك: ⏰ ${timeLeft}s`;
 
-    timerLabel.textContent = `⏰ ${timeLeft}s`;
     boxTimerIntervalBox = setInterval(() => {
       timeLeft--;
-      timerLabel.textContent = `⏰ ${timeLeft}s`;
+      timerLabel.textContent = `باقي لك: ⏰ ${timeLeft}s`;
       if (timeLeft <= 0) {
         clearInterval(boxTimerIntervalBox);
         boxTimerIntervalBox = null;
-        recordResult(90);
+        // هنا نعتبر اللاعب "لم يُكمل"
+        recordResult(null);
         boxAdvanceTimeoutBox = setTimeout(nextPlayer, 300);
       }
     }, 1000);
   }
 
   function renderBoxes() {
-    const nums = Array.from({ length: 20 }, (_, i) => i+1).sort(() => Math.random()-0.5);
+    const nums = Array.from({ length: 20 }, (_, i) => i+1)
+                      .sort(() => Math.random()-0.5);
     grid.innerHTML = '';
     nums.forEach(n => {
       const btn = document.createElement('button');
@@ -122,13 +131,18 @@ document.addEventListener('DOMContentLoaded', () => {
         boxAdvanceTimeoutBox = setTimeout(nextPlayer, 300);
       }
     } else {
+      // إذا ضغط خطأ: نعيد العد من البداية
       nextNumber = 1;
       renderBoxes();
     }
   }
 
+  // نسجل النتيجة: وقت التنفيذ أو null لتعني "لم يُكمل"
   function recordResult(time) {
-    boxResults.push({ name: playersBoxes[currentPlayer], time });
+    boxResults.push({
+      name: playersBoxes[currentPlayer],
+      time // إما رقم بالثواني أو null
+    });
   }
 
   function nextPlayer() {
@@ -141,31 +155,54 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function showResults() {
-    boxResults.sort((a,b)=>a.time-b.time);
-    const pts = [20,10,5];
-    const final = boxResults.map((r,i)=>({
-      name: r.name,
-      time: r.time,
-      points: i<3?pts[i]:0
-    }));
-    // تحديث localStorage
-    playersBoxes.forEach(p=>{
-      const prev = +localStorage.getItem(p)||0;
-      const curr = final.find(r=>r.name===p)?.points||0;
-      localStorage.setItem(p, prev+curr);
+    // نفرز اللاعبين: أولاً من أنهوا بأقل زمن، ثم من لم يكملوا في الأخير
+    boxResults.sort((a,b) => {
+      if (a.time === null && b.time === null) return 0;
+      if (a.time === null) return 1;
+      if (b.time === null) return -1;
+      return a.time - b.time;
     });
-    // عرض الجداول
+
+    const pts = [20,10,5];
+    const final = boxResults.map((r,i) => ({
+      name:   r.name,
+      time:   r.time === null ? "لم يكمل الجولة" : `${r.time}s`,
+      points: r.time === null ? 0 : (i<3 ? pts[i] : 0)
+    }));
+
+    // تحديث localStorage
+    playersBoxes.forEach(p => {
+      const prev = +localStorage.getItem(p) || 0;
+      const curr = final.find(r=>r.name===p).points;
+      localStorage.setItem(p, prev + curr);
+    });
+
+    // عرض نتائج الجولة
     document.getElementById('roundResultsBody1').innerHTML =
-      final.map((r,i)=>`
-        <tr><td>${i+1}</td><td>${r.name}</td><td>${r.time}s</td><td>${r.points}</td></tr>
+      final.map((r,i) => `
+        <tr>
+          <td>${i+1}</td>
+          <td>${r.name}</td>
+          <td>${r.time}</td>
+          <td>${r.points}</td>
+        </tr>
       `).join('');
-    const total = playersBoxes.map(p=>({
-      name:p, total:+localStorage.getItem(p)||0
-    })).sort((a,b)=>b.total-a.total);
+
+    // عرض النتائج الكليّة
+    const total = playersBoxes.map(p => ({
+      name: p,
+      total: +localStorage.getItem(p) || 0
+    })).sort((a,b) => b.total - a.total);
+
     document.getElementById('totalResultsBody1').innerHTML =
-      total.map((r,i)=>`
-        <tr><td>${i+1}</td><td>${r.name}</td><td>${r.total}</td></tr>
+      total.map((r,i) => `
+        <tr>
+          <td>${i+1}</td>
+          <td>${r.name}</td>
+          <td>${r.total}</td>
+        </tr>
       `).join('');
+
     showScreen('boxResultsScreen');
   }
 });

@@ -586,6 +586,7 @@ h2 {
   display: flex;
   justify-content: center;
   gap: 1rem;
+  padding-bottom: 1.5rem;
 }
 
 .btn.large {
@@ -774,7 +775,8 @@ h2 {
 #imagesScreen .image-card img {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
 }
 
 #imagesScreen .container {
