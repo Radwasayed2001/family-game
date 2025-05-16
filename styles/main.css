@@ -61,7 +61,7 @@ body {
   animation: fadeIn 0.5s ease-out;
   box-sizing: border-box; /* Ensure padding doesn't cause overflow */
   overflow-x: hidden; /* Prevent horizontal scrolling */
-  padding-bottom: 5rem;
+  padding-bottom: 3rem;
 }
 
 .screen.active {
@@ -79,7 +79,6 @@ body {
   font-family: 'Luckiest Guy', cursive;
   font-size: 2rem;
   font-weight: 700;
-  margin-bottom: var(--space-lg);
   text-align: center;
   color: var(--color-primary);
   text-shadow: 0 2px 4px rgba(0,0,0,0.3);
@@ -94,10 +93,6 @@ body {
   animation: bounce 1.5s infinite;
 }
 
-.game-header h1::before {
-  content: '🎯';
-  animation: bounce 1s infinite;
-}
 
 h2 {
   font-size: 1.8rem;
@@ -617,7 +612,7 @@ h2 {
   border: none;
   color: var(--color-text-light);
   font-size: 1rem;
-  padding: 1rem;
+  padding: 1rem !important;
   flex-grow: 1;
   text-align: center;
   cursor: pointer;
@@ -1551,7 +1546,7 @@ h2 {
   cursor: pointer;
   font-size: 1em;
   border-radius: 4px;
-  margin: 0.5em;
+  /* margin: 0.5em; */
 }
 .btn-primary      { background: #1976d2; color: #fff; }
 .btn-secondary    { background: #555;    color: #fff; }
@@ -1765,4 +1760,3 @@ h2 {
   background: #007bff;
   color: #fff;
 }
-
