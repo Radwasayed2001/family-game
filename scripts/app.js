@@ -10,6 +10,7 @@ let currentQuestionIndex = 0;
 let votes = {};
 let scores = {};
 let outOfTopicInput = 'sldkl;';
+let timerId = null;
 // Category words mapping
 const categoryWords = {
   food: ['كبسة', 'مندي', 'برياني', 'مقلوبة', 'محشي', 'فتوش', 'شاورما', 'سندويش', 'فلافل', 'حريرة', 'ملوخية', 'فتة', 'مسبحة', 'طاجن'],
@@ -32,7 +33,7 @@ let players = loadPlayers();
 // Initialize the application
 function initApp() {
   renderPlayerList(players);
-  setupEventListeners();
+  setupEventListeners(); 
 }
 
 document.addEventListener('DOMContentLoaded', initApp);
@@ -222,7 +223,7 @@ function revealSecret() {
   const content = document.getElementById('secretContent');
   content.innerHTML = `
     <h3 class="secret-word">${secretWord}</h3>
-    <p class="secret-instruction">حاول أن توضح للمجموعة أنك تعرف الموضوع بدون كشفه حتى لا يعرف اللاعب خارج الموضوع</p>
+    <p class="secret-instruction">حاول أن توضح للمجموعة أنك تعرف الموضوع بدون كشفه حتى لا يعرف اللاعب برا السالفة</p>
   `;
   document.getElementById('secretConfirmButton').style.display = 'block';
 }
@@ -230,7 +231,7 @@ function revealSecret() {
 function outOfTopicShown() {
   const content = document.getElementById('secretContent');
   content.innerHTML = `
-    <h3 class="secret-word">أنت خارج الموضوع</h3>
+    <h3 class="secret-word">أنت برا السالفة</h3>
     <p class="secret-instruction">مهمتك أن توضح للمجموعة أنك تعرف الموضوع بالإجابة بشكل عام وإيهام المجموعة أنك تعرف الموضوع</p>
   `;
   document.getElementById('secretConfirmButton').style.display = 'block';
@@ -402,7 +403,7 @@ function submitVote(voter, candidate) {
   // 2. عرض النتائج على الشاشة
   const resArea = document.getElementById('resultsArea');
   resArea.innerHTML = `
-    <h2>خارج الموضوع: ${outOfTopicPlayer}</h2>
+    <h2>برا السالفة: ${outOfTopicPlayer}</h2>
     <h3>الكلمة السرية: ${secretWord}</h3>
     <div class="scores">
       ${players
@@ -471,6 +472,7 @@ document.getElementById('nav-players').addEventListener('click', () => {
   clearInterval(timerIntervalT);
   clearTimersJ();
   // clearInterval(countdownId);
+  clearInterval(timerId);
   showScreen('playerScreen');
 });
 document.getElementById('nav-games').addEventListener('click', () => {
@@ -480,6 +482,7 @@ document.getElementById('nav-games').addEventListener('click', () => {
   clearInterval(timerIntervalT);
   clearTimersJ();
   // clearInterval(countdownId);
+  clearInterval(timerId);
   showScreen('gamesScreen');
 });
 document.getElementById('nav-results').addEventListener('click', () => {
@@ -488,14 +491,18 @@ document.getElementById('nav-results').addEventListener('click', () => {
   clearInterval(timerIntervalT);
   clearTimersJ();
   // clearInterval(countdownId);
+  clearInterval(timerId);
   loadStoredResults()
 });
 
 // دالة مساعدة لإظهار الشاشة المطلوبة
 function showScreen(screenId) {
-  console.log("klddddddddddddddddddddd")
   document.querySelectorAll('.screen').forEach(sec => {
     sec.classList.toggle('active', sec.id === screenId);
+  });
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth' // Optional: makes the scroll smooth
   });
 }
 function showAlert(type, message, duration = 4000) {

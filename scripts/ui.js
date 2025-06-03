@@ -23,6 +23,10 @@ function showScreen(screenId) {
   
   // Show the target screen
   document.getElementById(screenId).classList.add('active');
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth' // Optional: makes the scroll smooth
+  });
 }
 
 /**
@@ -43,31 +47,54 @@ function updatePlayerCount(count) {
  * Render the player list in the UI
  * @param {Array} players - Array of player names
  */
-function renderPlayerList(players) {
-  // Clear the current list
+function renderPlayerList(list) {
   playerListElement.innerHTML = '';
-  
-  // Add each player to the list
-  players.forEach((player, index) => {
+
+  list.forEach((player, index) => {
     const li = document.createElement('li');
-    
+    li.classList.add('player-item');
+    li.dataset.index = index;
+
+    // draggable handle
+    const handle = document.createElement('span');
+    handle.className = 'drag-handle';
+    handle.textContent = '⠿'; // أيقونة قابلة للسحب
+    li.appendChild(handle);
+
     const nameSpan = document.createElement('span');
     nameSpan.textContent = player;
-    
+    li.appendChild(nameSpan);
+
     const removeButton = document.createElement('button');
     removeButton.classList.add('remove-player');
     removeButton.textContent = '×';
-    removeButton.setAttribute('data-index', index);
-    
-    li.appendChild(nameSpan);
+    removeButton.addEventListener('click', () => {
+      players.splice(index, 1);
+      savePlayers();
+      renderPlayerList(players);
+    });
     li.appendChild(removeButton);
-    
+
     playerListElement.appendChild(li);
   });
-  
-  // Update the player count
-  updatePlayerCount(players.length);
+
+  updatePlayerCount(list.length);
+
+  //  بعد إضافة كل العناصر، فعّل SortableJS:
+  Sortable.create(playerListElement, {
+    handle: '.drag-handle',     // فقط عن طريق المقبض
+    animation: 150,
+    onEnd: evt => {
+      // evt.oldIndex, evt.newIndex
+      const [moved] = players.splice(evt.oldIndex, 1);
+      players.splice(evt.newIndex, 0, moved);
+      savePlayers();
+      // نعيد الرسم لتعكس الترتيب في الـ UI
+      renderPlayerList(players);
+    }
+  });
 }
+
 
 /**
  * Render the games list in the UI

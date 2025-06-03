@@ -126,14 +126,41 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function showFinalResults() {
+    // 1) نرتّب النتائج تصاعدياً حسب عدد الحركات
     const sorted = [...results].sort((a,b)=> a.movement - b.movement);
-    if (sorted[0]) sorted[0].roundPoints = 20;
-    if (sorted[1]) sorted[1].roundPoints = 10;
-    if (sorted[2]) sorted[2].roundPoints = 5;
+  
+    // 2) مصفوفة النقاط للمراتب 1–3
+    const pointsByRank = [20, 10, 5];
+  
+    // 3) سنمرّ عبر sorted ونجمع بالمجموعات حسب movement
+    let i = 0;
+    while (i < sorted.length) {
+      // بداية المجموعة
+      const startIdx = i;
+      const sameMov  = sorted[i].movement;
+  
+      // العثور على نهاية المجموعة
+      while (i < sorted.length && sorted[i].movement === sameMov) {
+        i++;
+      }
+      const endIdx = i; // تفصّل بين [startIdx, endIdx)
+  
+      // تحديد النقاط للمجموعة: نأخذ نقاط ترتيب البداية (أو 0 إذا >=3)
+      const pts = startIdx < pointsByRank.length ? pointsByRank[startIdx] : 0;
+  
+      // تطبيق النقاط على كل أعضاء المجموعة
+      for (let j = startIdx; j < endIdx; j++) {
+        sorted[j].roundPoints = pts;
+      }
+    }
+  
+    // 4) تحديث المجاميع وتخزينها
     sorted.forEach(r => {
       r.totalPoints += r.roundPoints;
       localStorage.setItem(r.name, r.totalPoints);
     });
+  
+    // 5) عرض الجدول
     resultsBody.innerHTML = sorted.map((r,i)=>`
       <tr>
         <td>${i+1}</td>
@@ -143,8 +170,10 @@ document.addEventListener('DOMContentLoaded', () => {
         <td>${r.totalPoints}</td>
       </tr>
     `).join('');
+  
     showScreen('balanceResultsScreen');
   }
+  
 
   function formatTime(sec) {
     const m=Math.floor(sec/60), s=sec%60;

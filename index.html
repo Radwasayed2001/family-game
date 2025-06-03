@@ -22,24 +22,26 @@
       <div class="container">
         <h1 class="title">ألعاب قصة</h1>
         <div class="player-input">
-          <input type="text" id="playerName" placeholder="اسم اللاعب"
-            maxlength="20">
+          <input type="text" id="playerName" placeholder="اسم اللاعب" maxlength="20">
           <button id="addPlayer" class="btn btn-primary">إضافة</button>
         </div>
         <p class="player-counter"><span id="playerCount">0</span>/12</p>
-
+    
         <div class="player-list-container">
           <h2>قائمة اللاعبين</h2>
+          <!-- نص توضيحي للسحب والإفلات -->
+          <p class="drag-hint">📌 اضغط مطولاً على اسم اللاعب ثم حرّكه لإعادة الترتيب</p>
           <ul id="playerList" class="player-list"></ul>
         </div>
-
+    
         <button id="startButton" class="btn btn-start" disabled>ابدأ</button>
       </div>
     </section>
+    
     <!-- 1. Rules -->
     <section id="spyRulesScreen" class="screen">
       <header class="game-header">
-        <div class="container">
+        <div class="headercontainer">
           <h1 class="game-header-title">🕵🏻‍♂️ لعبة: الجاسوس</h1>
         </div>
       </header>
@@ -159,64 +161,89 @@
 <!-- 1. Rules Screen -->
 <section id="winkRulesScreen" class="screen">
   <header class="game-header">
-    <div class="container">
-      <h1 class="game-header-title">😏 لعبة: غمزة 😉</h1>
+    <div class="headercontainer">
+      <h1 class="game-header-title">😏 لعبة: الدخيل 😉</h1>
     </div>
   </header>
   <div class="container">
-    <h2 class="game-title">📜 قوانين لعبة غمزة</h2>
+    <h2 class="game-title">📜 قوانين لعبة الدخيل</h2>
     <p>عدد اللاعبين المقترح في اللعبة من 5 إلى 12 لاعب.</p>
     
     <h3>🎯 الهدف</h3>
     <p>
-      الهدف من اللعبة هو اكتشاف القاتل بالغمزة 😉 أي اللاعب الذي يقوم بقتل الآخرين عن طريق إشارة بالغمزة دون أن يلاحظ باقي اللاعبين 👀.
+      اكتشاف الدخلاء بينكم! 😈😈  
+      الدخلاء يحاولون إخراج اللاعبين واحدًا تلو الآخر دون أن ينكشفوا 😉  
+      والبقية يجب أن يتعاونوا لكشفهم! 👮‍♂️👮‍♀️
     </p>
+
+    <h3>🛠️ الإعداد</h3>
+    <ul class="game-info">
+      <li><strong>اختيار الأدوار:</strong> يتم اختيار من 2 إلى 3 دخلاء حسب عدد اللاعبين.</li>
+      <li><strong>عدد الدخلاء:</strong> يجب أن يكون عدد الدخلاء أقل من عدد الأبرياء بـ لاعبين على الأقل.</li>
+    </ul>
     
     <h3>🔸 طريقة اللعب</h3>
     <ul class="game-info">
-      <li><strong>توزيع الأدوار:</strong> يتم اختيار أحد اللاعبين ليكون القاتل بالغمزة 😈 وتبقى هويته سرية 🤫. باقي اللاعبين بريئون 😇 وهدفهم كشف القاتل خلال الجولة 👮‍♂️👮‍♀️.</li>
-      <li><strong>بدء اللعب:</strong> يتناوب اللاعبون على طرح الأسئلة والمحادثات فيما بينهم 🗣، ويفضل أن تكون المواضيع عامة بعيدًا عن اللعبة 🤫. في هذه الأثناء، يحاول القاتل بالغمزة قتل اللاعبين الآخرين بإشارة خفية 👀.</li>
-      <li><strong>استهداف الضحية:</strong> اللاعب الذي يحصل على غمزة من القاتل يضغط زر “خروج” ⚪️ ليسجل خروجه من اللعبة 😵‍💫 ثم يبتعد عن اللعبة دون مساعدة الآخرين 🤐.</li>
-      <li><strong>مدة الجولة:</strong> تستمر الجولة حتى يتم تصفية جميع الأبرياء أو يتم اكتشاف القاتل.</li>
-      <li><strong>الإعلان عن الخروج:</strong> يجب على الضحية الانتظار بضع ثوانٍ 🕰️ قبل الإعلان عن خروجه حتى لا يكشف دوره المبكر.</li>
-      <li><strong>الكشف عن القاتل:</strong> يراقب اللاعبون تصرفات بعضهم البعض لمحاولة تحديد هوية القاتل بالغمزة من خلال الملاحظة الدقيقة 😉 أو السلوكيات المريبة 🤔.</li>
+      <li><strong>وضع الهاتف:</strong> ضع الهاتف في منتصف الأرض بحيث يتمكن الجميع من رؤية زر الطوارئ 🧲📱.</li>
+      <li><strong>بدء اللعب:</strong> يدور الحديث بين اللاعبين بمواضيع عامة. في هذه الأثناء، يحاول الدخلاء تصفية الأبرياء عن طريق غمزة سرّية 👀.</li>
+      <li><strong>الضحية:</strong> إذا شعرت أنك تلقيت غمزة (تمت تصفيتك)، اضغط زر “خروج” 🏃‍♂️، واختر اسمك من القائمة ثم ابتعد عن الجولة بهدوء 🤫.</li>
+      <li><strong>المدة:</strong> كل جولة مدتها 3 دقائق ⏱️، يظهر عدّاد زمني أسفل الشاشة خلال اللعب.</li>
+      <li><strong>زر الطوارئ:</strong> زر "🚨 SOS" في منتصف الشاشة، يمكن لأي لاعب الضغط عليه لعقد اجتماع تصويت فوري.</li>
     </ul>
-    
+
+    <h3>⚠️ قوانين خاصة بوجود أكثر من دخيل</h3>
+    <ul class="game-info">
+      <li>إذا كان هناك أكثر من دخيل في الجولة، لا يُسمح باستخدام زر "SOS".</li>
+      <li>يُمنع توجيه اتهامات أو تصويتات أثناء الجولة إذا لم يُكشف أحد الدخلاء بعد.</li>
+      <li>لا يُكشف عن عدد الدخلاء للاعبين أثناء الجولة، يجب على الأبرياء أن يلاحظوا ويتحققوا مع مرور الوقت.</li>
+    </ul>
+
     <h3>❓ التصويت والاكتشاف</h3>
     <ul class="game-info">
-      <li>يمكن لأي لاعب عقد اجتماع طارئ بالضغط على زر “SOS” 🚨 للتصويت الجماعي على المشبّه به 📦.</li>
-      <li>إذا كان المشبّه به بريئًا، يُستبعد من الجولة ويستمر اللاعبون في المحاولة.</li>
-      <li>يحق للقاتل حينها اتهام لاعب آخر لحماية نفسه 😈.</li>
-      <li>يُكشف القاتل إذا صوّتت الأغلبية عليه ✅ أو إذا بقي أقل من ثلاثة لاعبين 🏳️.</li>
+      <li>في حال كشف أحد الدخلاء، يُسمح باستخدام زر الطوارئ لعقد اجتماع تصويت 🔥.</li>
+      <li>يمكن للاعبين اختيار لاعب واتهامه. إذا وافق الأغلبية، يُستبعد من اللعبة.</li>
+      <li>إذا تم استبعاد بريء، تستمر اللعبة، وإذا تم طرد الدخيل، يربح الأبرياء تلك الجولة.</li>
+      <li>الدخيل (أو الدخلاء) يُعتبرون رابحين إذا بقيوا حتى النهاية دون كشفهم.</li>
     </ul>
-    
+
     <h3>🏆 نقاط الفوز</h3>
     <ul class="game-info">
-      <li>إذا اكتشف اللاعبون القاتل بالتصويت الصحيح، يحصل كل بقية اللاعبين على 25 نقطة لكل واحد منهم.</li>
-      <li>إذا نجح القاتل في تصفية الجميع أو البقاء دون اكتشافه، يحصل على 100 نقطة في تلك الجولة.</li>
+      <li>كل بريء ينجو ويكشف الدخيل يحصل على 25 نقطة.</li>
+      <li>الدخيل الذي يبقى دون انكشاف يحصل على 100 نقطة.</li>
     </ul>
-    
+
     <h3>🔄 مواصلة الجولات</h3>
     <p>
-      تستمر اللعبة لعدة جولات؛ في كل جولة يُختار قاتل جديد بالغمزة وتُعاد نفس الخطوات.
+      تُعاد الأدوار في كل جولة جديدة، ويمكن تغيير عدد الدخلاء في بداية كل جولة حسب الإعدادات.
     </p>
-    
+
     <div class="buttons-row">
       <button id="backToGamesBtnWink" class="btn btn-secondary">🔙 العودة للقائمة</button>
       <button id="startWinkBtn" class="btn btn-primary">ابدأ ▶️</button>
     </div>
   </div>
 </section>
+
    
 
 <!-- 2. شاشة الإعداد: تأكيد توزيع الأدوار -->
+<!-- 1. Settings Screen (winkSettingsScreen) -->
 <section id="winkSettingsScreen" class="screen animated-screen">
-  <div class="container">
+  <div class="container settingss-box">
     <h2 class="settings-title">⚙️ إعدادات اللعبة</h2>
     <p class="settings-info">
       عدد اللاعبين: <strong id="winkPlayerCount"></strong>
     </p>
-    <p class="settings-info">سيتم اختيار قاتل واحد عشوائياً.</p>
+    <p class="settings-info">
+      اختر عدد الدخلاء (2–3):
+      <select id="impostorCountSelect">
+        <option value="2">2 دخيل</option>
+        <option value="3">3 دخلاء</option>
+      </select>
+    </p>
+    <p class="settings-info">
+      **  يجب أن يكون عدد الدخلاء أقل من الأبرياء بلاعبَين على الأقل**
+    </p>
     <div class="buttons-row">
       <button id="backToRulesBtnWink"
               class="btn btn-secondary btn-animated">
@@ -229,6 +256,7 @@
     </div>
   </div>
 </section>
+
 
 <!-- 3. شاشة تمرير الهاتف لتعيين القاتل -->
 <section id="winkPassScreen" class="screen">
@@ -257,13 +285,13 @@
   </div>
 </section>
 
-<!-- 5. شاشة اللعب: زر الغمزة وSOS -->
+<!-- 5. شاشة اللعب: زر الالدخيل وSOS -->
 <section id="winkGameScreen" class="screen">
   <div class="container">
     <div class="wink-box">
       <p class="settings-info">الجولة جارية...</p>
       <div class="buttons-row">
-        <button id="winkSOSBtn" class="btn btn-warning btn-animated">
+        <button id="winkSOSBtn1" class="btn btn-warning btn-animated">
           SOS 🚨
         </button>
       </div>
@@ -274,18 +302,23 @@
 <!-- Pre-vote screen: -->
 <section id="winkPreVoteScreen" class="screen">
   <div class="container">
-    <div class="wink-box">
+    <div class="wink-box" style="text-align: center; padding: 2rem;">
       <h2 class="settings-title">⏳ الجولة قيد التنفيذ</h2>
-      <p class="settings-info">لديكم 15 ثانية لاكتشاف المغمور!</p>
+      <p class="settings-info">اضغط “SOS 🚨” لبدء اجتماع التصويت فورًا.</p>
+
       <div class="buttons-row">
         <button id="winkMarkVictimBtn" class="btn btn-warning btn-animated">
-          تم استهداف لاعب
+          خروج
         </button>
-        <button id="winkCallVoteBtn" class="btn btn-danger btn-animated">
-          التصويت على مشتبه به
+        <button id="winkCallVoteBtn" class="btn btn-danger btn-animated sos-btn">
+          🚨 SOS 🚨
         </button>
       </div>
-      <p class="settings-info">🕒 <span id="winkPreTimer">15</span>s</p>
+      <!-- 3-minute countdown below -->
+      <div class="timer-container" style="margin-top: 1.5rem;">
+        <p class="settings-info">⏰ الوقت المتبقي:</p>
+        <h3 id="winkPreTimer" class="pre-vote-timer">03:00</h3>
+      </div>
     </div>
   </div>
 </section>
@@ -361,7 +394,7 @@
 <!-- 1. Rules Screen -->
 <section id="charadesRulesScreen" class="screen">
   <header class="game-header">
-    <div class="container">
+    <div class="headercontainer">
       <h1 class="game-header-title">🤐 لعبة: بدون كلام</h1>
     </div>
   </header>
@@ -394,7 +427,7 @@
 <!-- شاشة الإعدادات المعدلة -->
 <section id="charadesSettingsScreen" class="screen">
   <header class="game-header">
-    <div class="container">
+    <div class="headercontainer">
       <h2 class="game-header-title">⚙️ إعدادات بدون كلام</h2>
     </div>
   </header>
@@ -411,14 +444,13 @@
     <div class="info-section">
       <h3>⏲️ زمن التمثيل:</h3>
       <div class="slider-wrapper">
-        <span>60s</span>
-        <input id="charadesTimeSlider" type="range" min="60" max="120" step="30" value="60">
-        <span id="charadesTimeValue">60 ثانية</span>
+        <input id="charadesTimeSlider" type="range" min="180" max="300" step="30" value="180">
+        <span id="charadesTimeValue">3 دقائق</span>
       </div>
     </div>
 
     <div class="buttons-row">
-      <button id="backToRulesBtnCharades" class="btn btn-secondary">🔙 رجوع</button>
+      <button id="backToRulesBtnCharades" class="btn btn-secondary">رجوع</button>
       <button id="startCharadesGameBtn"   class="btn btn-primary">ابدأ اللعبة</button>
     </div>
   </div>
@@ -442,7 +474,7 @@
 
 <section id="charadesGameScreen" class="screen">
   <header class="game-header">
-    <div class="container">
+    <div class="headercontainer">
       <h1>🎭 تمثيل صامت</h1>
     </div>
   </header>
@@ -456,7 +488,6 @@
     </div>
     <div class="buttons-row">
       <button id="charadesCorrectBtn" class="btn btn-success">صحيح ✓</button>
-      <button id="charadesFailBtn"    class="btn btn-danger">خطأ ✗</button>
       <button id="charadesChangeBtn"  class="btn btn-warning">
         تغيير الموضوع 🔄 (<span id="charadesChangeCount">2</span>)
       </button>
@@ -496,7 +527,7 @@
 <!-- 6. Final Results -->
 <section id="charadesFinalResultsScreen" class="screen">
   <header class="game-header">
-    <div class="container">
+    <div class="headercontainer">
       <h1>🏆 النتائج النهائية</h1>
     </div>
   </header>
@@ -518,7 +549,7 @@
     <!-- قواعد لعبة التوازن -->
 <section id="balanceRulesScreen" class="screen">
   <header class="game-header">
-    <div class="container">
+    <div class="headercontainer">
       <h1 class="game-header-title">⚖️ لعبة: التوازن</h1>
     </div>
   </header>
@@ -543,7 +574,7 @@
 <!-- إعدادات التوازن -->
 <section id="balanceSettingsScreen" class="screen">
   <header class="game-header">
-    <div class="container">
+    <div class="headercontainer">
       <h1 class="game-header-title">⚙️ إعدادات التوازن</h1>
     </div>
   </header>
@@ -612,7 +643,7 @@
 <!-- النتائج النهائية -->
 <section id="balanceResultsScreen" class="screen">
   <header class="game-header">
-    <div class="container">
+    <div class="headercontainer">
       <h1 class="game-header-title">🏆 نتائج التوازن</h1>
     </div>
   </header>
@@ -632,7 +663,7 @@
 
     <section id="treasureRulesScreen" class="screen rules-screen">
       <header class="game-header">
-        <div class="container">
+        <div class="headercontainer">
           <h1>📜 قوانين لعبة الكنز</h1>
         </div>
       </header>
@@ -724,13 +755,17 @@
             <!-- باقي النتائج تتملأ ديناميكيًا -->
           </tbody>
         </table>
+        <div class="buttons-row">
+          <button id="backToGamesBtT" class="btn btn-secondary" onclick="showScreen('gamesScreen')">🔙 العودة للقائمة</button>
+        </div>
       </div>
+      
     </section>
                 
     <!-- ====== شاشة قوانين لعبة "الأسرع" ====== -->
 <section id="fastRulesScreen" class="screen">
   <header class="game-header">
-    <div class="container">
+    <div class="headercontainer">
       <h1 class="game-header-title">⚡ لعبة الأسرع</h1>
     </div>
   </header>
@@ -783,7 +818,7 @@
 <!-- ====== شاشة اختيار زمن التحدي ====== -->
 <section id="fastTimeScreen" class="screen">
   <header class="game-header">
-    <div class="container">
+    <div class="headercontainer">
       <h1 class="game-header-title">⏱️ اختيار مدة التحدي</h1>
     </div>
   </header>
@@ -815,7 +850,7 @@
 </section>
 <section id="fastChallengeScreen" class="screen">
   <header class="game-header">
-    <div class="container">
+    <div class="headercontainer">
       <h1 class="game-header-title">🚀 جولة التحدي</h1>
     </div>
   </header>
@@ -866,7 +901,7 @@
     <!-- Rules Screen -->
 <section id="whoRulesScreen" class="screen">
   <header class="game-header">
-    <div class="container">
+    <div class="headercontainer">
       <h1 class="game-header-title">👧🏽 لعبة: مين فينا؟</h1>
     </div>
   </header>
@@ -907,7 +942,7 @@
 <!-- Settings Screen -->
 <section id="whoSettingsScreen" class="screen">
   <header class="game-header">
-    <div class="container">
+    <div class="headercontainer">
       <h1 class="game-header-title">⚙️ إعدادات مين فينا؟</h1>
     </div>
   </header>
@@ -958,7 +993,7 @@
 <!-- Vote Screen -->
 <section id="whoVoteScreen" class="screen">
   <header class="game-header">
-    <div class="container">
+    <div class="headercontainer">
       <h1 id="whoQuestion" class="game-header-title"></h1>
     </div>
   </header>
@@ -992,13 +1027,13 @@
      <!-- Jawwal Rules Screen -->
 <section id="jawwalRulesScreen" class="screen">
   <header class="game-header">
-    <div class="container">
-      <h1 class="game-header-title">📱 لعبة: الجوال على الرأس</h1>
+    <div class="headercontainer">
+      <h1 class="game-header-title">📱 لعبة: جوالك على راسك</h1>
     </div>
   </header>
 
   <div class="container">
-    <h2 class="game-title">📜 قوانين لعبة الجوال على الرأس</h2>
+    <h2 class="game-title">📜 قوانين لعبة جوالك على راسك</h2>
 
     <div class="game-info">
       <h3>👥 عدد اللاعبين:</h3>
@@ -1006,14 +1041,14 @@
 
       <h3>💡 فكرة اللعبة:</h3>
       <p>
-        "الجوال على الرأس" هي لعبة اجتماعية ممتعة وملئة بالإثارة 🔥، تعتمد على السرعة ⏱️ والذكاء 🧠 في تخمين الكلمات من مواضيع متنوعة 🎯.
+        "جوالك على راسك" هي لعبة اجتماعية ممتعة وملئة بالإثارة 🔥، تعتمد على السرعة ⏱️ والذكاء 🧠 في تخمين الكلمات من مواضيع متنوعة 🎯.
       </p>
 
       <h3>🎮 كيفية اللعب:</h3>
       <ul>
         <li>🔹 اختر الفئات المفضلة لديك مع أصدقائك.</li>
         <li>⏳ حددوا الوقت المخصص لكل جولة.</li>
-        <li>📱 ضع الهاتف على جبينك بحيث لا ترى الشاشة.</li>
+        <li>📱 ضع الجوال أفقيا على رأسك.</li>
         <li>🗣️ يقوم أصدقاؤك بوصف الكلمة باستخدام التلميحات والكلمات.</li>
         <li>🤔 حاول تخمين الكلمة بأسرع وقت ممكن!</li>
         <li>✅ إذا خمّنتها بشكل صحيح، أمل الهاتف للأمام لاحتساب النقطة.</li>
@@ -1037,8 +1072,8 @@
 
     <section id="headsUpSettings" class="screen">
       <header class="game-header">
-        <div class="container">
-          <h1 class="game-header-title">🎲 لعبة: الجوال على الرأس 📱</h1>
+        <div class="headercontainer">
+          <h1 class="game-header-title">🎲 لعبة: جوالك على راسك 📱</h1>
         </div>
       </header>
 
@@ -1136,7 +1171,7 @@
       </div>
     </section>
     <section id="headsUpPassPhone" class="screen">
-      <div class="container">
+      <div class="countdown-container">
         <div id="headsUpPlayerName" class="player-name-display"></div>
         <div id="headsUpCount" class="countdown-number"></div>
       </div>
@@ -1184,7 +1219,7 @@
 
     <section id="similarPicturesScreen" class="screen">
       <header class="game-header">
-        <div class="container">
+        <div class="headercontainer">
           <h1 class="game-header-title">🎲 لعبة: الصور المتشابهة</h1>
         </div>
       </header>
@@ -1324,7 +1359,7 @@
     <section id="boxesRulesScreen" style="padding-bottom: 3rem !important;"
       class="screen">
       <header class="game-header">
-        <div class="container">
+        <div class="headercontainer">
           <h1 class="game-header-title">🎲 لعبة الصناديق</h1>
         </div>
       </header>
@@ -1395,12 +1430,13 @@
     </section>
 
     <div id="boxGameScreen" class="screen">
-      <div style="padding-right: 3rem;">
+      <div class="box-header">
         <h3 id="boxgamename"></h3>
-        <div id="boxTimer" style="font-size: 1rem;font-weight: bold;">باقي لك: ⏰ 60s</div>  
+        <div id="boxTimer"></div>
       </div>
       <div class="box-grid"></div>
     </div>
+    
     <div id="boxResultsScreen" class="screen results-container">
       <h2 class="results-title">نتائج الجولة 🏁</h2>
 
@@ -1449,14 +1485,14 @@
     <!-- Out of Topic Game Screen -->
     <section id="outOfTopicScreen" class="screen">
       <header class="game-header">
-        <div class="container">
-          <h1 class="game-header-title">🎲 لعبة: خارج الموضوع</h1>
+        <div class="headercontainer">
+          <h1 class="game-header-title">🎲 لعبة: برا السالفة</h1>
         </div>
       </header>
 
       <div class="container">
         <div class="game-info">
-          <h2 class="game-title">قوانين لعبة خارج الموضوع</h2>
+          <h2 class="game-title">قوانين لعبة برا السالفة</h2>
 
           <div class="info-section">
             <h3>عدد اللاعبين المقترح:</h3>
@@ -1465,7 +1501,7 @@
 
           <div class="info-section">
             <h3>🎯 الهدف:</h3>
-            <p>اكتشف من هو اللاعب "خارج الموضوع" 😲 عن طريق طرح الأسئلة
+            <p>اكتشف من هو اللاعب "برا السالفة" 😲 عن طريق طرح الأسئلة
               🧑‍🤝‍🧑🙆‍♀️ وملاحظة الإجابات 🤨.</p>
           </div>
 
@@ -1474,16 +1510,16 @@
             <ol>
               <li>اختيار الكلمة السرية: 😲 يختار التطبيق بشكل عشوائي كلمة أو
                 موضوع سيعرفه الجميع ماعدا لاعب واحد.</li>
-              <li>توزيع الأدوار: 🎭 سيتم اختيار اللاعب "خارج الموضوع" بشكل
+              <li>توزيع الأدوار: 🎭 سيتم اختيار اللاعب "برا السالفة" بشكل
                 عشوائي أيضًا. لن يعلم هذا اللاعب بالكلمة السرية.</li>
               <li>الدور: 🎙️ يتناوب اللاعبون على طرح الأسئلة 🙋‍♀️ على بعضهم
-                البعض، بهدف اكتشاف هوية اللاعب 🙆‍♂️ "خارج الموضوع".</li>
+                البعض، بهدف اكتشاف هوية اللاعب 🙆‍♂️ "برا السالفة".</li>
               <li>الإجابات: 🤔 يجب على اللاعبين الإجابة على الأسئلة بشكل طبيعي
                 ودون الكشف عن هويتهم الحقيقية 🤐 , خاصة اللاعب "خارج الصندوق"
                 الذي سيحاول التظاهر بأنه على علم بالكلمة. </li>
               <li>التصويت: 🗳️ بعد انتهاء فترة الأسئلة 👑 يصوت كل لاعب على من
-                يعتقد أنه اللاعب "خارج الموضوع" 😲.</li>
-              <li>الكشف: يكشف التطبيق عن هوية اللاعب "خارج الموضوع" 😲. يحصل كل
+                يعتقد أنه اللاعب "برا السالفة" 😲.</li>
+              <li>الكشف: يكشف التطبيق عن هوية اللاعب "برا السالفة" 😲. يحصل كل
                 لاعب بشكل صحيح على 25 نقطة 🏆.</li>
               <li>الجولات التالية: 🔄 تستمر اللعبة بعدد من الجولات حسب رغبة
                 اللاعبين 🎲، مع اختيار كلمة سرية جديدة في كل جولة.</li>
@@ -1494,9 +1530,9 @@
           <div class="info-section">
             <h3>نصائح وإرشادات 🧠:</h3>
             <p> استخدموا خيالكم! كلما كانت الأسئلة أكثر إبداعًا 🎨، زادت متعة
-              اللعبة وصعوبة اكتشاف اللاعب "خارج الموضوع" 😲. انتبهوا لإشارات
+              اللعبة وصعوبة اكتشاف اللاعب "برا السالفة" 😲. انتبهوا لإشارات
               الكلام ولغة الجسد! 👀 قد تكشف بعض التصرفات هوية اللاعب
-              "خارج الموضوع" 😲. لا تنسوا الاستمتاع! 😆 تهدف اللعبة إلى قضاء وقت
+              "برا السالفة" 😲. لا تنسوا الاستمتاع! 😆 تهدف اللعبة إلى قضاء وقت
               ممتع مع العائلة والأصدقاء 👨‍👩‍👧‍👦 بدون عصبية وتوتر.</p>
           </div>
 
@@ -1509,7 +1545,7 @@
     </section>
     <section id="mafiaScreen" class="screen">
       <header class="game-header">
-        <div class="container">
+        <div class="headercontainer">
           <h1 class="game-header-title">🎲 لعبة: 🕵️‍♂️ المافيا</h1>
         </div>
       </header>
@@ -1520,7 +1556,7 @@
 
           <div class="info-section">
             <h3>عدد اللاعبين المقترح:</h3>
-            <p>من 5 إلى 12 لاعب</p>
+            <p>من 6 إلى 12 لاعب</p>
           </div>
 
           <div class="info-section">
@@ -1536,16 +1572,52 @@
 
           <div class="info-section">
             <h3>📝 الأدوار:</h3>
-            <ul>
-              <li>💀 <strong>المافيا:</strong> يوجد عضو مافيا لكل 4 لاعبين
-                تقريبًا. يحاولون قتل باقي الشخصيات دون أن يُكشف أمرهم.</li>
-              <li>🩺 <strong>الطبيب:</strong> مواطن يستطيع حماية أي لاعب (بما في
-                ذلك نفسه) من القتل في الجولة المسائية.</li>
-              <li>🕵️‍♂️ <strong>المحقق:</strong> مواطن يستطيع التحقق من هوية
-                لاعب واحد في كل جولة مسائية.</li>
-              <li>🧑‍🌾 <strong>المواطن:</strong> يحاول النجاة والتصويت لقتل
-                أعضاء المافيا خلال الجولات الصباحية.</li>
-            </ul>
+            <div class="roles-container">
+              <!-- دور المافيا -->
+              <div class="role-item">
+                <img src="./public/mafiaImg.png" alt="مافيا" class="role-img">
+                <div class="role-text">
+                  <h4>💀 المافيا</h4>
+                  <p>يوجد عضو مافيا تقريبًا لكل 4 لاعبين. يحاولون قتل باقي الشخصيات دون أن يُكشف أمرهم.</p>
+                </div>
+              </div>
+    
+              <!-- دور المافيا 2 -->
+              <div class="role-item">
+                <img src="./public/mafiaImg2.png" alt="مافيا" class="role-img">
+                <div class="role-text">
+                  <h4>💀 المافيا</h4>
+                  <p>يحاولون قتل المواطنين خلال الليل وإخفاء هويتهم عن الجميع.</p>
+                </div>
+              </div>
+    
+              <!-- دور الطبيب -->
+              <div class="role-item">
+                <img src="./public/DoctorImg.png" alt="طبيب" class="role-img">
+                <div class="role-text">
+                  <h4>🩺 الطبيب</h4>
+                  <p>مواطن يستطيع حماية أي لاعب (بما في ذلك نفسه) من القتل في الجولة المسائية.</p>
+                </div>
+              </div>
+    
+              <!-- دور المحقق -->
+              <div class="role-item">
+                <img src="./public/PImg.png" alt="محقق" class="role-img">
+                <div class="role-text">
+                  <h4>🕵️‍♂️ المحقق</h4>
+                  <p>مواطن يستطيع التحقق من هوية لاعب واحد في كل جولة مسائية.</p>
+                </div>
+              </div>
+    
+              <!-- دور المواطن العادي -->
+              <div class="role-item">
+                <img src="./public/CitizinImg.png" alt="مواطن" class="role-img">
+                <div class="role-text">
+                  <h4>🧑‍🌾 المواطن</h4>
+                  <p>يحاول النجاة والتصويت لقتل أعضاء المافيا خلال الجولات الصباحية.</p>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div class="info-section">
@@ -1635,7 +1707,7 @@
     <!-- Category Selection Screen -->
     <section id="categoryScreen" class="screen">
       <header class="game-header">
-        <div class="container">
+        <div class="headercontainer">
           <h1>اختر التصنيف</h1>
         </div>
       </header>
@@ -1829,7 +1901,7 @@
         <div class="questions-box">
           <p class="questions-instructions">
             في هذه الجولة كل لاعب يطرح سؤال عام عن الموضوع على اللاعب الآخر.<br>
-            لا تعطوا إجابات واضحة جدًا حتى لا يعرف اللاعب خارج الموضوع
+            لا تعطوا إجابات واضحة جدًا حتى لا يعرف اللاعب برا السالفة
             الموضوع.<br>
             يمنع إعادة نفس السؤال مرة أخرى.
           </p>
@@ -1843,7 +1915,7 @@
     <!-- Voting Round Screen -->
     <section id="votingScreen" class="screen">
       <header class="game-header">
-        <div class="container">
+        <div class="headercontainer">
           <h1>جولة التصويت على الخارج</h1>
         </div>
       </header>
@@ -1851,7 +1923,7 @@
         <div class="voting-box">
           <div class="voting-instructions">
             <p>
-              كل لاعب يصوت على من يظن أنه خارج الموضوع.<br>
+              كل لاعب يصوت على من يظن أنه برا السالفة.<br>
               كل صوت صحيح يمنح صاحب السؤال 25 نقطة.<br>
               إذا تصوت الأغلبية على الشخص الصحيح، يحصل الجميع على 100 نقطة
               إضافية.
@@ -1864,13 +1936,13 @@
     <!-- Secret Word Guess Screen -->
     <section id="guessScreen" class="screen">
       <header class="game-header">
-        <div class="container">
+        <div class="headercontainer">
           <h1>تخمين الكلمة السرية</h1>
         </div>
       </header>
       <div class="container">
         <div class="guess-box">
-          <p>أنت خارج الموضوع، <span id="guessingPlayer"></span>. حاول تخمين
+          <p>أنت برا السالفة، <span id="guessingPlayer"></span>. حاول تخمين
             الكلمة السرية:</p>
           <div id="guessWord" class="voting-area"></div>
           <button id="submitGuessButton" class="btn btn-primary">تأكيد</button>
@@ -1880,7 +1952,7 @@
     <!-- Results Screen -->
     <section id="resultsScreen" class="screen results-screen">
       <header class="game-header">
-        <div class="container">
+        <div class="headercontainer">
           <h1 class="results-title">🏆 النتائج النهائية 🏆</h1>
         </div>
       </header>
@@ -1894,7 +1966,7 @@
     
     <section id="finalCitizen" class="screen">
       <header class="game-header">
-        <div class="container">
+        <div class="headercontainer">
           <h1>النتائج النهائية</h1>
         </div>
       </header>
@@ -1907,7 +1979,7 @@
     </section>
     <section id="finalMafia" class="screen">
       <header class="game-header">
-        <div class="container">
+        <div class="headercontainer">
           <h1>النتائج النهائية</h1>
         </div>
       </header>
@@ -1920,7 +1992,7 @@
     </section>
     <section id="MorningDurationScreen" class="screen">
       <header class="game-header">
-        <div class="container">
+        <div class="headercontainer">
           <h1>🕵️‍♂️ لعبة: المافيا</h1>
         </div>
       </header>
@@ -1956,7 +2028,7 @@
     </section>
     <section id="NightDurationScreen" class="screen">
       <header class="game-header">
-        <div class="container">
+        <div class="headercontainer">
           <h1>🕵️‍♂️ لعبة: المافيا</h1>
         </div>
       </header>
@@ -1997,6 +2069,9 @@
       <button class="nav-btn" id="nav-games">الألعاب</button>
       <button class="nav-btn" id="nav-results">النتائج</button>
     </nav>
+    <!-- في <head> أو قبل </body> -->
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
     <script src="scripts/constants.js"></script>
     <script src="scripts/storage.js"></script>
     <script src="scripts/ui.js"></script>

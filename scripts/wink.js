@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let killerIndex     = null;
   let eliminated      = new Set();
   let scores          = {};
-  const PRE_VOTE_TIME = 15 * 60;    // now 15 minutes in seconds
+  const PRE_VOTE_TIME = 3 * 60;    // now 3 minutes in seconds
 
   // load historic scores
   players.forEach(p => scores[p] = parseInt(localStorage.getItem(p))||0);

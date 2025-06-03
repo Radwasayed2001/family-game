@@ -729,7 +729,8 @@ h2 {
 
 /* Countdown Screens */
 #countdownScreen,
-#boxCountdownScreen {
+#boxCountdownScreen,
+#headsUpPassPhone {
   position: fixed;
   top: 0;
   left: 0;
@@ -799,12 +800,12 @@ h2 {
 .box-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
-  padding: 20px;
+  gap: 5px;
+  margin: 5px;
 }
 
 .box {
-  padding: 20px;
+  padding: 10px;
   font-size: 24px;
   background: #eee;
   border: 2px solid #ccc;
@@ -1765,3 +1766,168 @@ h2 {
 #winkSettingsScreen{
   padding: 1rem !important;
 }
+.player-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid #ddd;
+}
+.drag-handle {
+  cursor: grab;
+  user-select: none;
+}
+.draggable-chosen {
+  background: #f0f0f0;
+}
+.remove-player {
+  margin-left: auto;
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  color: #c00;
+}
+/* تجعل الحاوية أفقيًا في منتصف الشاشة */
+#boxGameScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;  /* يوسّط أفقيًا */
+  padding: 2rem;
+}
+
+.box-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;  /* يوسّط العنوان والعداد داخل الحاوية */
+  margin-bottom: 1.5rem;
+}
+
+#boxTimer {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-top: 0.5rem;
+}
+
+/* تأكد أن الشبكة تظهر أسفل الهيدر */
+.box-grid {
+  width: 100%;
+  max-width: 600px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 0.5rem;
+}
+.drag-hint {
+  font-size: 0.9rem;
+  color: #555;
+  margin: 0.5rem 0 1rem;
+  text-align: center;
+  background: #f0f0f0;
+  padding: 0.5rem;
+  border-radius: 6px;
+}
+.player-list {
+  /* اجعل عناصر القائمة قابلة للسحب بتغيير الشكل عند السحب */
+  list-style: none;
+  padding: 0;
+}
+.player-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  margin-bottom: 0.5rem;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: move; /* مؤشر سحب */
+}
+.player-item.dragging {
+  opacity: 0.6;
+  background: #e0e0e0;
+}
+.player-item.drag-over {
+  border-color: #007bff;
+  background: #f0f8ff;
+}
+.roles-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+.role-item {
+  display: flex;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 0.75rem;
+  width: 220px;
+  align-items: center;
+}
+.role-img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  margin-right: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-left: 10px;
+}
+.role-text h4 {
+  margin: 0 0 0.25rem;
+  font-size: 1.1rem;
+  color: #222;
+}
+.role-text p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+/* تنسيق الأزرار */
+.buttons-row {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.settingss-box {
+  background: #fff;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+#impostorCountSelect {
+  margin-left: 0.5rem;
+  padding: 0.4rem;
+  font-size: 1rem;
+}
+/* Add (or merge) these rules into your stylesheet to center the SOS button nicely */
+
+.sos-container {
+  display: flex;
+  justify-content: center;
+}
+
+.sos-btn {
+  font-size: 1.5rem;
+  padding: 1rem 2rem;
+  background-color: #e91e63;
+  border: 2px solid #e91e63;
+  color: #fff;
+  border-radius: 8px;
+}
+
+.sos-btn:hover {
+  background-color: #d81b60;
+  border-color: #d81b60;
+}
+
+.pre-vote-timer {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+/* You already have .settings-title and .settings-info from before */

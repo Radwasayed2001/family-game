@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const replayBtn        = document.getElementById('spyReplay');
   const backGamesBtn     = document.getElementById('spyBackGames');
 
-  let timerId, remainingTime;
+  let remainingTime;
 
   // Navigation
   backToGames.onclick = () => showScreen('gamesScreen');

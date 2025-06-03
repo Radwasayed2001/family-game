@@ -20,8 +20,8 @@ function startMafiaGame() {
   mafianum = Math.floor(originalPlayers.length/4);
   cnum = originalPlayers.length - Math.floor(playersMafia.length/4) - 2;
 
-  if (originalPlayers.length < 5) {
-    showAlert('error', 'لعبة المافيا تحتاج على الأقل 5 لاعبين.');
+  if (originalPlayers.length < 6) {
+    showAlert('error', 'لعبة المافيا تحتاج على الأقل 6 لاعبين.');
     return;
   }
     // reset state
@@ -447,115 +447,122 @@ function roleShown(role) {
     
   }
   function showQuestionVote(role) {
-  const player = playersMafia[mafiaCurrentPlayerIndex];
-  const content = document.getElementById('VoteContent');
-  const confirmBtn = document.getElementById('VoteConfirmButton');
-
-
-  if (role === 'مواطن') {
-    content.innerHTML = `
-      <h3 class="secret-word">أنت مواطن 👩‍🌾</h3>
-      <p class="secret-instruction">
-        ليس لديك مهمة خاصة في هذه الجولة المسائية.
-      </p>
-    `;
-    confirmBtn.textContent = 'موافق';
-    confirmBtn.style.display = 'block';
-
-  } else if (role === 'طبيب') {
-    content.innerHTML = `
-      <h3 class="secret-word">أنت طبيب 🩺</h3>
-      <p class="secret-instruction">
-        اختر اللاعب الذي تتوقع أن المافيا تريد قتله حتى تنقذه:
-      </p>
-      <div id="doctorChoices" class="choice-list"></div>
-    `;
-    const list = document.getElementById('doctorChoices');
-    playersMafia
-      .forEach(p => {
+    const player = playersMafia[mafiaCurrentPlayerIndex];
+    const content = document.getElementById('VoteContent');
+    const confirmBtn = document.getElementById('VoteConfirmButton');
+  
+    // Reset any previous countdown
+    let countdownInterval = null;
+  
+    if (role === 'مواطن') {
+      // عرض رسالة "أنت مواطن" مع عداد 5→1
+      content.innerHTML = `
+        <h3 class="secret-word">أنت مواطن 👩‍🌾</h3>
+        <p class="secret-instruction">
+          ليس لديك مهمة خاصة في هذه الجولة المسائية.
+        </p>
+        <p id="citizenCountdown" class="countdown-text">3</p>
+      `;
+      confirmBtn.style.display = 'none';
+  
+      // نبدأ العد التنازلي من 5 إلى 1
+      let timeLeft = 3;
+      const countdownEl = document.getElementById('citizenCountdown');
+      countdownInterval = setInterval(() => {
+        timeLeft--;
+        if (timeLeft >= 1) {
+          countdownEl.textContent = timeLeft;
+        } else {
+          clearInterval(countdownInterval);
+          countdownEl.remove();
+          // بعد انتهاء العد، نظهر زر "موافق"
+          confirmBtn.textContent = 'موافق';
+          confirmBtn.style.display = 'block';
+        }
+      }, 1000);
+  
+    } else if (role === 'طبيب') {
+      content.innerHTML = `
+        <h3 class="secret-word">أنت طبيب 🩺</h3>
+        <p class="secret-instruction">
+          اختر اللاعب الذي تتوقع أن المافيا تريد قتله حتى تنقذه:
+        </p>
+        <div id="doctorChoices" class="choice-list"></div>
+      `;
+      const list = document.getElementById('doctorChoices');
+      playersMafia.forEach(p => {
         const btn = document.createElement('button');
         btn.className = 'btn btn-secondary choice-btn';
-        btn.textContent = p;
-        if (p === player) {
-          btn.textContent = `أنت`;
-        }
+        btn.textContent = p === player ? 'أنت' : p;
         btn.value = p;
         btn.addEventListener('click', () => {
           console.log(`الطبيب ${player} أنقذ:`, p);
           NightVotes["doctor"] = btn.value;
           document.querySelectorAll('#doctorChoices .choice-btn')
             .forEach(b => b.disabled = true);
-          flag = true; // Set flag to true when a choice is made
+          flag = true;
         });
         list.appendChild(btn);
       });
-
-  } else if (role === 'مافيا') {
-    content.innerHTML = `
-      <h3 class="secret-word">أنت مافيا 💀</h3>
-      <p class="secret-instruction">
-        اختر اللاعب الذي تريد إخراجه من اللعبة:
-      </p>
-      <div id="mafiaChoices" class="choice-list"></div>
-    `;
-    const list = document.getElementById('mafiaChoices');
-    playersMafia
-      .filter(p => p !== player)
-      .forEach(p => {
-        const btn = document.createElement('button');
-        btn.className = 'btn btn-secondary choice-btn';
-        btn.textContent = p;
-        btn.value = p;
-        btn.addEventListener('click', () => {
-          if (mafiaRoles[p] === 'مافيا') {
-            showAlert('warning','لا يمكنك التصويت ضد زميلك في المافيا!');
-
-          } else {
-            console.log(`المافيا ${player} اختار قتل:`, p);
-            btn.value = p;
-            NightVotes[p]?NightVotes[p]++:NightVotes[p]=1;
-            document.querySelectorAll('#mafiaChoices .choice-btn')
-              .forEach(b => b.disabled = true);
-            flag = true; // Set flag to true when a valid choice is made
-          }
-        });
-        list.appendChild(btn);
-      });
-
-  } else if (role === 'محقق') {
-    content.innerHTML = `
-      <h3 class="secret-word">أنت محقق 🕵️‍♂️</h3>
-      <p class="secret-instruction">
-        اختر لاعبًا للتحقق من هويته:
-      </p>
-      <div id="detectiveChoices" class="choice-list"></div>
-    `;
-    const list = document.getElementById('detectiveChoices');
-    playersMafia
-      .filter(p => p !== player)
-      .forEach(p => {
-        const btn = document.createElement('button');
-        btn.className = 'btn btn-secondary choice-btn';
-        btn.textContent = p;
-        btn.addEventListener('click', () => {
+  
+    } else if (role === 'مافيا') {
+      content.innerHTML = `
+        <h3 class="secret-word">أنت مافيا 💀</h3>
+        <p class="secret-instruction">
+          اختر اللاعب الذي تريد إخراجه من اللعبة:
+        </p>
+        <div id="mafiaChoices" class="choice-list"></div>
+      `;
+      const list = document.getElementById('mafiaChoices');
+      playersMafia
+        .filter(p => p !== player)
+        .forEach(p => {
+          const btn = document.createElement('button');
+          btn.className = 'btn btn-secondary choice-btn';
+          btn.textContent = p;
           btn.value = p;
-          showAlert('info',btn.value + " : " + mafiaRoles[btn.value]);
-
-          console.log(`المحقق ${player} تحقّق من:`, p, '→ دورهم:', mafiaRoles[p]);
-          document.querySelectorAll('#detectiveChoices .choice-btn')
-            .forEach(b => b.disabled = true);
-          flag = true; // Set flag to true when a choice is made
+          btn.addEventListener('click', () => {
+            if (mafiaRoles[p] === 'مافيا') {
+              showAlert('warning','لا يمكنك التصويت ضد زميلك في المافيا!');
+            } else {
+              console.log(`المافيا ${player} اختار قتل:`, p);
+              NightVotes[p] = (NightVotes[p] || 0) + 1;
+              document.querySelectorAll('#mafiaChoices .choice-btn')
+                .forEach(b => b.disabled = true);
+              flag = true;
+            }
+          });
+          list.appendChild(btn);
         });
-        list.appendChild(btn);
-      });
+  
+    } else if (role === 'محقق') {
+      content.innerHTML = `
+        <h3 class="secret-word">أنت محقق 🕵️‍♂️</h3>
+        <p class="secret-instruction">
+          اختر لاعبًا للتحقق من هويته:
+        </p>
+        <div id="detectiveChoices" class="choice-list"></div>
+      `;
+      const list = document.getElementById('detectiveChoices');
+      playersMafia
+        .filter(p => p !== player)
+        .forEach(p => {
+          const btn = document.createElement('button');
+          btn.className = 'btn btn-secondary choice-btn';
+          btn.textContent = p;
+          btn.addEventListener('click', () => {
+            showAlert('info', `${p} : ${mafiaRoles[p]}`);
+            document.querySelectorAll('#detectiveChoices .choice-btn')
+              .forEach(b => b.disabled = true);
+            flag = true;
+          });
+          list.appendChild(btn);
+        });
+    }
+  
+    mafiaCurrentPlayerIndex++;
   }
-  mafiaCurrentPlayerIndex++; 
-  confirmBtn.style.display = 'block';
-    
   
-  
-
-}
 function showQuestionVoteMorning(role) {
   const player = playersMafia[mafiaCurrentPlayerIndex];
   const content = document.getElementById('VoteContentMorning');

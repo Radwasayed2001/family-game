@@ -21,7 +21,7 @@ const GAMES = [
   },
   {
     id: 'phoneOnHead',
-    name: 'الجوال على الرأس',
+    name: 'جوالك على راسك',
     minPlayers: 2,
     maxPlayers: 12,
     description: ''
@@ -50,7 +50,7 @@ const GAMES = [
     },
   {
     id: 'outOfTopic',
-    name: 'خارج الموضوع',
+    name: 'برا السالفة',
     minPlayers: 3,
     maxPlayers: 12,
     description: ''
@@ -82,20 +82,19 @@ const GAMES = [
     description: ''
   },
   {
-    id: 'mafia',
-    name: 'المافيا',
+    id: 'ghomza',
+    name: 'الدخيل',
     minPlayers: 5,
     maxPlayers: 12,
     description: ''
   },
   {
-    id: 'ghomza',
-    name: 'غمزة',
-    minPlayers: 5,
+    id: 'mafia',
+    name: 'المافيا',
+    minPlayers: 6,
     maxPlayers: 12,
     description: ''
   },
-  
 ];
 
 // LocalStorage key for players

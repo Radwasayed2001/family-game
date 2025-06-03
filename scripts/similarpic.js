@@ -23,6 +23,10 @@ function showScreen(id) {
   clearAllTimersSim();
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth' // Optional: makes the scroll smooth
+  });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -105,23 +109,29 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function setupImages() {
-    // تحضير قائمة الصور بزوج مكرر
-    const start   = Math.floor(Math.random() * 12) + 1;
-    const names   = Array.from({ length: 24 }, (_, i) => `${start + i}.avif`);
-    const dupIdx  = Math.floor(Math.random() * names.length);
-    dupUrl        = `./public/${names[dupIdx]}`;
-    const final   = names.map(n => `./public/${n}`);
-    // إدخال المكرر مرتين
-    for (let i = 0; i < 2; i++) {
-      let pos;
-      do { pos = Math.floor(Math.random() * (final.length + 1)); }
-      while (final[pos] === dupUrl);
-      final.splice(pos, 0, dupUrl);
-    }
-    final.length = 25;
+    // 1) جهّز أسماء الملفات من 1.webp إلى 13.webp
+    const names = Array.from({ length: 13 }, (_, i) => `${i+1}.webp`);
+  
+    // 2) اختر عشوائيًا أي صورة ستكرّر
+    const dupIdx = Math.floor(Math.random() * names.length);
+    dupUrl = `./public/${names[dupIdx]}`;
+  
+    // 3) احسب القائمة النهائية: نسخة عن كل اسم + الإدراج الأحادي للمكرّر
+    const final = names.map(n => `./public/${n}`);
+    
+    // أدرج المكرر مرة واحدة فقط في موقع عشوائي
+    let pos;
+    do {
+      pos = Math.floor(Math.random() * (final.length + 1)); 
+    } while (final[pos] === dupUrl);
+    final.splice(pos, 0, dupUrl);
+  
+    // 4) خلط البطاقات
     final.sort(() => Math.random() - 0.5);
+  
     imageStartTime = Date.now();
-
+  
+    // 5) عرضها في الشبكة
     grid.innerHTML = '';
     final.forEach(src => {
       const card = document.createElement('div');
@@ -131,6 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
       grid.appendChild(card);
     });
   }
+  
 
   // 3) التعامل مع نقر الصور
   function onImageClick(src, card) {
