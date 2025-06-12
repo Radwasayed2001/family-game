@@ -146,7 +146,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const tbody = document.getElementById('fastResultsTableBody');
     tbody.innerHTML = sorted.map((r, i) => `
       <tr>
-        <td>${i + 1}</td>
         <td>${r.name}</td>
         <td>${r.wins}</td>
         <td>${r.pointsSession}</td>
