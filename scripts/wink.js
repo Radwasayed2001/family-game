@@ -2,11 +2,11 @@
 // Dependencies: loadPlayers(), showScreen(id), showAlert(type, msg)
 
 document.addEventListener('DOMContentLoaded', () => {
-  const players        = loadPlayers();
-  let impostorIndices  = [];        // array of impostor positions
-  let eliminated       = new Set();  // eliminated players
-  let scores           = {};
-  const PRE_VOTE_TIME  = 3 * 60;    // 3 دقائق بالثواني
+  const players = loadPlayers();
+  let impostorIndices = [];        // array of impostor positions
+  let eliminated = new Set();  // eliminated players
+  let scores = {};
+  const PRE_VOTE_TIME = 3 * 60;    // 3 دقائق بالثواني
 
   // load historic scores
   players.forEach(p => {
@@ -15,58 +15,58 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let preTimerId, preRemaining;
   let voteTally = {};
-  let voteTurn  = 0;
+  let voteTurn = 0;
   let remaining;  // array of alive players
 
   // --- DOM refs ---
-  const showScreenById  = id => showScreen(id);
-  const backToGames     = document.getElementById('backToGamesBtnWink');
-  const startWink       = document.getElementById('startWinkBtn');
-  const confirmSet      = document.getElementById('confirmWinkSettingsBtn');
-  const backRulesBtn    = document.getElementById('backToRulesBtnWink');
+  const showScreenById = id => showScreen(id);
+  const backToGames = document.getElementById('backToGamesBtnWink');
+  const startWink = document.getElementById('startWinkBtn');
+  const confirmSet = document.getElementById('confirmWinkSettingsBtn');
+  const backRulesBtn = document.getElementById('backToRulesBtnWink');
   const impostorCountEl = document.getElementById('impostorCountSelect');
 
   // Role reveal
-  const passText    = document.getElementById('winkPassText');
+  const passText = document.getElementById('winkPassText');
   const passNextBtn = document.getElementById('winkPassNextBtn');
-  const roleTitle   = document.getElementById('winkRoleTitle');
+  const roleTitle = document.getElementById('winkRoleTitle');
   const roleExplain = document.getElementById('winkRoleExplain');
   const roleDoneBtn = document.getElementById('winkRoleDoneBtn');
 
   // Pre-vote
-  const preTimerEl  = document.getElementById('winkPreTimer');
-  const sosBtn      = document.getElementById('winkCallVoteBtn');
-  const exitBtn     = document.getElementById('winkMarkVictimBtn');
+  const preTimerEl = document.getElementById('winkPreTimer');
+  const sosBtn = document.getElementById('winkCallVoteBtn');
+  const exitBtn = document.getElementById('winkMarkVictimBtn');
   const callVoteBtn = document.getElementById('winkCallVoteBtn');
 
   // Victim selection
   const victimList = document.getElementById('winkVictimList');
 
   // Voting
-  const votePrompt    = document.getElementById('winkVotePrompt');
-  const voteOptions   = document.getElementById('winkVoteOptions');
+  const votePrompt = document.getElementById('winkVotePrompt');
+  const voteOptions = document.getElementById('winkVoteOptions');
   const voteSubmitBtn = document.getElementById('winkSubmitVoteBtn');
 
   // Innocent warning
-  const innocentText        = document.getElementById('winkInnocentText');
+  const innocentText = document.getElementById('winkInnocentText');
   const innocentContinueBtn = document.getElementById('winkInnocentContinueBtn');
 
   // Results
   const resultsText = document.getElementById('winkResultsText');
   const resultsBody = document.getElementById('winkResultsBody');
-  const replayBtn   = document.getElementById('winkReplayBtn');
-  const endBtn      = document.getElementById('winkEndBtn');
+  const replayBtn = document.getElementById('winkReplayBtn');
+  const endBtn = document.getElementById('winkEndBtn');
   const skipBtn = document.getElementById('winkSkipBtn');
 
   // Screens
   const settingsScreen = 'winkSettingsScreen';
-  const passScreen     = 'winkPassScreen';
-  const roleScreen     = 'winkRoleScreen';
-  const preVoteScreen  = 'winkPreVoteScreen';
-  const victimScreen   = 'winkVictimScreen';
-  const voteScreen     = 'winkVoteScreen';
+  const passScreen = 'winkPassScreen';
+  const roleScreen = 'winkRoleScreen';
+  const preVoteScreen = 'winkPreVoteScreen';
+  const victimScreen = 'winkVictimScreen';
+  const voteScreen = 'winkVoteScreen';
   const innocentScreen = 'winkInnocentScreen';
-  const resultScreen   = 'winkResultsScreen';
+  const resultScreen = 'winkResultsScreen';
 
   // format seconds as MM:SS
   function formatTime(sec) {
@@ -75,9 +75,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- Navigation handlers ---
-  backToGames.onclick  = () => showScreenById('gamesScreen');
+  backToGames.onclick = () => showScreenById('gamesScreen');
   backRulesBtn.onclick = () => showScreenById('winkRulesScreen');
-  startWink.onclick    = () => {
+  startWink.onclick = () => {
     if (players.length < 5) {
       showAlert('error', 'لا يمكن اللعب بأقل من 5 لاعبين!');
     } else {
@@ -104,38 +104,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Role reveal ---
   // --- Role reveal ---
-function showNextRole(i) {
-  if (i >= players.length) return beginPreVote();
+  function showNextRole(i) {
+    if (i >= players.length) return beginPreVote();
 
-  const playerName = players[i];
-  passText.textContent = `📱 ${playerName} يكشف دوره ▶️`;
+    const playerName = players[i];
+    passText.textContent = `📱 ${playerName} يكشف دوره ▶️`;
 
-  passNextBtn.onclick = () => {
-    const isImp = impostorIndices.includes(i);
-    roleTitle.textContent = isImp ? 'أنت دخيل 😈' : 'أنت بريء 😇';
+    passNextBtn.onclick = () => {
+      const isImp = impostorIndices.includes(i);
+      roleTitle.textContent = isImp ? 'أنت دخيل 😈' : 'أنت بريء 😇';
 
-    if (isImp) {
-      // أسماء جميع الدخلاء بدون اسم اللاعب نفسه
-      const coImps = impostorIndices
-        .map(idx => players[idx])
-        .filter(n => n !== playerName)
-        .join(' و ');
-      roleExplain.textContent = `أنت دخيل مع: ${coImps}`;
-    } else {
-      roleExplain.textContent = 'مهمتك: حاول البقاء حيًّا واكتشاف الدخلاء.';
-    }
+      if (isImp) {
+        // أسماء جميع الدخلاء بدون اسم اللاعب نفسه
+        const coImps = impostorIndices
+          .map(idx => players[idx])
+          .filter(n => n !== playerName)
+          .join(' و ');
+        roleExplain.textContent = `أنت دخيل مع: ${coImps}`;
+      } else {
+        roleExplain.textContent = 'مهمتك: حاول البقاء حيًّا واكتشاف الدخلاء.';
+      }
 
-    showScreenById(roleScreen);
-    roleDoneBtn.onclick = () => showNextRole(i + 1);
-  };
+      showScreenById(roleScreen);
+      roleDoneBtn.onclick = () => showNextRole(i + 1);
+    };
 
-  showScreenById(passScreen);
-}
+    showScreenById(passScreen);
+  }
 
 
   // --- Pre-vote countdown ---
   function beginPreVote() {
-    remaining    = players.filter(p => !eliminated.has(p));
+    remaining = players.filter(p => !eliminated.has(p));
     preRemaining = PRE_VOTE_TIME;
     preTimerEl.textContent = formatTime(preRemaining);
     showScreenById(preVoteScreen);
@@ -159,10 +159,10 @@ function showNextRole(i) {
 
     sosBtn.onclick = () => {
       clearInterval(preTimerId);
-      exitBtn.style.display     = 'inline-block';
+      exitBtn.style.display = 'inline-block';
       callVoteBtn.style.display = 'inline-block';
     };
-    exitBtn.onclick    = () => pickVictim();
+    exitBtn.onclick = () => pickVictim();
     callVoteBtn.onclick = () => startVoting();
   }
 
@@ -173,8 +173,16 @@ function showNextRole(i) {
     remaining.forEach(p => {
       const btn = document.createElement('button');
       btn.textContent = p;
-      btn.className   = 'btn btn-warning player-btn';
-      btn.onclick     = () => {
+      btn.className = 'btn btn-warning player-btn';
+      btn.onclick = () => {
+        // إذا استُهدِف دخيل → خطأ في اللعبة ونبدأ جولة جديدة
+        const idx = players.indexOf(p);
+        if (impostorIndices.includes(idx)) {
+          showAlert('error', 'خطأ! لقد استهدفت دخيلًا. تعاد اللعبة من البداية.');
+          confirmSet.onclick();
+          return;
+        }
+        // خلاف ذلك، نخرج اللاعب الأبريء ونبدأ التصويت
         eliminated.add(p);
         startVoting();
       };
@@ -189,7 +197,7 @@ function showNextRole(i) {
   function startVoting() {
     remaining = players.filter(p => !eliminated.has(p));
     voteTally = {};
-    voteTurn  = 0;
+    voteTurn = 0;
     askNextVote();
   }
 
@@ -212,7 +220,7 @@ function showNextRole(i) {
   skipBtn.onclick = () => {
     beginPreVote();
   };
-  
+
   // --- Tally & Results ---
   function tallyVotes() {
     let top = null, max = 0;
@@ -220,7 +228,7 @@ function showNextRole(i) {
       if (c > max) { max = c; top = n; }
     });
     const idxImp = players.indexOf(top);
-    const isImp  = impostorIndices.includes(idxImp);
+    const isImp = impostorIndices.includes(idxImp);
 
     if (isImp) {
       eliminated.add(top);
@@ -234,7 +242,7 @@ function showNextRole(i) {
         .map(i => players[i])
         .filter(p => !eliminated.has(p));
       if (left.length > 0) {
-        alert(`✅ اللاعب ${top} دخيل وخرج من اللعبة`);
+        showAlert("info", `✅ اللاعب ${top} دخيل وخرج من اللعبة`);
         beginPreVote();
       } else {
         showFinalResult(`🎉 الأبرياء انتصروا!`);
@@ -260,33 +268,33 @@ function showNextRole(i) {
   }
 
   // --- Display final result and restart ---
-    // --- Display final result and restart ---
-    function showFinalResult(txt) {
-      // نص النتيجة النهائية (فوز أبرياء أو دخلاء)
-      resultsText.textContent = txt;
-      
-      // بناء جدول النتائج
-      // أعمدة: الترتيب – اسم اللاعب – نقاط الجولة (محسوبة في scores) – المجموع الكلي في localStorage
-      resultsBody.innerHTML = players.map((p, idx) => {
-        const roundPoints = scores[p];
-        const totalPoints = parseInt(localStorage.getItem(p), 10) || 0;
-        return `
+  // --- Display final result and restart ---
+  function showFinalResult(txt) {
+    // نص النتيجة النهائية (فوز أبرياء أو دخلاء)
+    resultsText.textContent = txt;
+
+    // بناء جدول النتائج
+    // أعمدة: الترتيب – اسم اللاعب – نقاط الجولة (محسوبة في scores) – المجموع الكلي في localStorage
+    resultsBody.innerHTML = players.map((p, idx) => {
+      const roundPoints = scores[p];
+      const totalPoints = parseInt(localStorage.getItem(p), 10) || 0;
+      return `
           <tr>
             <td>${idx + 1}</td>
             <td>${p}</td>
             <td>${roundPoints}</td>
             <td>${totalPoints}</td>
           </tr>`;
-      }).join('');
-      
-      // عرض شاشة النتائج
-      showScreenById(resultScreen);
-      
-          // ضبط زر "جولة جديدة"
-      replayBtn.textContent = 'جولة جديدة';
-      replayBtn.onclick     = () => confirmSet.onclick();
-        }
-      
+    }).join('');
+
+    // عرض شاشة النتائج
+    showScreenById(resultScreen);
+
+    // ضبط زر "جولة جديدة"
+    replayBtn.textContent = 'جولة جديدة';
+    replayBtn.onclick = () => confirmSet.onclick();
+  }
+
   // --- Init ---
   endBtn.onclick = () => showScreenById('gamesScreen');
 });
