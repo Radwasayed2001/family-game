@@ -1,117 +1,151 @@
 // scripts/wink.js
-// Dependencies: loadPlayers(), showScreen(id)
+// Dependencies: loadPlayers(), showScreen(id), showAlert(type, msg)
+
 document.addEventListener('DOMContentLoaded', () => {
-  const players       = loadPlayers();
-  
-  // --- State ---
-  let killerIndex     = null;
-  let eliminated      = new Set();
-  let scores          = {};
-  const PRE_VOTE_TIME = 3 * 60;    // now 3 minutes in seconds
+  const players        = loadPlayers();
+  let impostorIndices  = [];        // array of impostor positions
+  let eliminated       = new Set();  // eliminated players
+  let scores           = {};
+  const PRE_VOTE_TIME  = 3 * 60;    // 3 دقائق بالثواني
 
   // load historic scores
-  players.forEach(p => scores[p] = parseInt(localStorage.getItem(p))||0);
+  players.forEach(p => {
+    scores[p] = parseInt(localStorage.getItem(p), 10) || 0;
+  });
 
   let preTimerId, preRemaining;
-  let voteTally       = {};
-  let voteTurn        = 0;     // index of whose turn to vote
-  let remaining;               // array of alive players
+  let voteTally = {};
+  let voteTurn  = 0;
+  let remaining;  // array of alive players
 
   // --- DOM refs ---
-  const showScreenById    = id => showScreen(id);
-
-  // Settings / Roles
-  const backToGames       = document.getElementById('backToGamesBtnWink');
-  const startWink         = document.getElementById('startWinkBtn');
-  const confirmSet        = document.getElementById('confirmWinkSettingsBtn');
-  const backRulesBtn      = document.getElementById('backToRulesBtnWink');
+  const showScreenById  = id => showScreen(id);
+  const backToGames     = document.getElementById('backToGamesBtnWink');
+  const startWink       = document.getElementById('startWinkBtn');
+  const confirmSet      = document.getElementById('confirmWinkSettingsBtn');
+  const backRulesBtn    = document.getElementById('backToRulesBtnWink');
+  const impostorCountEl = document.getElementById('impostorCountSelect');
 
   // Role reveal
-  const passText          = document.getElementById('winkPassText');
-  const passNextBtn       = document.getElementById('winkPassNextBtn');
-  const roleTitle         = document.getElementById('winkRoleTitle');
-  const roleExplain       = document.getElementById('winkRoleExplain');
-  const roleDoneBtn       = document.getElementById('winkRoleDoneBtn');
+  const passText    = document.getElementById('winkPassText');
+  const passNextBtn = document.getElementById('winkPassNextBtn');
+  const roleTitle   = document.getElementById('winkRoleTitle');
+  const roleExplain = document.getElementById('winkRoleExplain');
+  const roleDoneBtn = document.getElementById('winkRoleDoneBtn');
 
   // Pre-vote
-  const preTimerEl        = document.getElementById('winkPreTimer');
-  const markVictimBtn     = document.getElementById('winkMarkVictimBtn');
-  const callVoteBtn       = document.getElementById('winkCallVoteBtn');
+  const preTimerEl  = document.getElementById('winkPreTimer');
+  const sosBtn      = document.getElementById('winkCallVoteBtn');
+  const exitBtn     = document.getElementById('winkMarkVictimBtn');
+  const callVoteBtn = document.getElementById('winkCallVoteBtn');
 
   // Victim selection
-  const victimList        = document.getElementById('winkVictimList');
+  const victimList = document.getElementById('winkVictimList');
 
-  // Per-player vote
-  const votePrompt        = document.getElementById('winkVotePrompt');
-  const voteOptions       = document.getElementById('winkVoteOptions');
-  const voteSubmitBtn     = document.getElementById('winkSubmitVoteBtn');
+  // Voting
+  const votePrompt    = document.getElementById('winkVotePrompt');
+  const voteOptions   = document.getElementById('winkVoteOptions');
+  const voteSubmitBtn = document.getElementById('winkSubmitVoteBtn');
 
-  // Innocent screen
-  const innocentText           = document.getElementById('winkInnocentText');
-  const innocentContinueBtn    = document.getElementById('winkInnocentContinueBtn');
-  const innocentScreenId       = 'winkInnocentScreen';
+  // Innocent warning
+  const innocentText        = document.getElementById('winkInnocentText');
+  const innocentContinueBtn = document.getElementById('winkInnocentContinueBtn');
 
   // Results
-  const resultsText       = document.getElementById('winkResultsText');
-  const resultsBody       = document.getElementById('winkResultsBody');
-  const replayBtn         = document.getElementById('winkReplayBtn');
-  const endBtn            = document.getElementById('winkEndBtn');
+  const resultsText = document.getElementById('winkResultsText');
+  const resultsBody = document.getElementById('winkResultsBody');
+  const replayBtn   = document.getElementById('winkReplayBtn');
+  const endBtn      = document.getElementById('winkEndBtn');
+  const skipBtn = document.getElementById('winkSkipBtn');
 
   // Screens
-  const settingsScreen    = 'winkSettingsScreen';
-  const passScreen        = 'winkPassScreen';
-  const roleScreen        = 'winkRoleScreen';
-  const preVoteScreen     = 'winkPreVoteScreen';
-  const victimScreen      = 'winkVictimScreen';
-  const voteScreen        = 'winkVoteScreen';
-  const resultScreen      = 'winkResultsScreen';
+  const settingsScreen = 'winkSettingsScreen';
+  const passScreen     = 'winkPassScreen';
+  const roleScreen     = 'winkRoleScreen';
+  const preVoteScreen  = 'winkPreVoteScreen';
+  const victimScreen   = 'winkVictimScreen';
+  const voteScreen     = 'winkVoteScreen';
+  const innocentScreen = 'winkInnocentScreen';
+  const resultScreen   = 'winkResultsScreen';
 
-  // Helper: format seconds as mm:ss
+  // format seconds as MM:SS
   function formatTime(sec) {
-    const m = Math.floor(sec/60), s = sec % 60;
-    return `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+    const m = Math.floor(sec / 60), s = sec % 60;
+    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
   }
 
-  // --- Flow ---
-  backToGames.onclick    = () => showScreenById('gamesScreen');
-  startWink.onclick      = () => {
+  // --- Navigation handlers ---
+  backToGames.onclick  = () => showScreenById('gamesScreen');
+  backRulesBtn.onclick = () => showScreenById('winkRulesScreen');
+  startWink.onclick    = () => {
     if (players.length < 5) {
-      return showAlert('error','لا يمكن اللعب بأقل من 5 لاعبين!');
+      showAlert('error', 'لا يمكن اللعب بأقل من 5 لاعبين!');
+    } else {
+      showScreenById(settingsScreen);
     }
-    showScreenById(settingsScreen);
   };
-  backRulesBtn.onclick   = () => showScreenById('winkRulesScreen');
 
-  confirmSet.onclick     = () => {
-    killerIndex = Math.floor(Math.random() * players.length);
+  // --- Setup impostors ---
+  confirmSet.onclick = () => {
+    const count = parseInt(impostorCountEl.value, 10);
+    if (count < 1 || count >= players.length - 1) {
+      showAlert('error', 'اختر عددًا صحيحًا من الدخلاء (2 أو 3)');
+      return;
+    }
+    const indices = players.map((_, i) => i);
+    impostorIndices = [];
+    while (impostorIndices.length < count) {
+      const rnd = Math.floor(Math.random() * indices.length);
+      impostorIndices.push(indices.splice(rnd, 1)[0]);
+    }
     eliminated.clear();
     showNextRole(0);
   };
 
-  function showNextRole(i) {
-    if (i >= players.length) {
-      return beginPreVote();
-    }
-    const p = players[i];
-    passText.textContent = `📱 ${p} يكشف دوره ▶️`;
-    passNextBtn.onclick = () => {
-      const isKiller = (i === killerIndex);
-      roleTitle.textContent   = isKiller ? 'أنت القاتل' : 'أنت بريء';
-      roleExplain.textContent = isKiller
-        ? 'غمز للاعب سرّاً لإقصائه'
-        : 'ابقَ هادئاً ولا تكشف شيئاً';
-      showScreenById(roleScreen);
-      roleDoneBtn.onclick = () => showNextRole(i+1);
-    };
-    showScreenById(passScreen);
-  }
+  // --- Role reveal ---
+  // --- Role reveal ---
+function showNextRole(i) {
+  if (i >= players.length) return beginPreVote();
 
-  // --- Pre-vote phase ---
+  const playerName = players[i];
+  passText.textContent = `📱 ${playerName} يكشف دوره ▶️`;
+
+  passNextBtn.onclick = () => {
+    const isImp = impostorIndices.includes(i);
+    roleTitle.textContent = isImp ? 'أنت دخيل 😈' : 'أنت بريء 😇';
+
+    if (isImp) {
+      // أسماء جميع الدخلاء بدون اسم اللاعب نفسه
+      const coImps = impostorIndices
+        .map(idx => players[idx])
+        .filter(n => n !== playerName)
+        .join(' و ');
+      roleExplain.textContent = `أنت دخيل مع: ${coImps}`;
+    } else {
+      roleExplain.textContent = 'مهمتك: حاول البقاء حيًّا واكتشاف الدخلاء.';
+    }
+
+    showScreenById(roleScreen);
+    roleDoneBtn.onclick = () => showNextRole(i + 1);
+  };
+
+  showScreenById(passScreen);
+}
+
+
+  // --- Pre-vote countdown ---
   function beginPreVote() {
-    remaining = players.filter(p => !eliminated.has(p));
+    remaining    = players.filter(p => !eliminated.has(p));
     preRemaining = PRE_VOTE_TIME;
     preTimerEl.textContent = formatTime(preRemaining);
     showScreenById(preVoteScreen);
+
+    const leftImps = impostorIndices
+      .map(i => players[i])
+      .filter(p => !eliminated.has(p))
+      .length;
+
+    sosBtn.style.display = leftImps === 1 ? 'inline-block' : 'none';
 
     clearInterval(preTimerId);
     preTimerId = setInterval(() => {
@@ -119,46 +153,39 @@ document.addEventListener('DOMContentLoaded', () => {
       preTimerEl.textContent = formatTime(preRemaining);
       if (preRemaining <= 0) {
         clearInterval(preTimerId);
-        beginPreVote();
+        pickVictim();
       }
     }, 1000);
 
-    markVictimBtn.onclick = () => {
+    sosBtn.onclick = () => {
       clearInterval(preTimerId);
-      pickVictim();
+      exitBtn.style.display     = 'inline-block';
+      callVoteBtn.style.display = 'inline-block';
     };
-    callVoteBtn.onclick   = () => {
-      clearInterval(preTimerId);
-      startVoting();
-    };
+    exitBtn.onclick    = () => pickVictim();
+    callVoteBtn.onclick = () => startVoting();
   }
 
-  // --- Victim selection ---
+  // --- Pick victim (exit) ---
   function pickVictim() {
+    remaining = players.filter(p => !eliminated.has(p));
     victimList.innerHTML = '';
     remaining.forEach(p => {
-      const li = document.createElement('li');
-      const btn= document.createElement('button');
+      const btn = document.createElement('button');
       btn.textContent = p;
       btn.className   = 'btn btn-warning player-btn';
       btn.onclick     = () => {
-        // إذا استبعدوا القاتل
-        if (players[killerIndex] === p) {
-          alert('❌ قمتم باستبعاد القاتل. انتهت الجولة.');
-          // إعادة بداية الجولة
-          confirmSet.onclick();
-        } else {
-          eliminated.add(p);
-          startVoting();
-        }
+        eliminated.add(p);
+        startVoting();
       };
+      const li = document.createElement('li');
       li.appendChild(btn);
       victimList.appendChild(li);
     });
     showScreenById(victimScreen);
   }
 
-  // --- Per-player voting ---
+  // --- Voting ---
   function startVoting() {
     remaining = players.filter(p => !eliminated.has(p));
     voteTally = {};
@@ -167,74 +194,99 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function askNextVote() {
-    if (voteTurn >= remaining.length) {
-      tallyVotes();
-      return;
-    }
+    if (voteTurn >= remaining.length) return tallyVotes();
     const voter = remaining[voteTurn];
     votePrompt.textContent = `🕵️ ${voter} يصوّت`;
     voteOptions.innerHTML = remaining
-      .map(cand => `
-        <label><input type="radio" name="suspect" value="${cand}"> ${cand}</label>
-      `).join('<br>');
+      .map(n => `<label><input type="radio" name="suspect" value="${n}"> ${n}</label>`)
+      .join('<br>');
     voteOptions.querySelector('input').checked = true;
-    voteSubmitBtn.onclick = recordVote;
+    voteSubmitBtn.onclick = () => {
+      const choice = voteOptions.querySelector('input:checked').value;
+      voteTally[choice] = (voteTally[choice] || 0) + 1;
+      voteTurn++;
+      askNextVote();
+    };
     showScreenById(voteScreen);
   }
-
-  function recordVote() {
-    const choice = voteOptions.querySelector('input[name="suspect"]:checked').value;
-    voteTally[choice] = (voteTally[choice] || 0) + 1;
-    voteTurn++;
-    askNextVote();
-  }
-
-  // --- Tally and result ---
+  skipBtn.onclick = () => {
+    beginPreVote();
+  };
+  
+  // --- Tally & Results ---
   function tallyVotes() {
     let top = null, max = 0;
-    Object.entries(voteTally).forEach(([name,cnt]) => {
-      if (cnt > max) { max = cnt; top = name; }
+    Object.entries(voteTally).forEach(([n, c]) => {
+      if (c > max) { max = c; top = n; }
     });
+    const idxImp = players.indexOf(top);
+    const isImp  = impostorIndices.includes(idxImp);
 
-    if (top === players[killerIndex]) {
-      // innocents win
-      players.filter(p => p !== top).forEach(p => {
-        scores[p] += 25;
-        localStorage.setItem(p, scores[p]);
-      });
-      showRoundResult(`✅ اكتشفتم القاتل (${top})! كل بريء يحصل على 25 نقطة`);
-    } else {
-      // wrong guess → eliminate or killer win
+    if (isImp) {
       eliminated.add(top);
-      const innocentsLeft = players.length - eliminated.size - 1;
-      if (innocentsLeft < 2) {
-        const k = players[killerIndex];
-        scores[k] += 100;
-        localStorage.setItem(k, scores[k]);
-        showRoundResult(`😎 القاتل (${k}) انتصر! يحصل على 100 نقطة`);
+      remaining
+        .filter(p => p !== top && !impostorIndices.includes(players.indexOf(p)))
+        .forEach(p => {
+          scores[p] += 25;
+          localStorage.setItem(p, scores[p]);
+        });
+      const left = impostorIndices
+        .map(i => players[i])
+        .filter(p => !eliminated.has(p));
+      if (left.length > 0) {
+        alert(`✅ اللاعب ${top} دخيل وخرج من اللعبة`);
+        beginPreVote();
       } else {
-        // innocent reveal
-        innocentText.textContent = `اللاعب ${top} بريء وليس هو القاتل.`;
+        showFinalResult(`🎉 الأبرياء انتصروا!`);
+      }
+    } else {
+      eliminated.add(top);
+      const innocentsLeft = players
+        .filter(p => !eliminated.has(p))
+        .filter(p => !impostorIndices.includes(players.indexOf(p)))
+        .length;
+      const impostorsLeft = impostorIndices
+        .map(i => players[i])
+        .filter(p => !eliminated.has(p))
+        .length;
+      if (innocentsLeft <= impostorsLeft) {
+        showFinalResult(`😎 الدخلاء انتصروا!`);
+      } else {
+        innocentText.textContent = `اللاعب ${top} بريء.`;
         innocentContinueBtn.onclick = () => beginPreVote();
-        showScreenById(innocentScreenId);
+        showScreenById(innocentScreen);
       }
     }
   }
 
-  // Show round result + table
-  function showRoundResult(txt) {
-    resultsText.textContent = txt;
-    resultsBody.innerHTML = players.map((p,i) => `
-      <tr>
-        <td>${i+1}</td>
-        <td>${p}</td>
-        <td>${scores[p]}</td>
-        <td>${localStorage.getItem(p)||0}</td>
-      </tr>
-    `).join('');
-    showScreenById(resultScreen);
-  }
-
-  replayBtn.onclick = () => confirmSet.onclick();
-  endBtn.onclick    = () => showScreenById('gamesScreen');
+  // --- Display final result and restart ---
+    // --- Display final result and restart ---
+    function showFinalResult(txt) {
+      // نص النتيجة النهائية (فوز أبرياء أو دخلاء)
+      resultsText.textContent = txt;
+      
+      // بناء جدول النتائج
+      // أعمدة: الترتيب – اسم اللاعب – نقاط الجولة (محسوبة في scores) – المجموع الكلي في localStorage
+      resultsBody.innerHTML = players.map((p, idx) => {
+        const roundPoints = scores[p];
+        const totalPoints = parseInt(localStorage.getItem(p), 10) || 0;
+        return `
+          <tr>
+            <td>${idx + 1}</td>
+            <td>${p}</td>
+            <td>${roundPoints}</td>
+            <td>${totalPoints}</td>
+          </tr>`;
+      }).join('');
+      
+      // عرض شاشة النتائج
+      showScreenById(resultScreen);
+      
+          // ضبط زر "جولة جديدة"
+      replayBtn.textContent = 'جولة جديدة';
+      replayBtn.onclick     = () => confirmSet.onclick();
+        }
+      
+  // --- Init ---
+  endBtn.onclick = () => showScreenById('gamesScreen');
 });

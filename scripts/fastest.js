@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
         clearInterval(timer);
         countdownText.hidden = true;
         challengeText.hidden = false;
-        postBtns.hidden = false;
+        postBtns.style.display = "flex";
       }
     }, 1000);
   }
@@ -108,13 +108,13 @@ document.addEventListener('DOMContentLoaded', () => {
   function onSkip() {
     currentChallenge = pickRandomChallenge();
     challengeText.textContent = `التحدي: ${currentChallenge}`;
-    postBtns.hidden = false;
+    postBtns.style.display = "flex";
   }
 
   function onPickWinner() {
     const names = loadPlayers();
     const list = document.createElement('div');
-    list.classList.add('info-section');
+    list.classList.add('info-section123');
     list.innerHTML = names
       .map(n => `<button class="btn btn-secondary pick-name">${n}</button>`)
       .join('');
@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
     revealBtn.hidden = false;
     countdownText.hidden = true;
     challengeText.hidden = true;
-    postBtns.hidden = true;
+    postBtns.style.display = "none";
     challengeText.textContent = `التحدي: ${currentChallenge}`;
 
     showScreen('fastChallengeScreen');

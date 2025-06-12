@@ -37,14 +37,16 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  overflow-x: hidden; /* Prevent horizontal scrolling */
+  overflow-x: hidden;
+  /* Prevent horizontal scrolling */
 }
 
 .container {
   max-width: 600px;
   margin: 0 auto;
   padding: 1rem;
-  box-sizing: border-box; /* Ensure padding doesn't cause overflow */
+  box-sizing: border-box;
+  /* Ensure padding doesn't cause overflow */
 }
 
 /* Screen Management */
@@ -59,8 +61,10 @@ body {
   opacity: 0;
   transition: opacity 0.3s ease;
   animation: fadeIn 0.5s ease-out;
-  box-sizing: border-box; /* Ensure padding doesn't cause overflow */
-  overflow-x: hidden; /* Prevent horizontal scrolling */
+  box-sizing: border-box;
+  /* Ensure padding doesn't cause overflow */
+  overflow-x: hidden;
+  /* Prevent horizontal scrolling */
   padding-bottom: 3rem;
 }
 
@@ -81,7 +85,7 @@ body {
   font-weight: 700;
   text-align: center;
   color: var(--color-primary);
-  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -109,18 +113,18 @@ h2 {
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
   transition: transform 0.1s ease, box-shadow 0.3s, background 0.2s;
 }
 
 .btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .btn:active {
   transform: translateY(0);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 }
 
 .btn:disabled {
@@ -161,7 +165,7 @@ h2 {
 .btn-start:hover:not(:disabled) {
   background-color: var(--color-purple-light);
   transform: translateY(-3px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Player Input Screen */
@@ -198,7 +202,7 @@ h2 {
   background-color: var(--color-bg-light);
   padding: var(--space-md);
   border-radius: var(--radius-lg);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   max-width: 600px;
   margin: 0 auto;
   max-height: 300px;
@@ -242,7 +246,7 @@ h2 {
   background-color: var(--color-bg-light);
   border-radius: var(--radius-lg);
   padding: var(--space-md);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
@@ -251,7 +255,7 @@ h2 {
 
 .game-card:hover {
   transform: scale(1.03);
-  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
 .game-card::before {
@@ -291,7 +295,7 @@ h2 {
   color: var(--color-text-light);
   padding: var(--space-md);
   margin-bottom: var(--space-xl);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-bottom-left-radius: var(--radius-lg);
   border-bottom-right-radius: var(--radius-lg);
 }
@@ -300,7 +304,7 @@ h2 {
   background-color: var(--color-bg-light);
   padding: var(--space-lg);
   border-radius: var(--radius-lg);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin: 0 auto var(--space-xl);
   max-width: 800px;
 }
@@ -335,7 +339,7 @@ h2 {
   font-weight: 500;
   color: var(--color-primary);
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, background 0.3s;
   position: relative;
   overflow: hidden;
@@ -346,10 +350,21 @@ h2 {
   background: #E1BEE7;
 }
 
-.category-card[data-category="food"]::before { content: '🍔'; }
-.category-card[data-category="clothes"]::before { content: '👕'; }
-.category-card[data-category="animals"]::before { content: '🐶'; }
-.category-card[data-category="places"]::before { content: '🌍'; }
+.category-card[data-category="food"]::before {
+  content: '🍔';
+}
+
+.category-card[data-category="clothes"]::before {
+  content: '👕';
+}
+
+.category-card[data-category="animals"]::before {
+  content: '🐶';
+}
+
+.category-card[data-category="places"]::before {
+  content: '🌍';
+}
 
 .category-card::before {
   position: absolute;
@@ -368,7 +383,7 @@ h2 {
   text-align: center;
   max-width: 600px;
   margin: var(--space-xl) auto;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   animation: wobble 1s;
 }
 
@@ -401,7 +416,7 @@ h2 {
   text-align: center;
   max-width: 600px;
   margin: var(--space-xl) auto;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
   animation: fadeInUp 0.6s ease-out;
 }
 
@@ -451,7 +466,7 @@ h2 {
   border: 3px solid var(--color-primary);
   border-radius: var(--radius-lg);
   padding: var(--space-xl);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
   text-align: center;
   max-width: 800px;
   margin: var(--space-xl) auto;
@@ -487,7 +502,7 @@ h2 {
   border: 3px solid var(--color-primary);
   border-radius: var(--radius-lg);
   padding: var(--space-xl);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
   max-width: 800px;
   margin: var(--space-xl) auto;
   animation: fadeInUp 0.6s ease-out;
@@ -526,7 +541,7 @@ h2 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
   color: var(--color-text-dark);
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .results-tables {
@@ -539,7 +554,7 @@ h2 {
 .results-box {
   background: var(--color-bg-light);
   border-radius: var(--radius-md);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
   padding: 1rem;
   flex: 1 1 400px;
   overflow-x: auto;
@@ -604,7 +619,7 @@ h2 {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  box-shadow: 0 -2px 5px rgba(0,0,0,0.3);
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
   z-index: 1000;
 }
 
@@ -621,7 +636,7 @@ h2 {
 
 .bottom-nav .nav-btn:hover,
 .bottom-nav .nav-btn.active {
-  background-color: rgba(255,255,255,0.1);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 /* Morning/Night Duration Screens */
@@ -663,7 +678,7 @@ h2 {
   font-size: 1.1rem;
   padding: 0.8rem 0;
   border-radius: 2rem;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   margin: 0 auto 1.5rem;
   transition: transform 0.2s, background 0.2s;
 }
@@ -684,7 +699,7 @@ h2 {
 
 #MorningDurationScreen .stat,
 #NightDurationScreen .stat {
-  background: rgba(0,0,0,0.05);
+  background: rgba(0, 0, 0, 0.05);
   padding: 1rem;
   border-radius: 0.75rem;
   display: flex;
@@ -765,7 +780,7 @@ h2 {
   background: var(--color-bg-light);
   border-radius: var(--radius-md);
   overflow: hidden;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   transition: transform 0.2s;
 }
 
@@ -922,7 +937,7 @@ h2 {
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 0;
-  border-bottom: 1px solid rgba(0,0,0,0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .checkbox-list input {
@@ -938,58 +953,141 @@ h2 {
 
 /* Animations */
 @keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes fadeInUp {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 @keyframes slideIn {
-  from { transform: translateX(-20px); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(40px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes wobble {
-  0% { transform: rotate(0deg); }
-  25% { transform: rotate(-2deg); }
-  50% { transform: rotate(2deg); }
-  75% { transform: rotate(-1deg); }
-  100% { transform: rotate(0deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(-2deg);
+  }
+
+  50% {
+    transform: rotate(2deg);
+  }
+
+  75% {
+    transform: rotate(-1deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
 }
 
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25%, 75% { transform: translateX(-5px); }
-  50% { transform: translateX(5px); }
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25%,
+  75% {
+    transform: translateX(-5px);
+  }
+
+  50% {
+    transform: translateX(5px);
+  }
 }
 
 @keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
 }
 
 @keyframes pop {
-  0% { transform: scale(0.2); opacity: 0; }
-  50% { transform: scale(1.2); opacity: 1; }
-  100% { transform: scale(1); opacity: 1; }
+  0% {
+    transform: scale(0.2);
+    opacity: 0;
+  }
+
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 @keyframes rubberBand {
-  0%, 100% { transform: scaleX(1); }
-  50% { transform: scaleX(1.25); }
+
+  0%,
+  100% {
+    transform: scaleX(1);
+  }
+
+  50% {
+    transform: scaleX(1.25);
+  }
 }
 
 /* Media Queries */
@@ -1000,18 +1098,22 @@ h2 {
 }
 
 @media (min-width: 600px) {
+
   #MorningDurationScreen .game-header h1,
   #NightDurationScreen .game-header h1 {
     font-size: 1.75rem;
   }
+
   #MorningDurationScreen .sub-title,
   #NightDurationScreen .sub-title {
     font-size: 1.4rem;
   }
+
   #MorningDurationScreen .description,
   #NightDurationScreen .description {
     font-size: 1rem;
   }
+
   #MorningDurationScreen .btn-start-night,
   #NightDurationScreen .btn-start-night {
     font-size: 1.2rem;
@@ -1025,19 +1127,24 @@ h2 {
 }
 
 @media (max-width: 480px) {
+
   .title,
   .game-header h1 {
     font-size: 1.8rem;
   }
+
   .player-input {
     flex-direction: column;
   }
+
   .btn-start {
     width: 100%;
   }
+
   .category-grid {
     grid-template-columns: 1fr;
   }
+
   .warning-box,
   .secret-box,
   .questions-box,
@@ -1046,11 +1153,13 @@ h2 {
     margin: var(--space-md);
     padding: var(--space-md);
   }
+
   .bottom-nav .nav-btn {
     font-size: 0.9rem;
     padding: 0.5rem;
   }
 }
+
 /* ===== Custom Radio Buttons Styling ===== */
 .vote-form label {
   position: relative;
@@ -1108,6 +1217,7 @@ h2 {
   outline: none;
   box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.3);
 }
+
 /* ===== Challenge Screen Styling ===== */
 #fastChallengeScreen .challenge-box {
   text-align: center;
@@ -1178,6 +1288,7 @@ h2 {
   gap: var(--space-md);
   margin-top: var(--space-lg);
 }
+
 /* خلفية ناعمة مع تأثير بسيط */
 .results-screen {
   min-height: 100vh;
@@ -1191,14 +1302,14 @@ h2 {
   font-size: 2.5rem;
   color: #d32f2f;
   margin-bottom: 30px;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .results-box {
   background-color: #ffffff;
   border-radius: 15px;
   padding: 30px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   max-width: 700px;
   margin: 0 auto;
   text-align: center;
@@ -1238,18 +1349,21 @@ h2 {
     opacity: 0;
     transform: translateY(40px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
-.score-row{
+
+.score-row {
   display: flex;
   width: 100%;
   justify-content: space-around;
   align-items: center;
   border-bottom: #eee solid 1px;
 }
+
 .rules-screen {
   background-color: #ffcc00;
   color: #000;
@@ -1299,8 +1413,9 @@ h2 {
   font-size: 18px;
   cursor: pointer;
   /* margin: 0.3rem; */
-  
+
 }
+
 #phoneFoundButton.btn {
   padding: 12px 25px;
   border: none;
@@ -1308,12 +1423,14 @@ h2 {
   font-size: 18px;
   cursor: pointer;
   margin: 0.3rem;
-  
+
 }
+
 .btn-primary {
   background-color: #7b2ff7;
   color: #fff;
 }
+
 .player-btn {
   background-color: #7b2ff7;
   color: #fff;
@@ -1325,14 +1442,17 @@ h2 {
   padding: 0.2rem;
   border-radius: var(--radius-sm);
 }
-#playersList li{
+
+#playersList li {
   padding: 0;
 }
+
 .btn-secondary {
   background-color: #fff;
   color: #7b2ff7;
   border: 2px solid #7b2ff7;
 }
+
 .settings-screen {
   min-height: 100vh;
   padding: 30px 0;
@@ -1358,6 +1478,7 @@ h2 {
   background-color: #fff;
   margin-bottom: 30px;
 }
+
 .start-button {
   background-color: #000;
   color: #fff;
@@ -1371,6 +1492,7 @@ h2 {
   text-align: center;
   line-height: 1.8;
 }
+
 /* Alert Container (fixed top center) */
 .alert-container {
   position: fixed;
@@ -1398,8 +1520,8 @@ h2 {
   font-size: 1rem;
   font-weight: 500;
   backdrop-filter: blur(8px);
-  background: rgba(255,255,255,0.1);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
   opacity: 0;
   transform: translateY(-1rem);
   animation: slideIn 0.4s ease-out forwards;
@@ -1417,6 +1539,7 @@ h2 {
   line-height: 1;
   transition: transform 0.2s;
 }
+
 .alert .close-btn:hover {
   transform: scale(1.2);
 }
@@ -1449,22 +1572,36 @@ h2 {
 
 /* Entrance Animation */
 @keyframes slideIn {
-  to { opacity: 1; transform: translateY(0); }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Exit Animation (add .exit class via JS) */
 .alert.exit {
   animation: fadeOut 0.3s ease-in forwards;
 }
+
 @keyframes fadeOut {
-  to { opacity: 0; transform: translateY(-1rem); }
+  to {
+    opacity: 0;
+    transform: translateY(-1rem);
+  }
 }
 
 /* Responsive text sizing */
 @media (max-width: 600px) {
-  .alert { font-size: 0.9rem; padding: 0.75rem 1rem; }
-  .alert .icon { font-size: 1.25rem; }
+  .alert {
+    font-size: 0.9rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .alert .icon {
+    font-size: 1.25rem;
+  }
 }
+
 /* ------------ Balance Game Styles ------------ */
 #balancePassScreen .btn.btn-black {
   background-color: #000;
@@ -1496,12 +1633,13 @@ h2 {
   font-size: 1.5em;
   font-weight: bold;
   color: #fff;
-  text-shadow: 0 0 5px rgba(0,0,0,0.8);
-  background: rgba(0,0,0,0.3);
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.3);
   padding: 0.5em 1em;
   border-radius: 0.5em;
   display: inline-block;
 }
+
 /* make the shake counter big, centered, and contrasting */
 #balanceMovementDisplay {
   font-size: 4rem;
@@ -1528,67 +1666,105 @@ h2 {
   border-radius: 4px;
   /* margin: 0.5em; */
 }
-.btn-primary      { background: #1976d2; color: #fff; }
-.btn-secondary    { background: #555;    color: #fff; }
-.btn-success      { background: #388e3c; color: #fff; }
-.btn-danger       { background: #d32f2f; color: #fff; }
+
+.btn-primary {
+  background: #1976d2;
+  color: #fff;
+}
+
+.btn-secondary {
+  background: #555;
+  color: #fff;
+}
+
+.btn-success {
+  background: #388e3c;
+  color: #fff;
+}
+
+.btn-danger {
+  background: #d32f2f;
+  color: #fff;
+}
+
 .btn-dark-outline {
   background: transparent;
   color: #000;
   border: 2px solid #000;
 }
+
 .timer-display {
   font-size: 2em;
   text-align: center;
   margin: 1em 0;
 }
+
 .player-name-display {
   font-size: 1.2em;
   text-align: center;
   margin-bottom: 1em;
 }
+
 .teams-input input {
   width: 48%;
   padding: 0.5em;
   margin: 0.2em;
 }
-.info-section { margin: 1em 0; }
+
+.info-section {
+  margin: 1em 0;
+}
+
 .slider-wrapper {
   display: flex;
   align-items: center;
 }
-.slider-wrapper span { width: 3em; text-align: center; }
-.slider-wrapper input[type=range] { flex: 1; margin: 0 0.5em; }
+
+.slider-wrapper span {
+  width: 3em;
+  text-align: center;
+}
+
+.slider-wrapper input[type=range] {
+  flex: 1;
+  margin: 0 0.5em;
+}
 
 .results-table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 1em;
 }
+
 .results-table th,
 .results-table td {
   border: 1px solid #ccc;
   padding: 0.5em;
   text-align: center;
 }
+
 .team-assignment-form {
   display: flex;
   flex-wrap: wrap;
   gap: 1em;
 }
+
 .team-assignment-form .player-item {
   flex: 1 1 calc(50% - 1em);
   background: #f9f9f9;
   padding: 0.5em;
   border-radius: 4px;
 }
+
 .player-item label {
   display: block;
   margin-bottom: 0.3em;
 }
+
 .player-item input[type="radio"] {
   margin-right: 0.3em;
 }
+
 /* Apply only to the settings screen */
 #winkSettingsScreen.animated-screen {
   opacity: 0;
@@ -1636,21 +1812,27 @@ h2 {
   overflow: hidden;
   transition: background-color 0.3s, transform 0.2s;
 }
+
 #winkSettingsScreen .btn-animated::after {
   content: '';
   position: absolute;
-  top: 50%; left: 50%;
-  width: 0; height: 0;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
   background: rgba(0, 0, 0, 0.1);
   border-radius: 50%;
   transform: translate(-50%, -50%);
   transition: width 0.4s ease-out, height 0.4s ease-out;
 }
+
 #winkSettingsScreen .btn-animated:hover {
   transform: translateY(-2px);
 }
+
 #winkSettingsScreen .btn-animated:active::after {
-  width: 200%; height: 200%;
+  width: 200%;
+  height: 200%;
   transition: 0s;
 }
 
@@ -1676,14 +1858,18 @@ h2 {
 
 /* Fade & slide keyframes */
 @keyframes fadeInScreen {
-  to { opacity: 1; }
+  to {
+    opacity: 1;
+  }
 }
+
 @keyframes slideUpContainer {
   to {
     transform: translateY(0);
     opacity: 1;
   }
 }
+
 /* Shared box style for all Wink stages */
 .wink-box {
   background: var(--color-bg-light);
@@ -1693,7 +1879,7 @@ h2 {
   text-align: center;
   max-width: 600px;
   margin: var(--space-xl) auto;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   animation: wobble 1s;
 }
 
@@ -1726,6 +1912,7 @@ h2 {
   list-style: none;
   margin: 0.5rem 0;
 }
+
 .player-list .player-btn {
   width: 100%;
   padding: 0.6rem;
@@ -1736,13 +1923,16 @@ h2 {
   font-size: 1rem;
   transition: background 0.3s, color 0.3s;
 }
+
 .player-list .player-btn:hover {
   background: #007bff;
   color: #fff;
 }
-#winkSettingsScreen{
+
+#winkSettingsScreen {
   padding: 1rem !important;
 }
+
 .player-item {
   display: flex;
   align-items: center;
@@ -1750,13 +1940,16 @@ h2 {
   padding: 0.5rem;
   border-bottom: 1px solid #ddd;
 }
+
 .drag-handle {
   cursor: grab;
   user-select: none;
 }
+
 .draggable-chosen {
   background: #f0f0f0;
 }
+
 .remove-player {
   margin-left: auto;
   background: transparent;
@@ -1764,18 +1957,21 @@ h2 {
   font-size: 1.2rem;
   color: #c00;
 }
+
 /* تجعل الحاوية أفقيًا في منتصف الشاشة */
 #boxGameScreen {
   display: flex;
   flex-direction: column;
-  align-items: center;  /* يوسّط أفقيًا */
+  align-items: center;
+  /* يوسّط أفقيًا */
   padding: 2rem;
 }
 
 .box-header {
   display: flex;
   flex-direction: column;
-  align-items: center;  /* يوسّط العنوان والعداد داخل الحاوية */
+  align-items: center;
+  /* يوسّط العنوان والعداد داخل الحاوية */
   margin-bottom: 1.5rem;
 }
 
@@ -1793,6 +1989,7 @@ h2 {
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 0.5rem;
 }
+
 .drag-hint {
   font-size: 0.9rem;
   color: #555;
@@ -1802,11 +1999,13 @@ h2 {
   padding: 0.5rem;
   border-radius: 6px;
 }
+
 .player-list {
   /* اجعل عناصر القائمة قابلة للسحب بتغيير الشكل عند السحب */
   list-style: none;
   padding: 0;
 }
+
 .player-item {
   display: flex;
   justify-content: space-between;
@@ -1816,22 +2015,27 @@ h2 {
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 4px;
-  cursor: move; /* مؤشر سحب */
+  cursor: move;
+  /* مؤشر سحب */
 }
+
 .player-item.dragging {
   opacity: 0.6;
   background: #e0e0e0;
 }
+
 .player-item.drag-over {
   border-color: #007bff;
   background: #f0f8ff;
 }
+
 .roles-container {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
 }
+
 .role-item {
   display: flex;
   background: #f9f9f9;
@@ -1841,6 +2045,7 @@ h2 {
   width: 220px;
   align-items: center;
 }
+
 .role-img {
   width: 60px;
   height: 60px;
@@ -1850,11 +2055,13 @@ h2 {
   border: 1px solid #ccc;
   margin-left: 10px;
 }
+
 .role-text h4 {
   margin: 0 0 0.25rem;
   font-size: 1.1rem;
   color: #222;
 }
+
 .role-text p {
   margin: 0;
   font-size: 0.95rem;
@@ -1868,17 +2075,20 @@ h2 {
   gap: 1rem;
   margin-top: 2rem;
 }
+
 .settingss-box {
   background: #fff;
   border-radius: 8px;
   padding: 1.5rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
+
 #impostorCountSelect {
   margin-left: 0.5rem;
   padding: 0.4rem;
   font-size: 1rem;
 }
+
 /* Add (or merge) these rules into your stylesheet to center the SOS button nicely */
 
 .sos-container {
@@ -1907,4 +2117,9 @@ h2 {
   margin: 0;
 }
 
-/* You already have .settings-title and .settings-info from before */
+.info-section123 {
+  margin: 1em 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}

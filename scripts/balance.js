@@ -127,28 +127,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function showFinalResults() {
     // 1) نرتّب النتائج تصاعدياً حسب عدد الحركات
-    const sorted = [...results].sort((a,b)=> a.movement - b.movement);
+    const sorted = [...results].sort((a,b) => a.movement - b.movement);
   
     // 2) مصفوفة النقاط للمراتب 1–3
     const pointsByRank = [20, 10, 5];
   
-    // 3) سنمرّ عبر sorted ونجمع بالمجموعات حسب movement
+    // 3) نمرّ عبر sorted ونجمعهم في مجموعات حسب movement متساوي
     let i = 0;
     while (i < sorted.length) {
-      // بداية المجموعة
       const startIdx = i;
-      const sameMov  = sorted[i].movement;
-  
-      // العثور على نهاية المجموعة
+      const sameMov = sorted[i].movement;
+      // نجد نهاية هذه المجموعة
       while (i < sorted.length && sorted[i].movement === sameMov) {
         i++;
       }
-      const endIdx = i; // تفصّل بين [startIdx, endIdx)
+      const endIdx = i; // المجموعة من startIdx إلى endIdx-1
   
-      // تحديد النقاط للمجموعة: نأخذ نقاط ترتيب البداية (أو 0 إذا >=3)
+      // نقاط هذه المجموعة: نقطة المرتبة الأولية (أو 0 إذا بعد المرتبة الثالثة)
       const pts = startIdx < pointsByRank.length ? pointsByRank[startIdx] : 0;
   
-      // تطبيق النقاط على كل أعضاء المجموعة
+      // نطبّق النقاط على جميع أعضاء المجموعة
       for (let j = startIdx; j < endIdx; j++) {
         sorted[j].roundPoints = pts;
       }
@@ -161,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   
     // 5) عرض الجدول
-    resultsBody.innerHTML = sorted.map((r,i)=>`
+    resultsBody.innerHTML = sorted.map((r, i) => `
       <tr>
         <td>${i+1}</td>
         <td>${r.name}</td>
@@ -173,6 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
     showScreen('balanceResultsScreen');
   }
+  
   
 
   function formatTime(sec) {

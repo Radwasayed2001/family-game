@@ -11,6 +11,7 @@ let votes = {};
 let scores = {};
 let outOfTopicInput = 'sldkl;';
 let timerId = null;
+let preTimerId;
 // Category words mapping
 const categoryWords = {
   food: ['كبسة', 'مندي', 'برياني', 'مقلوبة', 'محشي', 'فتوش', 'شاورما', 'سندويش', 'فلافل', 'حريرة', 'ملوخية', 'فتة', 'مسبحة', 'طاجن'],
@@ -471,8 +472,9 @@ document.getElementById('nav-players').addEventListener('click', () => {
   clearBoxAllTimers();
   clearInterval(timerIntervalT);
   clearTimersJ();
-  // clearInterval(countdownId);
+  clearInterval(countdownId);
   clearInterval(timerId);
+  clearInterval(preTimerId);
   showScreen('playerScreen');
 });
 document.getElementById('nav-games').addEventListener('click', () => {
@@ -481,8 +483,9 @@ document.getElementById('nav-games').addEventListener('click', () => {
   clearBoxAllTimers();
   clearInterval(timerIntervalT);
   clearTimersJ();
-  // clearInterval(countdownId);
+  clearInterval(countdownId);
   clearInterval(timerId);
+  clearInterval(preTimerId);
   showScreen('gamesScreen');
 });
 document.getElementById('nav-results').addEventListener('click', () => {
@@ -490,8 +493,9 @@ document.getElementById('nav-results').addEventListener('click', () => {
   clearBoxAllTimers() ;
   clearInterval(timerIntervalT);
   clearTimersJ();
-  // clearInterval(countdownId);
+  clearInterval(countdownId);
   clearInterval(timerId);
+  clearInterval(preTimerId);
   loadStoredResults()
 });
 
