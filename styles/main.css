@@ -771,7 +771,7 @@ h2 {
 /* Images Screen */
 #imagesScreen .image-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(98px, 1fr));
   gap: 8px;
   margin-top: 20px;
 }
@@ -2122,4 +2122,7 @@ h2 {
   display: flex;
   flex-direction: column;
   gap: 5px;
+}
+#nextTurnBtn{
+  margin-top: 10px;
 }
