@@ -6,8 +6,18 @@ document.addEventListener('DOMContentLoaded', () => {
   let impostorIndices  = [];        // array of impostor positions
   let eliminated       = new Set();  // eliminated players
   let scores           = {};
-  const PRE_VOTE_TIME  = 3 * 60;      // 3 دقائق بالثواني
-
+  let PRE_VOTE_TIME  = 3 * 60;     // 3 دقائق بالثواني
+const winkTimeSlider    = document.getElementById('winkTimeSlider');
+  const winkTimeValue    = document.getElementById('winkTimeValue');
+winkTimeSlider.addEventListener('input', e => {
+    const v = +e.target.value;
+    PRE_VOTE_TIME = v;
+    winkTimeValue.textContent = v === 60 ? '1 دقيقة'
+                          : v === 90 ? '1.5 دقيقة'
+                          : v === 120 ? '2 دقيقة'
+                          : v === 150 ? '2.5 دقيقة'
+                                     : '3 دقائق';
+  });
   // load historic scores
   players.forEach(p => {
     scores[p] = parseInt(localStorage.getItem(p), 10) || 0;
