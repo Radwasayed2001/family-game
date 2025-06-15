@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let impostorIndices  = [];        // array of impostor positions
   let eliminated       = new Set();  // eliminated players
   let scores           = {};
-  const PRE_VOTE_TIME  = 3;     // 3 دقائق بالثواني
+  const PRE_VOTE_TIME  = 3 * 60;      // 3 دقائق بالثواني
 
   // load historic scores
   players.forEach(p => {
