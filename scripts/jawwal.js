@@ -1,49 +1,48 @@
 let timerIdJ = null, wordTimerId = null;
+
 function clearTimersJ() {
   clearInterval(timerIdJ);
   clearInterval(wordTimerId);
 }
+
 document.addEventListener('DOMContentLoaded', () => {
   const playersJawwal = loadPlayers();
-  let settingsJawwal       = { time: 60, categories: [] };
+  let settingsJawwal = { time: 60, categories: [] };
   let order = [], idx = 0;
-  let currentPlayerJawwal  = 0, correctCount = 0;
+  let currentPlayerJawwal = 0, correctCount = 0;
   const roundResultsJ = [];
 
   // عتبة الميل بالنسبة للـ delta عن baseline
-  const TILT_THRESHOLD = 30;  
+  const TILT_THRESHOLD = 30;
   let baselineBeta = null;
-  let tiltHandled  = false;
+  let tiltHandled = false;
 
   // DOM refs
-  const timeSlider    = document.getElementById('timeSlider');
+  const timeSlider     = document.getElementById('timeSlider');
   const timeValueJ     = document.getElementById('timeValue');
   const catsJ          = [...document.querySelectorAll('.checkbox-list input')];
   const startBtnJ      = document.getElementById('startHeadsUp');
   const backSettingsJ  = document.getElementById('backToGamesBtnJ');
 
-  const passName      = document.getElementById('headsUpPlayerName');
-  const passCount     = document.getElementById('headsUpCount');
-  const gameWord      = document.getElementById('headsUpWord');
-  const gameTimer     = document.getElementById('headsUpTimer');
+  const passName       = document.getElementById('headsUpPlayerName');
+  const passCount      = document.getElementById('headsUpCount');
+  const gameWord       = document.getElementById('headsUpWord');
+  const gameTimer      = document.getElementById('headsUpTimer');
 
-  const endCount      = document.getElementById('headsUpCountCorrect');
+  const endCount       = document.getElementById('headsUpCountCorrect');
   const nextPlayerBtnJ = document.getElementById('btnNextPlayer');
 
-  const resultsBody   = document.getElementById('headsUpResultsBody');
-  const replayBtn     = document.getElementById('btnReplayHeadsUp');
+  const resultsBody    = document.getElementById('headsUpResultsBody');
+  const replayBtn      = document.getElementById('btnReplayHeadsUp');
   const backGameBtnJ   = document.getElementById('btnBackHeadsUp');
-
-  // يمسح كل المؤقتات
-  
 
   // ضبط نص السلايدر
   timeSlider.addEventListener('input', e => {
     const v = +e.target.value;
     settingsJawwal.time = v;
     timeValueJ.textContent = v === 60 ? '1 دقيقة'
-                          : v === 90 ? '1.5 دقيقة'
-                                     : '2 دقائق';
+                         : v === 90 ? '1.5 دقيقة'
+                                    : '2 دقائق';
   });
 
   // العودة للقائمة
@@ -53,18 +52,17 @@ document.addEventListener('DOMContentLoaded', () => {
   startBtnJ.addEventListener('click', () => {
     settingsJawwal.categories = catsJ.filter(c => c.checked).map(c => c.value);
     if (!settingsJawwal.categories.length) {
-       showAlert('warning','اختر مجموعة واحدة على الأقل!');
-       return;
+      showAlert('warning','اختر مجموعة واحدة على الأقل!');
+      return;
     }
     order = [];
     for (const cat of settingsJawwal.categories) {
       if (Array.isArray(WORDS[cat])) {
-          order.push(...WORDS[cat]);
+        order.push(...WORDS[cat]);
       } else {
-          console.warn(`WORDS[${cat}] is undefined or not an array`);
+        console.warn(`WORDS[${cat}] is undefined or not an array`);
       }
-  }
-  
+    }
     shuffle(order);
     idx = 0;
     currentPlayerJawwal = 0;
@@ -72,11 +70,30 @@ document.addEventListener('DOMContentLoaded', () => {
     runTurn();
   });
 
-  
   // معايرة نقطة المرجع وتصفير tiltHandled
   function resetTilt() {
     baselineBeta = null;
     tiltHandled  = false;
+  }
+
+  // طلب إذن استخدام DeviceOrientation على iOS
+  function enableTiltListener() {
+    if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+      DeviceOrientationEvent.requestPermission()
+        .then(response => {
+          if (response === 'granted') {
+            window.addEventListener('deviceorientation', onTilt);
+          } else {
+            showAlert('error', 'لم يتم منح الإذن باستخدام مستشعر الميل');
+          }
+        })
+        .catch(err => {
+          console.error('طلب الإذن فشل', err);
+          showAlert('error', 'حدث خطأ أثناء طلب إذن المستشعر');
+        });
+    } else {
+      window.addEventListener('deviceorientation', onTilt);
+    }
   }
 
   // كشف الميل بالنسبة للـ baseline
@@ -85,25 +102,25 @@ document.addEventListener('DOMContentLoaded', () => {
       baselineBeta = e.beta;
       return;
     }
-  
+
     const delta = e.beta - baselineBeta;
-  
+
     if (!tiltHandled) {
       if (delta > TILT_THRESHOLD) {
-        // ميل لأعلى = صح
+        // ميل ↓ (نحو المستخدم) = صح
         tiltHandled = true;
-        correctCount++;  // زيادة العداد
+        correctCount++;
         nextWord();
         setTimeout(() => tiltHandled = false, 1000);
-      } else if (delta < -TILT_THRESHOLD) {
-        // ميل لأسفل = تخطي
+      }
+      else if (delta < -TILT_THRESHOLD) {
+        // ميل ↑ (بعيد عن المستخدم) = تخطي
         tiltHandled = true;
         nextWord();
         setTimeout(() => tiltHandled = false, 1000);
       }
     }
   }
-  
 
   // بداية دور لاعب
   function runTurn() {
@@ -129,9 +146,8 @@ document.addEventListener('DOMContentLoaded', () => {
     resetTilt();
     showScreen('headsUpGameScreen');
 
-
-    // تفعيل مستمع الميل
-    window.addEventListener('deviceorientation', onTilt);
+    // طلب الإذن ثم تفعيل مستمع الميل
+    enableTiltListener();
 
     let timeLeft = settingsJawwal.time;
     gameTimer.textContent = `⏰ ${timeLeft}s`;
@@ -152,8 +168,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     gameWord.textContent = order[idx++];
   }
-
-
 
   // نهاية الجولة
   function endRound() {
@@ -194,8 +208,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // إعادة لعب أو عودة
-  replayBtn.onclick   = () => showScreen('headsUpSettings');
-  backGameBtnJ.onclick = () => showScreen('gamesScreen');
+  replayBtn.onclick     = () => showScreen('headsUpSettings');
+  backGameBtnJ.onclick  = () => showScreen('gamesScreen');
 });
 
 // تقليب مصفوفة
@@ -203,6 +217,7 @@ function shuffle(a) {
   return a.sort(() => Math.random() - 0.5);
 }
 
+// قائمة الكلمات
 const WORDS = {
   food: [
     'تفاح','موز','برتقال','عنب','كيوي','خوخ','رمان','فراولة','كرز','مانجو',
@@ -286,8 +301,8 @@ const WORDS = {
 };
 function startJawwalGame(){
   if (players.length < 2) {
-    showAlert('error', 'لعبة التوازن تتطلب لاعبين 2 على الأقل  ');
+    showAlert('error', 'لعبة التوازن تتطلب لاعبين 2 على الأقل');
     return; 
   } 
-  showScreen('headsUpSettings')
+  showScreen('headsUpSettings');
 }
