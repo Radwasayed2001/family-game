@@ -1249,7 +1249,7 @@ h2 {
 .challenge-text {
   font-size: 1.25rem;
   color: var(--color-text-dark);
-  margin-top: var(--space-md);
+  margin-block: var(--space-md);
   line-height: 1.4;
 }
 

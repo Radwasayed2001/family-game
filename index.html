@@ -865,7 +865,12 @@
     <div class="challenge-box">
       <button id="revealChallengeBtn" class="btn-challenge">اكشف السؤال</button>
       <div id="countdownText" class="countdown-text" hidden>3</div>
-      <div id="challengeText" class="challenge-text" hidden>التحدي: أسرع واحد يجيب شباصة يفوز!</div>
+      <div id="challenge-end" style="display: flex; flex-direction: column;">
+<div id="challengeText" class="challenge-text" hidden>التحدي: أسرع واحد يجيب شباصة يفوز!</div>
+      <button onclick="repeateGame()" id="repeatFastChallengeBtn" class="btn btn-primary" style="display: none;"> إعادة اللعب 🚀</button>
+
+      </div>
+      
     </div>
 
     <!-- أزرار بعد الكشف -->
